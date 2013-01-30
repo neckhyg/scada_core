@@ -1,0 +1,32 @@
+CONNECTION0* - 	jdbc:derby:D:\walter\IdeaProjects\eazyscada\core\/mango_db
+* = current connection
+WARNING 01J01: Database 'D:\walter\IdeaProjects\eazyscada\core\/mango_db' not created, connection made to existing database instead.
+ij> alter table dataPoints add column name varchar(255);
+ERROR X0Y32: Column 'NAME' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column deviceName varchar(255);
+ERROR X0Y32: Column 'DEVICENAME' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column enabled char(1);
+ERROR X0Y32: Column 'ENABLED' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column pointFolderId int;
+ERROR X0Y32: Column 'POINTFOLDERID' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column loggingType int;
+ERROR X0Y32: Column 'LOGGINGTYPE' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column intervalLoggingPeriodType int;
+ERROR X0Y32: Column 'INTERVALLOGGINGPERIODTYPE' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column intervalLoggingPeriod int;
+ERROR X0Y32: Column 'INTERVALLOGGINGPERIOD' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column intervalLoggingType int;
+ERROR X0Y32: Column 'INTERVALLOGGINGTYPE' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column tolerance double;
+ERROR X0Y32: Column 'TOLERANCE' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column purgeType int;
+ERROR X0Y32: Column 'PURGETYPE' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column purgePeriod int;
+ERROR X0Y32: Column 'PURGEPERIOD' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column defaultCacheSize int;
+ERROR X0Y32: Column 'DEFAULTCACHESIZE' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column discardExtremeValues char(1);
+ERROR X0Y32: Column 'DISCARDEXTREMEVALUES' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> alter table dataPoints add column engineeringUnits int;
+ERROR X0Y32: Column 'ENGINEERINGUNITS' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> 

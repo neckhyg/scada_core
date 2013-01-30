@@ -1,0 +1,6 @@
+CONNECTION0* - 	jdbc:derby:D:\walter\IdeaProjects\eazyscada\core\/mango_db
+* = current connection
+WARNING 01J01: Database 'D:\walter\IdeaProjects\eazyscada\core\/mango_db' not created, connection made to existing database instead.
+ij> alter table publishers add column rtdata blob;
+ERROR X0Y32: Column 'RTDATA' already exists in Table/View '"APP"."PUBLISHERS"'.
+ij> 

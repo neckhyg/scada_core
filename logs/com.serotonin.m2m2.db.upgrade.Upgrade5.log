@@ -1,0 +1,14 @@
+CONNECTION0* - 	jdbc:derby:D:\walter\IdeaProjects\eazyscada\core\/mango_db
+* = current connection
+WARNING 01J01: Database 'D:\walter\IdeaProjects\eazyscada\core\/mango_db' not created, connection made to existing database instead.
+ij> ALTER TABLE dataPoints ADD COLUMN pointFolderId int;
+ERROR X0Y32: Column 'POINTFOLDERID' already exists in Table/View '"APP"."DATAPOINTS"'.
+ij> CREATE TABLE dataPointHierarchy (
+  id int NOT NULL, 
+  parentId int, 
+  name varchar(100)
+);
+ERROR X0Y32: Table/View 'DATAPOINTHIERARCHY' already exists in Schema 'APP'.
+ij> ALTER TABLE dataPointHierarchy ADD CONSTRAINT dataPointHierarchyPk PRIMARY KEY (id);
+ERROR 42Z93: Constraints 'DATAPOINTHIERARCHYPK' and 'DATAPOINTHIERARCHYPK' have the same set of columns, which is not allowed. 
+ij> 
