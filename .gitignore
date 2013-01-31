@@ -1,0 +1,10 @@
+/doc
+/logs
+/mango_db
+/target
+/m2m2.license*
+/m2m2-core-*
+/RESTART
+/bin
+core.iml
+*~
