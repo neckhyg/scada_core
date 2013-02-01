@@ -26,7 +26,7 @@ public class PropUtils {
 //            fis = new FileInputStream("D:\\messages_zh_CN.properties");
 //            prop.load(fis);
 //            prop.list(System.out);
-            fis = new FileInputStream("D:\\messages_zh_CN.properties");
+            fis = new FileInputStream("D:\\i18n_zh.properties");
             prop_cn.load(fis);
             Set<String> pname = prop_cn.stringPropertyNames();
             Iterator<String> it = pname.iterator();
@@ -40,7 +40,7 @@ public class PropUtils {
             }
 
             fis.close();
-            FileOutputStream fos = new FileOutputStream("D:\\i18n_zh.properties");
+            FileOutputStream fos = new FileOutputStream("D:\\i18n_zh_CN.properties");
             prop.store(fos, "");
 
         } catch (FileNotFoundException e) {
@@ -50,4 +50,6 @@ public class PropUtils {
         }
 
     }
+    // change iso8859-1 to utf-8
+    // native2ascii -reverse -encoding iso8859-1 i18n_zh.properties i18n_zh_CN.properties
 }

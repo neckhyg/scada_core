@@ -10,27 +10,30 @@ import com.serotonin.timer.TimerTask;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class LicMonitor extends TimerTask {
-    private static final Log LOG = LogFactory.getLog(LicMonitor.class);
-    private static final long TIMEOUT = Common.getMillis(2, 15);
+public class LicMonitor extends TimerTask
+{
+  private static final Log LOG = LogFactory.getLog(LicMonitor.class);
+  private static final long TIMEOUT = Common.getMillis(2, 15);
 
-    public static void start() {
-        Common.timer.schedule(new LicMonitor());
-    }
+  public static void start() {
+    Common.timer.schedule(new LicMonitor());
+  }
 
-    private LicMonitor() {
-        super(new FixedRateTrigger(TIMEOUT, TIMEOUT));
-    }
+  private LicMonitor() {
+    super(new FixedRateTrigger(TIMEOUT, TIMEOUT));
+  }
 
-    public void run(long fireTime) {
-        ((ICoreLicense) Providers.get(ICoreLicense.class)).licenseCheck(false);
+  public void run(long fireTime)
+  {
+    ((ICoreLicense)Providers.get(ICoreLicense.class)).licenseCheck(false);
 
-        for (Module module : ModuleRegistry.getModules())
-            for (LicenseDefinition def : module.getDefinitions(LicenseDefinition.class))
-                try {
-                    def.licenseCheck(false);
-                } catch (Throwable e) {
-                    LOG.error(e.getMessage());
-                }
-    }
+    for (Module module : ModuleRegistry.getModules())
+      for (LicenseDefinition def : module.getDefinitions(LicenseDefinition.class))
+        try {
+          def.licenseCheck(false);
+        }
+        catch (Throwable e) {
+          LOG.error(e.getMessage());
+        }
+  }
 }

@@ -113,8 +113,6 @@ abstract public class DBUpgrade extends BaseDao {
      * 
      * @param script
      *            the array of script lines to run
-     * @param out
-     *            the stream to which to direct output from running the script
      * @throws Exception
      *             if something bad happens
      */
