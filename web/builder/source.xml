@@ -1,0 +1,24 @@
+<anychart>
+						<margin all="10" />
+						<settings>
+							<animation enabled="true" />
+						</settings>
+						<gauges>
+							<gauge>
+								<chart_settings>
+									<title enabled="false"/>
+									<chart_background enabled="false"/>
+								</chart_settings>
+								<circular name="circularGauge">
+									<pointers>
+										<pointer name="value" value="35.6" type="Needle">
+											<label enabled="true">
+												<position placement_mode="ByPoint" x="50" y="75"/>
+												<background enabled="false"/>
+											</label>
+										</pointer>
+									</pointers>
+								</circular>
+							</gauge>
+						</gauges>
+					</anychart>;
