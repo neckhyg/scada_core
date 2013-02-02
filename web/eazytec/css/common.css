@@ -1,0 +1,455 @@
+@CHARSET "UTF-8";
+/*-----------------------------页面基础定义----------------------------------*/
+/*{border:0px solid #eee;margin:0;padding:0;list-style:none} */
+html,body,#cont {
+	width: 100%;
+	height: 100%;
+	overflow: hidden
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 21px;
+	cursor: default;
+	color: #000;
+	background-image: url("../images/bg.jpg");
+	background-repeat: repeat;
+	margin: 0px;
+}
+
+h2,.box div img {
+	padding-bottom: 10px
+}
+
+a,a:visited {
+	text-decoration: none;
+	color: #fff;
+}
+/*img{display:block}*/
+
+/* -----------------------------清除浮动----------------------------- */
+.clear {
+	clear: both;
+}
+
+/*--------------------------------页面背景----------------------------------*/
+/*与时间插件样式冲突
+dl{margin:10px 0}
+dt{text-transform:uppercase;padding:0 5px;cursor:pointer;line-height:20px;height:20px;font-weight:bold;width:430px}
+dd{height:0px;overflow:hidden;width:440px}
+*/
+#bg div {
+	position: absolute;
+	width: 200%;
+	height: 200%;
+	top: -50%;
+	left: -50%
+}
+
+#bg td {
+	vertical-align: middle;
+	text-align: center
+}
+
+#bg img {
+	min-height: 50%;
+	min-width: 50%;
+	margin: 0 auto
+}
+
+/*--------------------------------页头样式----------------------------------*/
+.top {
+	position: relative;
+	height: 20px;
+	width: 100%;
+	z-index: 1;
+	background-color: rgba(79, 79, 79, 0.8);
+	filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#7F000000,
+		endcolorstr=#7F000000 );
+}
+
+.top p {
+	position: absolute;
+	left: 5px;
+	top: 2px;
+	margin: 0px;
+	color: white;
+}
+
+#menu {
+	position: relative;
+	width: 100%;
+	height: 60px;
+	z-index: -1;
+	background: black;
+	-webkit-box-shadow: #666 0px 5px 10px;
+	-moz-box-shadow: #666 0px 5px 10px;
+	box-shadow: #666 0px 5px 10px;
+	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#222),
+		to(#7c7c7c) );
+	background: -webkit-linear-gradient(#222, #7c7c7c);
+	background: -moz-linear-gradient(#222, #7c7c7c);
+	background: -ms-linear-gradient(#222, #7c7c7c);
+	background: -o-linear-gradient(#222, #7c7c7c);
+	background: linear-gradient(#222, #7c7c7c);
+	-pie-background: linear-gradient(#222, #7c7c7c);
+	behavior: url("eazytec/js/PIE-1.0.0/PIE.htc");
+}
+
+.top_mid {
+	height: 60px;
+}
+
+.top_left {
+	float: left;
+	height: 60px;
+	width: 120px;
+}
+
+.top_right {
+	float: right;
+	height: 60px;
+}
+
+.top_right1 {
+	width: 300px;
+	height: 20px;
+	margin-top: 20px;
+	float: left;
+	-moz-border-radius: 12px;
+	-khtml-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	border-radius: 12px;
+	background-color: #8b7c71;
+	behavior: url("eazytec/js/PIE-1.0.0/PIE.htc");
+}
+
+.top_right1 ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.top_right1 ul li {
+	width: 60px;
+	height: 20px;
+	float: left;
+}
+
+.top_right1 ul li span {
+	margin-left: 2px;
+	color: white;
+	line-height: 16px;
+	vertical-align: 20%;
+}
+
+.top_right1 ul li img {
+	margin-left: 8px;
+	margin-top: 2px;
+}
+
+.ge1 a {
+	float: left;
+	width: 90px;
+	height: 90px;
+	background: url("../images/18.png") right no-repeat;
+}
+
+.ge1 a p {
+	color: white;
+	margin-top: 5px;
+}
+
+.ge1 a img {
+	text-align: center;
+	padding-left: 23px;
+	padding-top: 15px;
+}
+
+.ge2 a {
+	float: left;
+	width: 90px;
+	height: 90px;
+}
+
+.ge2 a p {
+	color: white;
+	margin-top: 5px;
+}
+
+.ge2 a img {
+	text-align: center;
+	padding-left: 23px;
+	padding-top: 15px;
+}
+
+.ge1 a:hover,.ge2 a:hover {
+	text-decoration: none;
+}
+
+#top_buttons {
+	width: 120px;
+	float: left;
+}
+
+#top_buttons img {
+	float: left;
+	margin: 2px;
+}
+
+/*--------------------------------页尾样式----------------------------------*/
+.bottom {
+	position: absolute;
+	height: 20px;
+	width: 100%;
+	z-index: 1;
+	bottom: 0;
+	background: rgb(34, 34, 34);
+}
+
+.bottom p {
+	text-align: center;
+	padding-top: 2px;
+	color: white;
+}
+
+.middle {
+	position: relative;
+	z-index: 1;
+}
+
+/*--------------------------------页中左边样式----------------------------------*/
+.mid-left {
+	width: 270px;
+	height: 100%;
+	float: left;
+	margin-left: 12px;
+	margin-top: 10px;
+}
+
+.left-a {
+	width: 258px;
+	height: 240px;
+	color: white;
+}
+
+.left-a-top {
+	width: 258px;
+	height: 14px;
+	background: url(../images/left-top.png) no-repeat
+}
+
+.left-a-middle {
+	width: 258px;
+	height: 208px;
+	background: url(../images/left-middle.png) repeat-y
+}
+
+.left-a-middle span {
+	margin: 0px 5px;
+}
+
+.left-a-bottom {
+	width: 258px;
+	height: 8px;
+	background: url(../images/left-bottom.png) no-repeat
+}
+
+.left-b {
+	width: 258px;
+	height: 280px;
+}
+
+.left-b-top {
+	width: 258px;
+	height: 14px;
+	background: url(../images/left-top.png) no-repeat
+}
+
+.left-b-middle {
+	width: 258px;
+	height: 248px;
+	background: url(../images/left-middle.png) repeat-y
+}
+
+.left-b-bottom {
+	width: 258px;
+	height: 8px;
+	background: url(../images/left-bottom.png) no-repeat
+}
+
+/*--------------------------------页中右边样式----------------------------------*/
+.mid-right {
+	margin: 10px 12px;
+	float: right;
+}
+
+.rigbox {
+	width: 88px;
+}
+
+.right-top {
+	width: 88px;
+	height: 10px;
+	background: url(../images/right-top.png) no-repeat
+}
+
+.right-middle {
+	width: 88px;
+	height: 452px;
+	background: url(../images/right-middle.png) repeat-y
+}
+
+.right-bottom {
+	width: 88px;
+	height: 8px;
+	background: url(../images/right-bottom.png) no-repeat
+}
+
+.mid-mid {
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	background: white;
+	margin: 10px 10px;
+	-webkit-box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 1);
+	box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 1);
+	behavior: url("eazytec/js/PIE-1.0.0/PIE.htc");
+}
+
+#container {
+	overflow: hidden;
+	margin: 0 auto 20px;
+	width: 88px;
+}
+
+#container .js {
+	overflow: hidden;
+	zoom: 1;
+}
+
+#container .carousel,#container .carousel .carousel-wrap {
+	margin: 0;
+	border: 0;
+	zoom: 1;
+}
+
+#container .js .carousel-wrap {
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 5px;
+}
+
+.IE #container .js .carousel-wrap {
+	display: block;
+}
+
+#container .carousel ul {
+	margin: 0;
+	padding: 0;
+	zoom: 1;
+}
+
+#container .carousel .carousel-control {
+	overflow: hidden;
+	width: 88px;
+	height: 40px;
+	cursor: pointer;
+	line-height: 999px;
+	zoom: 1;
+	border: 0;
+	text-indent: -9999px;
+}
+
+#container .carousel .carousel-next {
+	margin-top: 10px;
+	background: url(../images/tt/next.png) center 0px no-repeat;
+}
+
+#container .carousel .carousel-previous {
+	background: url(../images/tt/prev.png) center 0px no-repeat;
+	margin-bottom: 10px;
+}
+
+#container .carousel .carousel-control:hover {
+	-moz-opacity: .7;
+	opacity: 0.70;
+	filter: alpha(opacity =     70);
+}
+
+#container .carousel .disabled,#container .carousel .disabled:hover {
+	-moz-opacity: .4;
+	opacity: 0.40;
+	filter: alpha(opacity =     40);
+	cursor: default;
+}
+
+#container .carousel div {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+#container .carousel ul {
+	padding: 0;
+	list-style: none;
+}
+
+#examples {
+	margin-top: 30px;
+	border: 0;
+}
+
+#examples .tabs-frames {
+	padding: 0px;
+}
+
+#examples .js ul {
+	overflow: hidden;
+	zoom: 1;
+}
+
+#examples .js ul li {
+	overflow: hidden;
+	width: 60px;
+	height: 70px;
+}
+
+#examples .js .carousel-wrap {
+	padding: 105px 9px;
+	width: 60px;
+	margin-top: 5px;
+	zoom: 1;
+}
+
+#examples .js .carousel-wrap img {
+	
+}
+
+#query_condition_area {
+	width: 258px;
+	height: 240px;
+	color: white;
+}
+
+.left-a-middle_time {
+	width: 258px;
+	height: 50px;
+	background: url(../images/left-middle.png) repeat-y
+}
+.datalist{
+	color:#0046a6;			/* 表格文字颜色 */
+	/*background-color:#d2e8ff;	             表格背景色 */
+	font-family:Arial;	              /* 表格字体 */
+	border:1px solid #007eff;
+	border-collapse:collapse;
+}                            
+
+.datalist th, .datalist td{  
+	color:#003e7e;		            /* 行、列名称颜色 */
+	/*background-color:#7bb3ff; */
+	border:1px solid #007eff;
+}       
