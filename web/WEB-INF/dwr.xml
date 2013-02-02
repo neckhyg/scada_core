@@ -16,8 +16,21 @@
     <filter class="com.serotonin.m2m2.web.dwr.util.TranslationsFilter">
       <param name="messageSourceKey">messageSource</param>
     </filter>
-    
-    <create creator="new" javascript="DataPointDetailsDwr" scope="application">
+      <!-- eazytec Start -->
+      <create creator="new" javascript="FlexWatchListDwr" scope="application">
+          <param name="class" value="com.serotonin.eazytec.web.dwr.FlexWatchListDwr"/>
+      </create>
+      <create creator="new" javascript="HourPowerPointDetailsDwr" scope="application">
+          <param name="class" value="com.serotonin.eazytec.web.dwr.HourPowerPointDetailsDwr"/>
+      </create>
+      <create creator="new" javascript="DayPowerPointDetailsDwr" scope="application">
+          <param name="class" value="com.serotonin.eazytec.web.dwr.DayPowerPointDetailsDwr"/>
+      </create>
+      <create creator="new" javascript="MonthPowerBillsListDwr" scope="application">
+          <param name="class" value="com.serotonin.eazytec.web.dwr.MonthPowerBillsListDwr"/>
+      </create>
+      <!-- eazytec end -->
+      <create creator="new" javascript="DataPointDetailsDwr" scope="application">
       <param name="class" value="com.serotonin.m2m2.web.dwr.DataPointDetailsDwr"/>
     </create>
     <create creator="new" javascript="DataPointEditDwr" scope="application">

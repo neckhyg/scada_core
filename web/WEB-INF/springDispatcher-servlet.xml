@@ -44,6 +44,16 @@
         <prop key="/system_settings.shtm">systemSettingsController</prop>
         <prop key="/users.shtm">usersController</prop>
         <prop key="/webcam_live_feed.htm">webcamLiveFeedController</prop>
+          <!-- eazytec start -->
+          <!--
+          <prop key="/eazyscada_main.shtm">eazyScadaMainController</prop>
+           -->
+          <prop key="/computer_house_whole_view.shtm">computerHouseWholeViewController</prop>
+          <prop key="/flex_chart_data.shtm">flexChartDataController</prop>
+          <prop key="/hour_power_point_details.shtm">hourPowerPointDetailsController</prop>
+          <prop key="/day_power_point_details.shtm">dayPowerPointDetailsController</prop>
+          <prop key="/month_power_bills_list.shtm">monthPowerBillsListController</prop>
+          <!-- eazytec end  -->
       </props>
     </property>
     
@@ -140,9 +150,34 @@
   <bean id="webcamLiveFeedController" class="com.serotonin.m2m2.web.mvc.controller.WebcamLiveFeedController">
     <property name="viewName"><value>/WEB-INF/jsp/webcamLiveFeed.jsp</value></property>
   </bean>
-  
-  
-  
-  <!-- Interceptors -->
+
+    <!--eazytec  start  -->
+    <!--
+       <bean id="eazyScadaMainController" class="cn.com.eazytec.web.mvc.controller.EazyScadaMainController">
+       <property name="viewName"><value>eazy_main</value></property>
+     </bean>
+    -->
+    <bean id="computerHouseWholeViewController" class="com.serotonin.eazytec.web.mvc.controller.FlexWatchListController">
+        <property name="viewName"><value>/WEB-INF/jsp/computerHouseWholeView.jsp</value></property>
+    </bean>
+    <bean id="flexChartDataController" class="com.serotonin.eazytec.web.mvc.controller.FlexWatchListController">
+        <property name="viewName"><value>/WEB-INF/jsp/flexChartData.jsp</value></property>
+    </bean>
+    <bean id="hourPowerPointDetailsController" class="com.serotonin.eazytec.web.mvc.controller.HourPowerPointDetailsController">
+        <!--
+        <property name="viewName"><value>/WEB-INF/jsp/testHighChart.jsp</value></property>
+        -->
+        <property name="viewName"><value>/WEB-INF/jsp/hourPowerPointDetails.jsp</value></property>
+
+    </bean>
+    <bean id="dayPowerPointDetailsController" class="com.serotonin.eazytec.web.mvc.controller.DayPowerPointDetailsController">
+        <property name="viewName"><value>/WEB-INF/jsp/dayPowerPointDetails.jsp</value></property>
+    </bean>
+    <bean id="monthPowerBillsListController" class="com.serotonin.eazytec.web.mvc.controller.MonthPowerBillsListController">
+        <property name="viewName"><value>/WEB-INF/jsp/monthPowerBillsList.jsp</value></property>
+    </bean>
+    <!--eazytec end  -->
+
+    <!-- Interceptors -->
   <bean id="commonData" class="com.serotonin.m2m2.web.mvc.interceptor.CommonDataInterceptor"/>
 </beans>
