@@ -31,7 +31,7 @@ abstract public class DBUpgrade extends BaseDao {
     protected static final String DEFAULT_DATABASE_TYPE = "*";
 
     public static void checkUpgrade() {
-        checkUpgrade(SystemSettingsDao.DATABASE_SCHEMA_VERSION, Common.getDatabaseSchemaVersion(), DBUpgrade.class
+        checkUpgrade(SystemSettingsDao.DATABASE_SCHEMA_VERSION + ".core", Common.getDatabaseSchemaVersion(), DBUpgrade.class
                 .getPackage().getName(), "core", DBUpgrade.class.getClassLoader());
         LOG.info("Starting instance with core version " + Common.getVersion() + ", db "
                 + Common.getDatabaseSchemaVersion());
@@ -48,7 +48,8 @@ abstract public class DBUpgrade extends BaseDao {
         // If this is a very old version of the system, there may be multiple upgrades to run, so start a loop.
         while (true) {
             // Get the current schema version.
-            int schemaVersion = SystemSettingsDao.getIntValue(settingsKey, -1);
+//            int schemaVersion = SystemSettingsDao.getIntValue(settingsKey, -1);
+            int schemaVersion = codeVersion;
 
             if (schemaVersion == -1) {
                 if ("core".equals(moduleName))

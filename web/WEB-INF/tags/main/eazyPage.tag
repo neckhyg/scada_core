@@ -67,9 +67,10 @@
     <script type="text/javascript">
       dwr.util.setEscapeHtml(false);
       dojo.ready(storeCheck);
+      dojo.ready(setRightContentSize);
       <c:if test="${!empty sessionUser}">
         dojo.ready(mango.header.onLoad);
-        dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
+     //   dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
       </c:if>
       
       function setLocale(locale) {
@@ -92,6 +93,31 @@
               alert(ss);
           }
       }
+	function setRightContentSize(){
+
+	   var sideBarNavWidth = dojo.query(".sideBarNav").style("width"); 
+	   //dojo.style("menu","width");//dojo.query(".sideBarNav")[0].clientWidth; 
+	   var rightWidth = window.screen.width - sideBarNavWidth - 74;//
+
+	    
+	 //   dojo.byId("right_content").clientWidth = rightWidth;  
+	    
+
+	  var menuHeight = dojo.query("menu").style("height");
+	  var rightHeight = window.screen.height - menuHeight  - 100;
+	//  dojo.query("right_content").style("width") = rightWidth;
+	  // dojo.query("right_content").style("height") = rightHeight;
+	//  dojo.query("right_content").setWidth (rightWidth);
+	//  dojo.query("right_content").setHeight( rightHeight );	  
+	
+	 dojo.style(dojo.byId('right_content'),{
+        width:"980px",
+        height: "600px",
+       // background:"#ccf"
+    });
+	     
+	  //  alert("width ="+$get("rightWidth")+"Height ="+$get("rightHeight"));
+	}				      
     </script>
   </c:if>
   <c:forEach items="<%= Common.applicationScripts %>" var="modScript">
@@ -113,7 +139,7 @@
  <div id="menu">
 	<div class="t2"></div>
 	<div class="top_left">
-          <img src="${modulePath}/web/images/logo.png"
+          <img src="images/logo.png"
 			style="padding-left: 20px; float: left;">
 	</div>
 
@@ -121,8 +147,8 @@
 
 		<div class="top_right1">
 			<ul>
-				<li><a href="http://localhost:8080/"><img src="${modulePath}/web/images/home.png" /><span>主页</span></a></li>
-				<li><a href="logout.shtm"><img src="${modulePath}/web/images/quit.png" /><span>退出</span></a></li>
+				<li><a href="http://localhost:8080/"><img src="${modulePath}/web/images/home.png" /><span>配置主页</span></a></li>
+				<li><a href="logout.htm"><img src="${modulePath}/web/images/quit.png" /><span>退出</span></a></li>
 			</ul>
 		</div>
 	</div>
@@ -137,10 +163,17 @@
     <div class="tit">  
         <span class="innerTit">环境监控</span>  
         <ul>  
-        <li><a href="watch_list.shtm">&nbsp;&nbsp;&nbsp;&nbsp;温湿度</a></li>  
-        <li><a href="main.shtm?viewId=2" >&nbsp;&nbsp;&nbsp;&nbsp;能耗</a></li>  
+        <li><a href="whole_view.shtm">&nbsp;&nbsp;&nbsp;&nbsp;温湿度</a></li>
         </ul>  
     </div>  
+    <div class="tit">  
+        <span class="innerTit">能耗监控</span>  
+        <ul>  
+        <li><a href="hour_power.shtm">&nbsp;&nbsp;&nbsp;&nbsp;时能耗分析</a></li>
+        <li><a href="day_power.shtm" >&nbsp;&nbsp;&nbsp;&nbsp;日能耗分析</a></li>
+		<li><a href="month_power.shtm" >&nbsp;&nbsp;&nbsp;&nbsp;电费清单</a></li>
+        </ul>  
+    </div>      
     <div class="tit">  
         <span class="innerTit">动力监控</span>  
         <ul>  
@@ -152,7 +185,7 @@
         <span class="innerTit">安防信息</span>  
         <ul>  
             <li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;视频监控</a></li>  
- 			<li><a href="http://localhost:8080/" >&nbsp;&nbsp;&nbsp;&nbsp;门禁监控</a></li>                      
+ 			<li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;门禁监控</a></li>                      
         </ul>  
     </div>   
     <div class="tit">  
@@ -170,31 +203,15 @@
     </div>   
 </div> 
 </div>
-
-  <tr id="contentArea">
-    <td>
-      <div id="mainContent" style="padding:5px;">
+<!-- 
+      <div dojoType="SplitContainer" orientation="horizontal" sizerWidth="3" activeSizing="true" class="borderDiv"
+              widgetId="splitContainer" style="width:100%; height: 300px;">
+       -->
+         <div id="right_content">
         <jsp:doBody/>
       </div>
-    </td>
-  </tr>
-
-  <tr id="footerArea">
-    <td>
-      <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tr><td colspan="2">&nbsp;</td></tr>
-        <tr>
-          <td colspan="2" class="footer" align="center">&copy;2006-2012 EazyTec Software Technologies Inc., <fmt:message key="footer.rightsReserved"/></td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center"><a href="http://www.eazytec.com/" ><b></b>Distributed by EazyTec Information Inc.</a></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-</table>
-
+        
+       
 <c:if test="${!empty onload}">
   <script type="text/javascript">dojo.ready(${onload});</script>
 </c:if>

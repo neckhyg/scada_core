@@ -185,7 +185,7 @@ public class SystemSettingsDao extends BaseDao {
 
     private static final Map<String, Object> DEFAULT_VALUES = new HashMap<String, Object>();
     static {
-        DEFAULT_VALUES.put(DATABASE_SCHEMA_VERSION, "0.7.0");
+        DEFAULT_VALUES.put(DATABASE_SCHEMA_VERSION, "2.0.0");
 
         DEFAULT_VALUES.put(HTTP_CLIENT_PROXY_SERVER, "");
         DEFAULT_VALUES.put(HTTP_CLIENT_PROXY_PORT, -1);
