@@ -5,5 +5,5 @@
 /m2m2-core-*
 /RESTART
 /bin
-core.iml
+*.iml
 *~
