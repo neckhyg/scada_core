@@ -27,21 +27,23 @@
   <meta name="Copyright" content="&copy;2008-2011 EazyTec Software Technologies Inc."/>
   <meta name="DESCRIPTION" content="EazyTec SCADA"/>
   <meta name="KEYWORDS" content="EazyTec SCADA"/>
-  
+ <%--
   <c:if test="${empty dojoURI}">
     <c:set var="dojoURI">http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/</c:set>
-    <%-- <c:set var="dojoURI">http://ajax.googleapis.com/ajax/libs/dojo/1.8.0/</c:set> --%>
   </c:if>
-  
+  --%>
+
   <!-- Style -->
   <link rel="icon" href="/images/favicon.ico"/>
   <link rel="shortcut icon" href="/images/favicon.ico"/>
+  <%--
   <style type="text/css">
     @import "${dojoURI}dojox/editor/plugins/resources/css/StatusBar.css";
     @import "${dojoURI}dojox/layout/resources/FloatingPane.css";
     @import "${dojoURI}dijit/themes/${theme}/${theme}.css";
     @import "${dojoURI}dojo/resources/dojo.css";
-  </style>  
+  </style>
+  --%>
   <link href="/resources/common.css" type="text/css" rel="stylesheet"/>
   <c:forEach items="<%= Common.applicationStyles %>" var="modStyle">
     <link href="/${modStyle}" type="text/css" rel="stylesheet"/></c:forEach>
@@ -49,7 +51,9 @@
   
   <link rel="stylesheet" media="screen" type="text/css" href="${modulePath}/web/css/common.css">
   <!-- Scripts -->
+  <!--
   <script type="text/javascript" src="${dojoURI}dojo/dojo.js" data-dojo-config="async: false, parseOnLoad: true, isDebug:true, extraLocale: ['${lang}']"></script>
+  -->
   <script type="text/javascript" src="/dwr/engine.js"></script>
   <script type="text/javascript" src="/dwr/util.js"></script>
   <script type="text/javascript" src="/dwr/interface/MiscDwr.js"></script>
@@ -63,13 +67,15 @@
     mango.i18n = <sst:convert obj="${clientSideMessages}"/>;
   </script>
   <c:if test="${!simple}">
+  <%--
     <script type="text/javascript" src="/resources/header.js"></script>
+    --%>
     <script type="text/javascript">
       dwr.util.setEscapeHtml(false);
-      dojo.ready(storeCheck);
-      dojo.ready(setRightContentSize);
+      //dojo.ready(storeCheck);
+      //dojo.ready(setRightContentSize);
       <c:if test="${!empty sessionUser}">
-        dojo.ready(mango.header.onLoad);
+     //   dojo.ready(mango.header.onLoad);
      //   dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
       </c:if>
       
@@ -212,9 +218,29 @@
       </div>
         
        
+
+
+<%--
+  <tr id="footerArea">
+    <td>
+      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr>
+          <td colspan="2" class="footer" align="center">&copy;2006-2012 EazyTec Software Technologies Inc., <fmt:message key="footer.rightsReserved"/></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><a href="http://www.eazytec.com/" ><b></b>Distributed by EazyTec Information Inc.</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  --%>
+
+<%--
 <c:if test="${!empty onload}">
   <script type="text/javascript">dojo.ready(${onload});</script>
 </c:if>
+--%>
 
 </body>
 </html>

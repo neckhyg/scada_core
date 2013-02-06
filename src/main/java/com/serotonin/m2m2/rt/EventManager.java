@@ -229,10 +229,7 @@ public class EventManager implements ILifecycle {
                 AlarmLevels.getAlarmLevelMessage(highestActiveAlarmLevel));
     }
 
-    //
-    //
     // Lifecycle interface
-    //
     @Override
     public void initialize() {
         eventDao = new EventDao();
@@ -254,10 +251,7 @@ public class EventManager implements ILifecycle {
         // no op
     }
 
-    //
-    //
     // Listeners
-    //
     public void addListener(EventManagerListenerDefinition l) {
         listeners.add(l);
     }
@@ -266,10 +260,7 @@ public class EventManager implements ILifecycle {
         listeners.remove(l);
     }
 
-    //
-    //
     // Convenience
-    //
     /**
      * Returns the first event instance with the given type, or null is there is none.
      */
