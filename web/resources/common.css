@@ -169,12 +169,12 @@ a.rowHeaderLink, a.rowHeaderLink:visited, a.rowHeaderLink:link, a.rowHeaderLink:
 }
 select, input, textarea {
 	color: #333333;
-	border: 1px solid #F07800;
+	border: 1px solid #CCCCCC;
 	padding: 2px;
 	margin-bottom: 2px;
 }
 input[type="checkbox"], input[type="radio"] {
-	color: #F07800;
+	color: #CCCCCC;
 	border: 0;
 }
 .formVeryShort {
