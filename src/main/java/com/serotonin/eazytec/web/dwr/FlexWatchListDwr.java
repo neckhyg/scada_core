@@ -524,7 +524,7 @@ public class FlexWatchListDwr extends ModuleDwr {
     @DwrPermission(anonymous = true)
     public String getPorjectPath(){ 
     	String projectName="web"; 	
-	    String nowpath;             //µ±Ç°tomcatµÄbinÄ¿Â¼µÄÂ·¾¶ Èç D:\java\software\apache-tomcat-6.0.14\bin   
+	    String nowpath;             //ï¿½ï¿½Ç°tomcatï¿½ï¿½binÄ¿Â¼ï¿½ï¿½Â·ï¿½ï¿½ ï¿½ï¿½ D:\java\software\apache-tomcat-6.0.14\bin   
 	    String tempdir; 
 	    nowpath=System.getProperty("user.dir");   
 	    tempdir=nowpath.replace("bin", "webapps");   
@@ -713,7 +713,8 @@ public class FlexWatchListDwr extends ModuleDwr {
 			response.addData("Flexchart", htmlData.toString());
 			 try {   
 				 String projectDir = getPorjectPath();
-				 projectDir += "\\"+"WEB-INF\\jsp\\flexChartData.jsp";
+				// projectDir += "\\"+"WEB-INF\\jsp\\flexChartData.jsp";
+                 projectDir += "\\"+"modules\\main\\web\\flexChartData.jsp";
 				 System.out.println(projectDir);
 				 BufferedWriter output = new BufferedWriter(new FileWriter(projectDir));
 				   output.write(htmlData.toString());
