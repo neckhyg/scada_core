@@ -7,10 +7,7 @@ package com.serotonin.eazytec.web.dwr;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -620,9 +617,6 @@ public class FlexWatchListDwr extends ModuleDwr {
 		}
     @DwrPermission(user = true)
 	 public  Map<String, Object> readRealTimePowerDataFromDB(int watchListId){
-			
-
-
 
 			Map<String, Object> data = new HashMap<String, Object>();
 
@@ -731,5 +725,140 @@ public class FlexWatchListDwr extends ModuleDwr {
 //				 }
 			return response;
 
-		}		 
+		}
+ //   @DwrPermission(user = true)
+    public List<DataPointVO> getDataPoints(String deviceName)  {
+
+        int id;
+        DataPointDao dataPointDao = new DataPointDao();
+
+        List<DataPointVO> dps = dataPointDao.getDataPoints(deviceName,null);
+
+                      return dps;
+
+    }
+    @DwrPermission(user = true)
+    public  Map<String, Object> readCurrentTempHumidDataFromDB(int watchListId,String deviceName){
+
+        //System.out.println("readRealTimeDataFromDB watchListId ="+watchListId);
+        //	User user = Common.getUser();
+
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        User user = Common.getUser(request);
+
+        FlexWatchListDao watchListDao = new FlexWatchListDao();
+        FlexWatchList watchList = watchListDao.getWatchList(watchListId);
+        //	Permissions.ensureWatchListPermission(user, watchList);
+        prepareWatchList(watchList, user);
+
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        if (watchList == null)
+            return data;
+
+        List<DataPointVO> points = getDataPoints(deviceName);//watchList.getPointList();
+        //List<Integer> pointIds = new ArrayList<Integer>(points.size());
+        List<String> watchListStateValues = new ArrayList<String>(points.size());
+        for (DataPointVO point : points) {
+            if (Permissions.hasDataPointReadPermission(user, point))
+            {
+               // Check permissions.
+                Permissions.ensureDataPointReadPermission(user, point);
+                //	Permissions.ensureWatchListEditPermission(user, watchList);
+                // Return the watch list state for it.
+                FlexWatchListState watchListState = createWatchListState(request, point,
+                        Common.runtimeManager, new HashMap<String, Object>(),user);
+
+
+                watchListStateValues.add(watchListState.getValue());
+            }
+        }
+        data.put("realTimeData", watchListStateValues);
+
+        return data;
+    }
+    @DwrPermission(user = true)
+    public  Map<String, Object> readPowerStateValueFromDB(int watchListId,String deviceName){
+
+        HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
+        User user = Common.getUser(request);
+
+        FlexWatchListDao watchListDao = new FlexWatchListDao();
+        FlexWatchList watchList = watchListDao.getWatchList(watchListId);
+        //	Permissions.ensureWatchListPermission(user, watchList);
+        prepareWatchList(watchList, user);
+
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        if (watchList == null)
+            return data;
+
+       // List<DataPointVO> points = getDataPoints(deviceName);//watchList.getPointList();
+        //List<Integer> pointIds = new ArrayList<Integer>(points.size());
+     //   List<String> watchListStateValues = new ArrayList<String>(points.size());
+//        for (DataPointVO point : points) {
+//            if (Permissions.hasDataPointReadPermission(user, point))
+//            {
+//
+//
+//
+//                // Check permissions.
+//                Permissions.ensureDataPointReadPermission(user, point);
+//                //	Permissions.ensureWatchListEditPermission(user, watchList);
+//                // Return the watch list state for it.
+//                FlexWatchListState watchListState = createWatchListState(request, point,
+//                        Common.runtimeManager, new HashMap<String, Object>(),user);
+//
+//
+//                watchListStateValues.add(watchListState.getValue());
+//            }
+//        }
+
+        PointValueDao pointValueDao = new PointValueDao();
+        MeterItem meterItem = new MeterItem();
+        List<MeterItem> meterItemList = meterItem.getMeterItemRootList(pointValueDao,0);   //top level company
+        HourPowerPointValueDao hourPowerPointValueDao = new HourPowerPointValueDao();
+
+        List<String> watchListStateValues = new ArrayList<String>(meterItemList.size());
+        List<String> powerTopLevelValues = new ArrayList<String>(meterItemList.size());
+        for (MeterItem tempMeterItem : meterItemList) {
+
+            PointValueTime  pointValueTime = hourPowerPointValueDao.getLatestPointValue(tempMeterItem.getCode(),1);
+
+            if ( pointValueTime == null){
+                powerTopLevelValues.add("0");
+            }else{
+                DataValue baseValue = pointValueTime.getValue();
+                //Double sumValue = new Double();
+                watchListStateValues.add(baseValue.numberValue().toString());
+                System.out.println("Code = "+ tempMeterItem.getCode() + " value = "+ baseValue.numberValue());
+            }
+
+        }
+//        MeterItemDao meterItemDao = new MeterItemDao();
+//        List<MeterItem> meterItemList2 = meterItemDao.getMeterItemListByLevel(4);   //second level 机柜
+//        // List<MeterItem> meterItemList = meterItem.getMeterItemRootList(pointValueDao,0);
+//        //	HourPowerPointValueDao hourPowerPointValueDao = new HourPowerPointValueDao();
+//
+//        //	List<String> powerTopLevelValues = new ArrayList<String>(meterItemList2.size());
+//        for (MeterItem tempMeterItem : meterItemList2) {
+//
+//            PointValueTime  pointValueTime = hourPowerPointValueDao.getLatestPointValue(tempMeterItem.getCode(),1);
+//
+//            if ( pointValueTime == null){
+//                powerTopLevelValues.add("0");
+//            }else{
+//                DataValue baseValue = pointValueTime.getValue();
+//                //Double sumValue = new Double();
+//                watchListStateValues.add(baseValue.numberValue().toString());
+//                System.out.println("second Code = "+ tempMeterItem.getCode() + " value = "+ baseValue.numberValue());
+//            }
+//
+//        }
+
+        data.put("realTimeData", watchListStateValues);
+//			data.put("powerTopLevelValues", powerTopLevelValues);
+
+        return data;
+    }
 }
