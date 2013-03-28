@@ -27,7 +27,7 @@ rem set JPDA=-agentlib:jdwp=transport=dt_socket,address=8090,server=y,suspend=y
 SETLOCAL ENABLEDELAYEDEXPANSION
 set MA_CP=%MA_HOME%\overrides\classes
 set MA_CP=%MA_CP%;%MA_HOME%\classes
-set MA_CP=%MA_CP%;%MA_HOME%\target\classes
+rem set MA_CP=%MA_CP%;%MA_HOME%\target\classes
 set MA_CP=%MA_CP%;%MA_HOME%\overrides\properties
 FOR /F %%A IN ('dir /b "%MA_HOME%\lib\*.jar"') DO set MA_CP=!MA_CP!;%MA_HOME%\lib\%%A
 rem echo %MA_CP%

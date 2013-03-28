@@ -117,6 +117,18 @@ function setDisabled(node, disabled) {
     }
 }
 
+function disable(/* node list */) {
+    var node;
+    for (var i=0; i<arguments.length; i++)
+        setDisabled(arguments[i], true);
+}
+
+function enable(/* node list */) {
+    var node;
+    for (var i=0; i<arguments.length; i++)
+        setDisabled(arguments[i], false);
+}
+
 function dump(o) {
     for (var p in o)
         dojo.debug(p +"="+ o[p]);
@@ -206,10 +218,12 @@ function hideLayer(node) {
     getNodeIfString(node).style.visibility = "hidden";
 }
 
-function hideLayerIgnoreMissing(node) {
-	var node = getNodeIfString(node);
-	if (node)
-		node.style.visibility = "hidden";
+function hideLayersIgnoreMissing() {
+    for (var i=0; i<arguments.length; i++) {
+        var node = getNodeIfString(arguments[i]);
+        if (node)
+            node.style.visibility = "hidden";
+    }
 }
 
 function setZIndex(node, amt) {
@@ -715,7 +729,10 @@ function writeImageSQuote(id, src, png, title, onclick) {
 }
 
 function hideContextualMessages(parent) {
-    parent = getNodeIfString(parent);
+    if (parent)
+        parent = getNodeIfString(parent);
+    else
+        parent = document;
     var nodes = dojo.query(".ctxmsg", parent);
     for (var i=0; i<nodes.length; i++)
         hide(nodes[i]);
@@ -761,26 +778,40 @@ function showDwrMessages(/*ProcessResult.messages*/messages, /*tbody*/genericMes
             }
         }
         else
-            genericMessages[genericMessages.length] = m.genericMessage;
+            genericMessages[genericMessages.length] = m;
     }
     
     if (genericMessages.length > 0) {
         if (!genericMessageNode) {
             for (i=0; i<genericMessages.length; i++)
-                alert(genericMessages[i]);
+                alert(genericMessages[i].genericMessage);
         }
         else {
             genericMessageNode = getNodeIfString(genericMessageNode);
-            dwr.util.removeAllRows(genericMessageNode);
-            dwr.util.addRows(genericMessageNode, genericMessages, [ function(data) { return data; } ],
-                {
-                    cellCreator:function(options) {
-                        var td = document.createElement("td");
-                        td.className = "formError";
-                        return td;
-                    }
-                });
-            show(genericMessageNode);
+            if (genericMessageNode.tagName == "TBODY") {
+                dwr.util.removeAllRows(genericMessageNode);
+                dwr.util.addRows(genericMessageNode, genericMessages,
+                    [ function(data) { return data.genericMessage; } ],
+                    {
+                        cellCreator:function(options) {
+                            var td = document.createElement("td");
+                            if (options.rowData.level == 'error')
+                                td.className = "formError";
+                            else if (options.rowData.level == 'warning')
+                                td.className = "formWarning";
+                            else if (options.rowData.level == 'info')
+                                td.className = "formInfo";
+                            return td;
+                        }
+                    });
+                show(genericMessageNode);
+            }
+            else if (genericMessageNode.tagName == "DIV" || genericMessageNode.tagName == "SPAN") {
+                var content = "";
+                for (var i=0; i<genericMessages.length; i++)
+                    content += genericMessages[i].genericMessage + "<br/>";
+                genericMessageNode.innerHTML = content;
+            }
         }
     }
 }
@@ -916,7 +947,7 @@ mango.share.writeSharedUsers = function(sharedUsers) {
         );
     }
     mango.share.updateUserList(sharedUsers);
-}
+};
 
 mango.share.updateUserList = function(sharedUsers) {
     dwr.util.removeAllOptions("allShareUsersList");
@@ -934,7 +965,7 @@ mango.share.updateUserList = function(sharedUsers) {
             availUsers.push(mango.share.users[i]);
     }
     dwr.util.addOptions("allShareUsersList", availUsers, "id", "username");
-}
+};
 
 mango.toggleLabelledSection = function(labelNode) {
 	var divNode = labelNode.parentNode;
@@ -942,4 +973,15 @@ mango.toggleLabelledSection = function(labelNode) {
         dojo.removeClass(divNode, "closed");
 	else
         dojo.addClass(divNode, "closed");
-}
+};
+
+mango.closeLabelledSection = function(node) {
+    dojo.addClass(node, "closed");
+};
+
+mango.pad = function(number, length) {
+    var str = '' + number;
+    while (str.length < length)
+        str = '0' + str;
+    return str;
+};

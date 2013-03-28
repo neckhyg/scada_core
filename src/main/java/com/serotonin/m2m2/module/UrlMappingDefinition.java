@@ -4,6 +4,9 @@
  */
 package com.serotonin.m2m2.module;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.serotonin.m2m2.Constants;
 import com.serotonin.m2m2.web.mvc.UrlHandler;
 
@@ -11,18 +14,33 @@ import com.serotonin.m2m2.web.mvc.UrlHandler;
  * A URL mapping definition creates a page - and optionally a menu item - accessible by MA users.
  * 
  * @author Matthew Lohbihler
+ * @deprecated Use {@link MenuItemDefinition} to create menu entries. Use {@link UriMappingDefinition} to create mapping
+ *             definitions.
  */
-abstract public class UrlMappingDefinition extends ModuleElementDefinition {
-    /**
-     * The available permission types for the URL. This value determines whether the URL link is displayed to a given
-     * user, and also whether access is provided to a user when a request is made (in case the user manually constructs
-     * a link to the resource).
-     */
+@Deprecated
+abstract public class UrlMappingDefinition extends MenuItemDefinition {
     public enum Permission {
         ANONYMOUS, USER, DATA_SOURCE, ADMINISTRATOR;
     }
 
-    public final String getMenuImagePath() {
+    abstract public Permission getPermission();
+
+    @Override
+    public Visibility getVisibility() {
+        switch (getPermission()) {
+        case ANONYMOUS:
+            return Visibility.ANONYMOUS;
+        case USER:
+            return Visibility.USER;
+        case DATA_SOURCE:
+            return Visibility.DATA_SOURCE;
+        case ADMINISTRATOR:
+            return Visibility.ADMINISTRATOR;
+        }
+        return null;
+    }
+
+    public String getMenuImagePath() {
         return "/" + Constants.DIR_MODULES + "/" + getModule().getName() + "/" + getMenuImage();
     }
 
@@ -64,17 +82,30 @@ abstract public class UrlMappingDefinition extends ModuleElementDefinition {
     abstract public String getMenuImage();
 
     /**
-     * The permission to use when allowing access to the URL, or displaying the URL to a user.
-     * 
-     * @return the URL's permission level
-     */
-    abstract public Permission getPermission();
-
-    /**
      * The value of the HTML target attribute that will appear in the menu link. If null, no target attribute will be
      * written.
      */
     public String getTarget() {
         return null;
+    }
+
+    @Override
+    public String getHref(HttpServletRequest request, HttpServletResponse response) {
+        return getUrlPath();
+    }
+
+    @Override
+    public String getTextKey(HttpServletRequest request, HttpServletResponse response) {
+        return getMenuKey();
+    }
+
+    @Override
+    public String getImage(HttpServletRequest request, HttpServletResponse response) {
+        return getMenuImage();
+    }
+
+    @Override
+    public String getTarget(HttpServletRequest request, HttpServletResponse response) {
+        return getTarget();
     }
 }

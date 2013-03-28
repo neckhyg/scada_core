@@ -110,7 +110,7 @@
                   <a href="event_handlers.shtm?ehid=${event.eventType.referenceId1}"><tag:img png="cog" title="events.editEventHandler"/></a>
                 </c:when>
                 <c:when test="${event.eventType.systemEventType == applicationScope['constants.SystemEventType.TYPE_LICENSE_CHECK']}">
-                  <a href="modules.shtm"><tag:img png="puzzle" title="modules.modules"/></a>
+                  <a href="modules.shtm"><tag:img png="modules" title="modules.modules"/></a>
                 </c:when>
                 <c:otherwise>
                   ${m2m2:systemEventTypeLink(event.eventType.systemEventType, event.eventType.referenceId1, event.eventType.referenceId2, pageContext)}

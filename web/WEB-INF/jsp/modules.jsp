@@ -79,7 +79,7 @@
   </script>
   
   <div>
-    <tag:img png="puzzle" title="modules.modules"/>
+    <tag:img png="modules" title="modules.modules"/>
     <span class="smallTitle"><fmt:message key="modules.modules"/></span>
   </div>
   

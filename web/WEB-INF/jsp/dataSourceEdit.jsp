@@ -201,8 +201,14 @@
         if (typeof editPointCBImpl == 'function') 
         	cancel = editPointCBImpl(locator);
         if (!cancel) {
-           	startImageFader("editImg"+ point.id);
+            var img = "editImg"+ point.id;
+           	startImageFader(img);
            	show("pointDetails");
+           	
+            require(["dojo/_base/html", "dojo/dom-style"], function(html, domStyle){
+                var position = html.position(img, true);
+                domStyle.set("pointDetails", "top", position.y +"px");
+           	});
         }
     }
     
@@ -219,7 +225,8 @@
         hideContextualMessages("pointProperties");
         var locator = currentPoint.pointLocator;
         
-        // Prevents DWR warnings
+        // Prevents DWR warnings. These properties are read-only. If sent back to the server
+        // DWR will say as much. Deleting the properties saves a bit of logging.
         delete locator.configurationDescription;
         delete locator.dataTypeMessage;
         
@@ -235,6 +242,14 @@
             editPoint(response.data.id);
             showMessage("pointMessage", "<fmt:message key="dsEdit.pointSaved"/>");
         }
+    }
+    
+    function closePoint() {
+        if (currentPoint)
+            stopImageFader("editImg"+ currentPoint.id);
+        hideContextualMessages("pointProperties");
+        hide("pointDetails");
+        currentPoint = null;
     }
     
     function getAlarms() {

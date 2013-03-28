@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.vo;
 
 import java.io.IOException;
@@ -97,7 +93,7 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
     public static final int ENGINEERING_UNITS_DEFAULT = 95; // No units
     public static ExportCodes ENGINEERING_UNITS_CODES = new ExportCodes();
     static {
-        Translations en = Translations.getTranslations(Locale.ENGLISH);
+        Translations en = Translations.getTranslations(Locale.getDefault());
         for (int i = 0; i < 190; i++) {
             EngineeringUnits eu = new EngineeringUnits(i);
             ENGINEERING_UNITS_CODES.addElement(i, StringUtils.capitalize(en.translate(eu.getKey())), eu.getKey());

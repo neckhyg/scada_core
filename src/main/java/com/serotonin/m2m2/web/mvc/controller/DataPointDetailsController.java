@@ -86,11 +86,11 @@ public class DataPointDetailsController extends ParameterizableViewController {
             List<Map<String, Object>> users = new LinkedList<Map<String, Object>>();
             Map<String, Object> userData;
             int accessType;
-            for (User mangoUser : allUsers) {
-                accessType = Permissions.getDataPointAccessType(mangoUser, point);
+            for (User scadaUser: allUsers) {
+                accessType = Permissions.getDataPointAccessType(scadaUser, point);
                 if (accessType != Permissions.DataPointAccessTypes.NONE) {
                     userData = new HashMap<String, Object>();
-                    userData.put("user", mangoUser);
+                    userData.put("user", scadaUser);
                     userData.put("accessType", accessType);
                     users.add(userData);
                 }

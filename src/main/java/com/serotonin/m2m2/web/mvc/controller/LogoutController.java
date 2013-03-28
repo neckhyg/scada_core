@@ -13,16 +13,11 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.module.AuthenticationDefinition;
+import com.serotonin.m2m2.module.DefaultPagesDefinition;
 import com.serotonin.m2m2.module.ModuleRegistry;
 import com.serotonin.m2m2.vo.User;
 
 public class LogoutController extends AbstractController {
-    private String redirectUrl;
-
-    public void setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-    }
-
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) {
         // Check if the user is logged in.
@@ -36,7 +31,6 @@ public class LogoutController extends AbstractController {
                 def.logout(request, response, user);
         }
 
-        // Regardless of what happened above, forward to the configured view.
-        return new ModelAndView(new RedirectView(redirectUrl));
+        return new ModelAndView(new RedirectView(DefaultPagesDefinition.getDefaultUri(request, response, null)));
     }
 }

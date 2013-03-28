@@ -28,7 +28,7 @@ public class M2M2ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent evt) {
-        log.info("Mango Automation context starting");
+        log.info("EazyScada context starting");
 
         // Get a handle on the context.
         ServletContext ctx = evt.getServletContext();
@@ -36,7 +36,7 @@ public class M2M2ContextListener implements ServletContextListener {
         // Create all the stuff we need.
         constantsInitialize(ctx);
 
-        log.info("Mango Automation context started");
+        log.info("EazyScada context started");
     }
 
     @Override

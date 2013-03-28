@@ -5,15 +5,24 @@
 package com.serotonin.m2m2.module;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 
+import com.serotonin.NotImplementedException;
+import com.serotonin.m2m2.module.MenuItemDefinition.Visibility;
 import com.serotonin.m2m2.module.license.LicenseEnforcement;
+import com.serotonin.m2m2.vo.User;
 
 /**
  * The registry of all modules in an MA instance.
@@ -22,7 +31,7 @@ import com.serotonin.m2m2.module.license.LicenseEnforcement;
  */
 public class ModuleRegistry {
     private static final Object LOCK = new Object();
-    private static final Map<String, Module> MODULES = new HashMap<String, Module>();
+    private static final Map<String, Module> MODULES = new LinkedHashMap<String, Module>();
 
     private static Map<String, DataSourceDefinition> DATA_SOURCE_DEFINITIONS;
     private static Map<String, PublisherDefinition> PUBLISHER_DEFINITIONS;
@@ -30,9 +39,11 @@ public class ModuleRegistry {
     private static Map<String, SystemEventTypeDefinition> SYSTEM_EVENT_TYPE_DEFINITIONS;
     private static Map<String, AuditEventTypeDefinition> AUDIT_EVENT_TYPE_DEFINITIONS;
 
-    private static Map<UrlMappingDefinition.Permission, List<UrlMappingDefinition>> MENU_ITEMS;
+    private static Map<MenuItemDefinition.Visibility, List<MenuItemDefinition>> MENU_ITEMS;
 
     private static final List<LicenseEnforcement> licenseEnforcements = new ArrayList<LicenseEnforcement>();
+    private static final List<ModuleElementDefinition> preDefaults = new ArrayList<ModuleElementDefinition>();
+    private static final List<ModuleElementDefinition> postDefaults = new ArrayList<ModuleElementDefinition>();
 
     /**
      * @return a list of all available modules in the instance.
@@ -81,11 +92,12 @@ public class ModuleRegistry {
         if (DATA_SOURCE_DEFINITIONS == null) {
             synchronized (LOCK) {
                 if (DATA_SOURCE_DEFINITIONS == null) {
-                    DATA_SOURCE_DEFINITIONS = new HashMap<String, DataSourceDefinition>();
+                    Map<String, DataSourceDefinition> map = new HashMap<String, DataSourceDefinition>();
                     for (Module module : MODULES.values()) {
                         for (DataSourceDefinition def : module.getDefinitions(DataSourceDefinition.class))
-                            DATA_SOURCE_DEFINITIONS.put(def.getDataSourceTypeName(), def);
+                            map.put(def.getDataSourceTypeName(), def);
                     }
+                    DATA_SOURCE_DEFINITIONS = map;
                 }
             }
         }
@@ -109,11 +121,12 @@ public class ModuleRegistry {
         if (PUBLISHER_DEFINITIONS == null) {
             synchronized (LOCK) {
                 if (PUBLISHER_DEFINITIONS == null) {
-                    PUBLISHER_DEFINITIONS = new HashMap<String, PublisherDefinition>();
+                    Map<String, PublisherDefinition> map = new HashMap<String, PublisherDefinition>();
                     for (Module module : MODULES.values()) {
                         for (PublisherDefinition def : module.getDefinitions(PublisherDefinition.class))
-                            PUBLISHER_DEFINITIONS.put(def.getPublisherTypeName(), def);
+                            map.put(def.getPublisherTypeName(), def);
                     }
+                    PUBLISHER_DEFINITIONS = map;
                 }
             }
         }
@@ -132,11 +145,12 @@ public class ModuleRegistry {
         if (SYSTEM_EVENT_TYPE_DEFINITIONS == null) {
             synchronized (LOCK) {
                 if (SYSTEM_EVENT_TYPE_DEFINITIONS == null) {
-                    SYSTEM_EVENT_TYPE_DEFINITIONS = new HashMap<String, SystemEventTypeDefinition>();
+                    Map<String, SystemEventTypeDefinition> map = new HashMap<String, SystemEventTypeDefinition>();
                     for (Module module : MODULES.values()) {
                         for (SystemEventTypeDefinition def : module.getDefinitions(SystemEventTypeDefinition.class))
-                            SYSTEM_EVENT_TYPE_DEFINITIONS.put(def.getTypeName(), def);
+                            map.put(def.getTypeName(), def);
                     }
+                    SYSTEM_EVENT_TYPE_DEFINITIONS = map;
                 }
             }
         }
@@ -155,11 +169,12 @@ public class ModuleRegistry {
         if (EVENT_TYPE_DEFINITIONS == null) {
             synchronized (LOCK) {
                 if (EVENT_TYPE_DEFINITIONS == null) {
-                    EVENT_TYPE_DEFINITIONS = new HashMap<String, EventTypeDefinition>();
+                    Map<String, EventTypeDefinition> map = new HashMap<String, EventTypeDefinition>();
                     for (Module module : MODULES.values()) {
                         for (EventTypeDefinition def : module.getDefinitions(EventTypeDefinition.class))
-                            EVENT_TYPE_DEFINITIONS.put(def.getTypeName(), def);
+                            map.put(def.getTypeName(), def);
                     }
+                    EVENT_TYPE_DEFINITIONS = map;
                 }
             }
         }
@@ -178,11 +193,12 @@ public class ModuleRegistry {
         if (AUDIT_EVENT_TYPE_DEFINITIONS == null) {
             synchronized (LOCK) {
                 if (AUDIT_EVENT_TYPE_DEFINITIONS == null) {
-                    AUDIT_EVENT_TYPE_DEFINITIONS = new HashMap<String, AuditEventTypeDefinition>();
+                    Map<String, AuditEventTypeDefinition> map = new HashMap<String, AuditEventTypeDefinition>();
                     for (Module module : MODULES.values()) {
                         for (AuditEventTypeDefinition def : module.getDefinitions(AuditEventTypeDefinition.class))
-                            AUDIT_EVENT_TYPE_DEFINITIONS.put(def.getTypeName(), def);
+                            map.put(def.getTypeName(), def);
                     }
+                    AUDIT_EVENT_TYPE_DEFINITIONS = map;
                 }
             }
         }
@@ -194,8 +210,10 @@ public class ModuleRegistry {
     //
     public static <T extends ModuleElementDefinition> List<T> getDefinitions(Class<T> clazz) {
         List<T> defs = new ArrayList<T>();
+        defs.addAll(Module.getDefinitions(preDefaults, clazz));
         for (Module module : MODULES.values())
             defs.addAll(module.getDefinitions(clazz));
+        defs.addAll(Module.getDefinitions(postDefaults, clazz));
         return defs;
     }
 
@@ -221,24 +239,40 @@ public class ModuleRegistry {
     /**
      * @return a map by permissions type of all available menu items in this instance.
      */
-    public static Map<UrlMappingDefinition.Permission, List<UrlMappingDefinition>> getMenuItems() {
+    public static Map<MenuItemDefinition.Visibility, List<MenuItemDefinition>> getMenuItems() {
         if (MENU_ITEMS == null) {
             synchronized (LOCK) {
                 if (MENU_ITEMS == null) {
-                    MENU_ITEMS = new HashMap<UrlMappingDefinition.Permission, List<UrlMappingDefinition>>();
+                    Map<MenuItemDefinition.Visibility, List<MenuItemDefinition>> map = new HashMap<MenuItemDefinition.Visibility, List<MenuItemDefinition>>();
 
-                    for (UrlMappingDefinition url : getDefinitions(UrlMappingDefinition.class)) {
-                        if (!StringUtils.isBlank(url.getMenuKey())) {
-                            List<UrlMappingDefinition> permList = MENU_ITEMS.get(url.getPermission());
+                    for (MenuItemDefinition mi : getDefinitions(MenuItemDefinition.class)) {
+                        boolean add = true;
+                        // Special handling of url mapping definitions
+                        if (mi instanceof UrlMappingDefinition)
+                            add = !StringUtils.isBlank(((UrlMappingDefinition) mi).getMenuKey());
+
+                        if (add) {
+                            List<MenuItemDefinition> permList = map.get(mi.getVisibility());
 
                             if (permList == null) {
-                                permList = new ArrayList<UrlMappingDefinition>();
-                                MENU_ITEMS.put(url.getPermission(), permList);
+                                permList = new ArrayList<MenuItemDefinition>();
+                                map.put(mi.getVisibility(), permList);
                             }
 
-                            permList.add(url);
+                            permList.add(mi);
                         }
                     }
+
+                    for (List<MenuItemDefinition> list : map.values()) {
+                        Collections.sort(list, new Comparator<MenuItemDefinition>() {
+                            @Override
+                            public int compare(MenuItemDefinition m1, MenuItemDefinition m2) {
+                                return m1.getOrder() - m2.getOrder();
+                            }
+                        });
+                    }
+
+                    MENU_ITEMS = map;
                 }
             }
         }
@@ -258,5 +292,78 @@ public class ModuleRegistry {
                 result.add((T) le);
         }
         return result;
+    }
+
+    static {
+        // Add default definitions
+        postDefaults.add(new DefaultPagesDefinition() {
+            @Override
+            public String getLoginPageUri(HttpServletRequest request, HttpServletResponse response) {
+                return "/login.htm";
+            }
+
+            @Override
+            public String getLoggedInPageUri(HttpServletRequest request, HttpServletResponse response, User user) {
+                return "/data_point_details.shtm";
+            }
+
+            @Override
+            public String getFirstUserLoginPageUri(HttpServletRequest request, HttpServletResponse response, User user) {
+                return "/help.shtm";
+            }
+        });
+
+        preDefaults.add(createMenuItemDefinition(Visibility.USER, "header.dataPoints", "icon_comp",
+                "/data_point_details.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.USER, "header.alarms", "alarm", "/events.shtm"));
+
+        preDefaults.add(createMenuItemDefinition(Visibility.DATA_SOURCE, "header.eventHandlers", "events",
+                "/event_handlers.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.DATA_SOURCE, "header.dataSources", "icon_ds",
+                "/data_sources.shtm"));
+
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.pointHierarchy", "folder_brick",
+                "/point_hierarchy.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.mailingLists", "book",
+                "/mailing_lists.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.publishers", "transmit",
+                "/publishers.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.systemSettings", "settings",
+                "/system_settings.shtm"));
+        preDefaults
+                .add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.modules", "modules", "/modules.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.emport", "emport", "/emport.shtm"));
+
+        preDefaults.add(createMenuItemDefinition(Visibility.ANONYMOUS, "header.help", "help", "/help.shtm"));
+    }
+
+    static MenuItemDefinition createMenuItemDefinition(final Visibility visibility, final String textKey,
+            final String png, final String href) {
+        return new MenuItemDefinition() {
+            @Override
+            public Visibility getVisibility() {
+                return visibility;
+            }
+
+            @Override
+            public String getTextKey(HttpServletRequest request, HttpServletResponse response) {
+                return textKey;
+            }
+
+            @Override
+            public String getImagePath(HttpServletRequest request, HttpServletResponse response) {
+                return "/images/icons/" + png + ".png";
+            }
+
+            @Override
+            public String getImage(HttpServletRequest request, HttpServletResponse response) {
+                throw new NotImplementedException();
+            }
+
+            @Override
+            public String getHref(HttpServletRequest request, HttpServletResponse response) {
+                return href;
+            }
+        };
     }
 }

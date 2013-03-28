@@ -166,7 +166,8 @@
         });
     }
   </script>
-  
+
+  <div class="borderDiv">
   <table>
     <tr>
       <td>
@@ -198,6 +199,7 @@
       </td>
     </tr>
   </table>
+</div>
   
   <div data-dojo-type="dijit.Dialog" data-dojo-id="copyDataSourceDialog" title="<fmt:message key="dsList.copy"/>" style="display: none">
     <form data-dojo-type="dijit.form.Form">

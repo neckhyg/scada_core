@@ -81,7 +81,7 @@
         setPublisherStatusImg(enabled, imgNode);
     }
   </script>
-  
+  <div class="borderDiv"> 
   <table cellspacing="0" cellpadding="0">
     <tr>
       <td>
@@ -111,4 +111,5 @@
       </td>
     </tr>
   </table>
+  </div>
 </tag:page>

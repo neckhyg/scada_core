@@ -17,11 +17,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.module.AuthenticationDefinition;
+import com.serotonin.m2m2.module.DefaultPagesDefinition;
 import com.serotonin.m2m2.module.ModuleRegistry;
 import com.serotonin.m2m2.util.license.LicenseFeature;
 import com.serotonin.m2m2.vo.User;
@@ -29,17 +31,16 @@ import com.serotonin.m2m2.vo.User;
 public class LoggedInFilter implements Filter {
     private final Log LOGGER = LogFactory.getLog(LoggedInFilter.class);
 
-    private String forwardUrl;
-
-    // Free mode checking should arguably be done in a separate filter, but it becomes too easy to just comment out 
-    // such a filter in the web.xml file, so we do it here in a place where it is more secure.
+    // Free mode checking should arguably be done in a separate filter, but it
+    // becomes too easy to just comment out
+    // such a filter in the web.xml file, so we do it here in a place where it
+    // is more secure.
     private int maxUniqueIps;
     private final List<String> usedIpAddresses = new ArrayList<String>();
     private String exceededIpLimitUrl;
 
     @Override
     public void init(FilterConfig config) {
-        forwardUrl = config.getInitParameter("forwardUrl");
         exceededIpLimitUrl = config.getInitParameter("exceededIpLimitUrl");
 
         LicenseFeature uniqueIpAddresses = Common.licenseFeature("uniqueIpAddresses");
@@ -61,7 +62,8 @@ public class LoggedInFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         if (maxUniqueIps != -1) {
-            // Check the list of IP addresses. If this is a new IP, and there are no more available slots, deny the 
+            // Check the list of IP addresses. If this is a new IP, and there
+            // are no more available slots, deny the
             // request.
             String ip = request.getRemoteAddr();
             if (!usedIpAddresses.contains(ip)) {
@@ -93,7 +95,14 @@ public class LoggedInFilter implements Filter {
         if (!loggedIn) {
             LOGGER.info("Denying access to secure page for session id " + request.getSession().getId() + ", uri="
                     + request.getRequestURI());
-            response.sendRedirect(forwardUrl);
+
+            String forwardUri = null;
+            for (DefaultPagesDefinition def : ModuleRegistry.getDefinitions(DefaultPagesDefinition.class)) {
+                forwardUri = def.getLoginPageUri(request, response);
+                if (!StringUtils.isBlank(forwardUri))
+                    break;
+            }
+            response.sendRedirect(forwardUri);
             return;
         }
 

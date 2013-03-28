@@ -120,7 +120,7 @@ abstract public class DatabaseProxy {
                     user.setId(Common.NEW_ID);
                     user.setUsername("admin");
                     user.setPassword(Common.encrypt("admin"));
-                    user.setEmail("admin@yourMangoDomain.com");
+                    user.setEmail("admin@yourScadaDomain.com");
                     user.setPhone("");
                     user.setAdmin(true);
                     user.setDisabled(false);
@@ -128,9 +128,15 @@ abstract public class DatabaseProxy {
                     user.setDataPointPermissions(new LinkedList<DataPointAccess>());
                     new UserDao().saveUser(user);
 
+                    SystemSettingsDao systemSettingsDao = new SystemSettingsDao();
+
                     // Record the current version.
-                    new SystemSettingsDao().setValue(SystemSettingsDao.DATABASE_SCHEMA_VERSION, Common.getVersion()
-                            .getFullString());
+                    systemSettingsDao.setValue(SystemSettingsDao.DATABASE_SCHEMA_VERSION,
+                            Integer.toString(Common.getDatabaseSchemaVersion()));
+
+                    // Add the settings flag that this is a new instance. This flag is removed when an administrator
+                    // logs in.
+                    systemSettingsDao.setBooleanValue(SystemSettingsDao.NEW_INSTANCE, true);
                 }
             }
             else
@@ -156,7 +162,7 @@ abstract public class DatabaseProxy {
             // The users table wasn't found, so assume that this is a new instance.
             // Create the tables
             try {
-                runScriptFile(Common.M2M2_HOME + "/db/createTables-" + getType().name() + ".sql", new FileOutputStream(
+                runScriptFile(Common.MA_HOME + "/db/createTables-" + getType().name() + ".sql", new FileOutputStream(
                         new File(Common.getLogsDir(), "createTables.log")));
             }
             catch (FileNotFoundException e) {

@@ -3,7 +3,6 @@
     @author Matthew Lohbihler
 --%>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
-<c:choose>
-  <c:when test="${!empty sessionUser}"><c:redirect url="data_point_details.shtm"/></c:when>
-  <c:otherwise><c:redirect url="login.htm"/></c:otherwise>
-</c:choose>
+<%@page import="com.serotonin.m2m2.module.DefaultPagesDefinition"%>
+<%@page import="com.serotonin.m2m2.vo.User"%>
+<c:redirect url="<%= DefaultPagesDefinition.getDefaultUri(request, response, (User) session.getAttribute("sessionUser")) %>"/>

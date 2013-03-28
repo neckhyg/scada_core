@@ -36,7 +36,7 @@ public class ModulesController extends ParameterizableViewController {
 
         Module core = new Module("core", Common.getVersion().getFullString(), new TranslatableMessage(
                 "modules.core.description"), "Serotonin Software Technologies, Inc and InfiniteAUTOMATION SYSTEMS.",
-                "http://infiniteautomation.com", null);
+                "http://infiniteautomation.com", null, -1);
 
         core.addDefinition((LicenseDefinition) Providers.get(ICoreLicense.class));
         modules.add(0, core);
@@ -49,7 +49,6 @@ public class ModulesController extends ParameterizableViewController {
         json.put("guid", Providers.get(ICoreLicense.class).getGuid());
         json.put("description", SystemSettingsDao.getValue(SystemSettingsDao.INSTANCE_DESCRIPTION));
         json.put("distributor", Common.envProps.getString("distributor"));
-        json.put("domain", ControllerUtils.getDomain(request));
 
         Map<String, String> jsonModules = new HashMap<String, String>();
         json.put("modules", jsonModules);

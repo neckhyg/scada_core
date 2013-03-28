@@ -45,7 +45,7 @@
   </style>
   --%>
   <link href="/resources/common.css" type="text/css" rel="stylesheet"/>
-  <c:forEach items="<%= Common.applicationStyles %>" var="modStyle">
+  <c:forEach items="<%= Common.moduleStyles %>" var="modStyle">
     <link href="/${modStyle}" type="text/css" rel="stylesheet"/></c:forEach>
   <jsp:invoke fragment="styles"/>
   
@@ -126,7 +126,7 @@
 	}				      
     </script>
   </c:if>
-  <c:forEach items="<%= Common.applicationScripts %>" var="modScript">
+  <c:forEach items="<%= Common.moduleScripts %>" var="modScript">
     <script type="text/javascript" src="/${modScript}"></script></c:forEach>
 </head>
 
@@ -167,47 +167,39 @@
       
       <div class="sideBarNav">  
     <div class="tit">  
-        <span class="innerTit">环境监控</span>  
+        <span class="innerTit">监测数据</span>
         <ul>  
-        <li><a href="whole_view.shtm">&nbsp;&nbsp;&nbsp;&nbsp;温湿度</a></li>
+        <li><a href="monitoring_point.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
+        <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
         </ul>  
     </div>  
-    <div class="tit">  
-        <span class="innerTit">能耗监控</span>  
-        <ul>  
-        <li><a href="hour_power.shtm">&nbsp;&nbsp;&nbsp;&nbsp;时能耗分析</a></li>
-        <li><a href="day_power.shtm" >&nbsp;&nbsp;&nbsp;&nbsp;日能耗分析</a></li>
-		<li><a href="month_power.shtm" >&nbsp;&nbsp;&nbsp;&nbsp;电费清单</a></li>
-        </ul>  
-    </div>      
-    <div class="tit">  
-        <span class="innerTit">动力监控</span>  
-        <ul>  
-			<li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;市电电流监测</a></li>   
-			<li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;UPS监测</a></li>  
-        </ul>  
-    </div>  
-    <div class="tit">  
-        <span class="innerTit">安防信息</span>  
-        <ul>  
-            <li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;视频监控</a></li>  
- 			<li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;门禁监控</a></li>                      
-        </ul>  
-    </div>   
-    <div class="tit">  
-        <span class="innerTit">性能分析</span>  
-        <ul>      
-            <li><a href="javascript:void(0)" >&nbsp;&nbsp;&nbsp;&nbsp;性能评估</a></li>   
-        </ul>  
-    </div> 
-    <div class="tit">  
-        <span class="innerTit">管理信息</span>  
-        <ul>  
-            <li><a href="javascript:user_user_info()" >&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a></li>  
-            <li><a href="javascript:user_role_manage(0)" >&nbsp;&nbsp;&nbsp;&nbsp;用户角色管理</a></li>  
-        </ul>  
-    </div>   
-</div> 
+    <div class="tit">
+        <span class="innerTit">报表统计</span>
+        <ul>
+		<li><a href="data_analysis.shtm">&nbsp;&nbsp;&nbsp;&nbsp;数据分析</a></li>
+		<li><a href="statistic.shtm">&nbsp;&nbsp;&nbsp;&nbsp;统计</a></li>
+		<li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
+        </ul>
+    </div>
+    <div class="tit">
+        <span class="innerTit">超标报警</span>
+        <ul>
+		<li><a href="alarm.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报警</a></li>
+        </ul>
+    </div>
+    <div class="tit">
+        <span class="innerTit">排污企业记录</span>
+        <ul>
+		<li><a href="drain_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业记录</a></li>
+        </ul>
+    </div>
+    <div class="tit">
+        <span class="innerTit">用户管理</span>
+        <ul>
+		<li><a href="user_managerment.shtm">&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a></li>
+        </ul>
+    </div>
+</div>
 </div>
 <!-- 
       <div dojoType="SplitContainer" orientation="horizontal" sizerWidth="3" activeSizing="true" class="borderDiv"
@@ -218,8 +210,6 @@
       </div>
         
        
-
-
 <%--
   <tr id="footerArea">
     <td>
@@ -234,7 +224,7 @@
       </table>
     </td>
   </tr>
-  --%>
+--%>
 
 <%--
 <c:if test="${!empty onload}">

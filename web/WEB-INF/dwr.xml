@@ -16,21 +16,8 @@
     <filter class="com.serotonin.m2m2.web.dwr.util.TranslationsFilter">
       <param name="messageSourceKey">messageSource</param>
     </filter>
-      <!-- eazytec Start -->
-      <create creator="new" javascript="FlexWatchListDwr" scope="application">
-          <param name="class" value="com.serotonin.eazytec.web.dwr.FlexWatchListDwr"/>
-      </create>
-      <create creator="new" javascript="HourPowerPointDetailsDwr" scope="application">
-          <param name="class" value="com.serotonin.eazytec.web.dwr.HourPowerPointDetailsDwr"/>
-      </create>
-      <create creator="new" javascript="DayPowerPointDetailsDwr" scope="application">
-          <param name="class" value="com.serotonin.eazytec.web.dwr.DayPowerPointDetailsDwr"/>
-      </create>
-      <create creator="new" javascript="MonthPowerBillsListDwr" scope="application">
-          <param name="class" value="com.serotonin.eazytec.web.dwr.MonthPowerBillsListDwr"/>
-      </create>
-      <!-- eazytec end -->
-      <create creator="new" javascript="DataPointDetailsDwr" scope="application">
+    
+    <create creator="new" javascript="DataPointDetailsDwr" scope="application">
       <param name="class" value="com.serotonin.m2m2.web.dwr.DataPointDetailsDwr"/>
     </create>
     <create creator="new" javascript="DataPointEditDwr" scope="application">
@@ -128,6 +115,7 @@
     <convert converter="bean" match="com.serotonin.m2m2.web.mvc.form.PointViewForm"/>
     
     <convert converter="bean" match="com.serotonin.m2m2.i18n.ProcessMessage"/>
+    <convert converter="enum" match="com.serotonin.m2m2.i18n.ProcessMessage$Level"/>
     <convert converter="bean" match="com.serotonin.m2m2.i18n.ProcessResult"/>
     
     <convert converter="translatableMessage" match="com.serotonin.m2m2.i18n.TranslatableMessage"/>

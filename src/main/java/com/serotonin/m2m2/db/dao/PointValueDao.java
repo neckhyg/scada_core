@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.RejectedExecutionException;
 
-import com.serotonin.eazytec.db.dao.DayPowerPointValueDao;
-import com.serotonin.eazytec.db.dao.HourPowerPointValueDao;
-import com.serotonin.eazytec.rt.dataImage.MeterItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.ConcurrencyFailureException;
@@ -183,12 +180,6 @@ public class PointValueDao extends BaseDao {
 
         if (async) {
             BatchWriteBehind.add(new BatchWriteBehindEntry(pointId, dataType, dvalue, time), ejt);
-            DayPowerPointValueDao  dayPowerPointValue = new DayPowerPointValueDao();
-            dayPowerPointValue.savePointValue(pointId, dataType, dvalue,
-                    time,  svalue, source, async);
-            HourPowerPointValueDao hourPowerPointValue = new HourPowerPointValueDao();
-            hourPowerPointValue.savePointValue(pointId, dataType, dvalue,
-                    time,  svalue, source, async);
             return -1;
         }
 
@@ -515,47 +506,6 @@ public class PointValueDao extends BaseDao {
      * 
      * @author Matthew Lohbihler
      */
-    //////////////////////////////////////////////////////
-//	private static final String DAY_ENERGY_POINT_VALUE_SELECT = "select  pv.dayValue , pv.ts from pointEnergyDayValue pv ";
-    private static final String Meter_ITEM_SELECT = "select  * from meter_item  ";
-
-    class MeterItemValueRowMapper implements RowMapper<MeterItem> {
-        public MeterItem mapRow(ResultSet rs, int rowNum)
-                throws SQLException {
-            //MangoValue value = createMangoValue(rs);
-            int id = rs.getInt(1);
-            String code = rs.getString(2);
-            String  name = rs.getString(3);
-            int   parentId = rs.getInt(4);
-            long time = rs.getLong(2);
-
-            //int sourceType = rs.getInt(6);
-            //if (rs.wasNull())
-            // No annotations, just return a point value.
-            return new MeterItem(id,code,name,parentId);
-
-            // There was a source for the point value, so return an annotated
-            // version.
-            //return new AnnotatedPointValueTime(value, time, sourceType,
-            //rs.getInt(7));
-        }
-    }
-
-    public List<MeterItem> getMeterItemList() {
-        List<MeterItem> result = query(Meter_ITEM_SELECT, new Object[] {},
-                new MeterItemValueRowMapper(), 0);
-        //updateAnnotations(result);
-        return result;
-        //	return null;
-    }
-    public List<MeterItem> getMeterItemRootList(int parentId) {
-        String sql = Meter_ITEM_SELECT + " where parentId = " + parentId;
-        List<MeterItem> result = query(sql, new Object[] {},
-                new MeterItemValueRowMapper(), 0);
-        //updateAnnotations(result);
-        return result;
-        //	return null;
-    }
     class UnsavedPointValue {
         private final int pointId;
         private final PointValueTime pointValue;

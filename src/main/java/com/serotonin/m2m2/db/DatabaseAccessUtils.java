@@ -19,6 +19,6 @@ public class DatabaseAccessUtils {
     //    
     //    public static void main(String[] args) {
     //        StringEncrypter se = new StringEncrypter(KEY, "Blowfish");
-    //        System.out.println(se.encodeString("mango2"));
+    //        System.out.println(se.encodeString("eazyscada"));
     //    }
 }

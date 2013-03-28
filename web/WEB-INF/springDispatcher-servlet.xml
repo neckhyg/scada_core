@@ -99,14 +99,10 @@
     <property name="commandName"><value>login</value></property>
     <property name="commandClass"><value>com.serotonin.m2m2.web.mvc.form.LoginForm</value></property>
     <property name="formView"><value>/WEB-INF/jsp/login.jsp</value></property>
-    <property name="successUrl"><value>main.shtm</value></property>
-    <property name="newUserUrl"><value>help.shtm</value></property>
     <property name="bindOnNewForm"><value>true</value></property>
   </bean>
   
-  <bean id="logoutController" class="com.serotonin.m2m2.web.mvc.controller.LogoutController">
-    <property name="redirectUrl"><value>login.htm</value></property>
-  </bean>
+  <bean id="logoutController" class="com.serotonin.m2m2.web.mvc.controller.LogoutController"/>
   
   <bean id="mailingListsController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
     <property name="viewName"><value>/WEB-INF/jsp/mailingLists.jsp</value></property>
@@ -140,7 +136,9 @@
   <bean id="webcamLiveFeedController" class="com.serotonin.m2m2.web.mvc.controller.WebcamLiveFeedController">
     <property name="viewName"><value>/WEB-INF/jsp/webcamLiveFeed.jsp</value></property>
   </bean>
-
-    <!-- Interceptors -->
+  
+  
+  
+  <!-- Interceptors -->
   <bean id="commonData" class="com.serotonin.m2m2.web.mvc.interceptor.CommonDataInterceptor"/>
 </beans>

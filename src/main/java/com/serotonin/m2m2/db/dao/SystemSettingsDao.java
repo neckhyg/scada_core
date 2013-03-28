@@ -20,6 +20,7 @@ import com.serotonin.util.ColorUtils;
 public class SystemSettingsDao extends BaseDao {
     // Database schema version
     public static final String DATABASE_SCHEMA_VERSION = "databaseSchemaVersion";
+    public static final String NEW_INSTANCE = "newInstance";
 
     // Email settings
     public static final String EMAIL_SMTP_HOST = "emailSmtpHost";
@@ -185,7 +186,7 @@ public class SystemSettingsDao extends BaseDao {
 
     private static final Map<String, Object> DEFAULT_VALUES = new HashMap<String, Object>();
     static {
-        DEFAULT_VALUES.put(DATABASE_SCHEMA_VERSION, "2.0.0");
+        DEFAULT_VALUES.put(DATABASE_SCHEMA_VERSION, "0.7.0");
 
         DEFAULT_VALUES.put(HTTP_CLIENT_PROXY_SERVER, "");
         DEFAULT_VALUES.put(HTTP_CLIENT_PROXY_PORT, -1);
@@ -197,7 +198,7 @@ public class SystemSettingsDao extends BaseDao {
         DEFAULT_VALUES.put(EMAIL_FROM_ADDRESS, "");
         DEFAULT_VALUES.put(EMAIL_SMTP_USERNAME, "");
         DEFAULT_VALUES.put(EMAIL_SMTP_PASSWORD, "");
-        DEFAULT_VALUES.put(EMAIL_FROM_NAME, "Mango Automation");
+        DEFAULT_VALUES.put(EMAIL_FROM_NAME, "EazyScada Automation");
 
         DEFAULT_VALUES.put(POINT_DATA_PURGE_PERIOD_TYPE, Common.TimePeriods.YEARS);
         DEFAULT_VALUES.put(POINT_DATA_PURGE_PERIODS, 1);
@@ -205,7 +206,7 @@ public class SystemSettingsDao extends BaseDao {
         DEFAULT_VALUES.put(EVENT_PURGE_PERIOD_TYPE, Common.TimePeriods.YEARS);
         DEFAULT_VALUES.put(EVENT_PURGE_PERIODS, 1);
 
-        DEFAULT_VALUES.put(LANGUAGE, "en");
+        DEFAULT_VALUES.put(LANGUAGE, "en_US");
 
         DEFAULT_VALUES.put(FILEDATA_PATH, "~/WEB-INF/filedata");
         DEFAULT_VALUES.put(HTTPDS_PROLOGUE, "");
@@ -213,7 +214,7 @@ public class SystemSettingsDao extends BaseDao {
         DEFAULT_VALUES.put(UI_PERFORMANCE, 2000);
         DEFAULT_VALUES.put(FUTURE_DATE_LIMIT_PERIODS, 24);
         DEFAULT_VALUES.put(FUTURE_DATE_LIMIT_PERIOD_TYPE, Common.TimePeriods.HOURS);
-        DEFAULT_VALUES.put(INSTANCE_DESCRIPTION, "My Mango Automation");
+        DEFAULT_VALUES.put(INSTANCE_DESCRIPTION, "我的EazyScada");
 
         DEFAULT_VALUES.put(CHART_BACKGROUND_COLOUR, "white");
         DEFAULT_VALUES.put(PLOT_BACKGROUND_COLOUR, "white");

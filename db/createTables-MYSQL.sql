@@ -30,6 +30,7 @@ create table users (
   receiveAlarmEmails int not null,
   receiveOwnAuditEvents char(1) not null,
   timezone varchar(50),
+  muted char(1),
   primary key (id)
 ) engine=InnoDB;
 
@@ -263,49 +264,3 @@ create table publishers (
   primary key (id)
 ) engine=InnoDB;
 alter table publishers add constraint publishersUn1 unique (xid);
-
-CREATE TABLE `dayenergypointvalue` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `dataPointId` int(11) NOT NULL,
-  `dayValue` double(20,4) default NULL,
-  `ts` bigint(20) default NULL,
-  `xid` varchar(10) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
-CREATE TABLE `meter_item` (
-  `id` int(11) NOT NULL auto_increment,
-  `code` varchar(10) default NULL,
-  `name` varchar(32) default NULL,
-  `parentId` int(11) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
-
--- ----------------------------
--- Records
--- ----------------------------
-INSERT INTO `meter_item` VALUES ('1', '10', '江苏卓易', '0');
-INSERT INTO `meter_item` VALUES ('2', '20', '江苏环保', '0');
-INSERT INTO `meter_item` VALUES ('3', '30', '宜兴环科园', '0');
-INSERT INTO `meter_item` VALUES ('4', '1001', '机柜1', '1');
-INSERT INTO `meter_item` VALUES ('5', '1002', '机柜2', '1');
-INSERT INTO `meter_item` VALUES ('6', '2001', '机柜3', '2');
-INSERT INTO `meter_item` VALUES ('7', '100101', '仪表1', '4');
-INSERT INTO `meter_item` VALUES ('8', '100102', '仪表2', '4');
-INSERT INTO `meter_item` VALUES ('9', '200101', '仪表3', '6');
-
-CREATE TABLE `hourpowerpointvalue` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `dataPointId` int(11) NOT NULL,
-  `dayValue` double(20,4) default NULL,
-  `ts` datetime default NULL,
-  `xid` varchar(10) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
-CREATE TABLE `daypowerpointvalue` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `dataPointId` int(11) NOT NULL,
-  `dayValue` double(20,4) default NULL,
-  `ts` date default NULL,
-  `xid` varchar(10) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;

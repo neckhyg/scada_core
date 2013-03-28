@@ -1,6 +1,9 @@
 package com.serotonin.m2m2;
 
-import com.serotonin.ShouldNeverHappenException;
+import com.serotonin.m2m2.host.DefaultHost;
+import com.serotonin.m2m2.host.DreamPlug;
+import com.serotonin.m2m2.host.Host;
+import com.serotonin.m2m2.host.Host.Specificity;
 import com.serotonin.m2m2.i18n.TranslatableMessage;
 import com.serotonin.m2m2.module.LicenseDefinition;
 import com.serotonin.m2m2.rt.EventManager;
@@ -10,15 +13,11 @@ import com.serotonin.m2m2.util.timeout.TimeoutClient;
 import com.serotonin.m2m2.util.timeout.TimeoutTask;
 import com.serotonin.provider.Providers;
 import com.serotonin.timer.TimerTask;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
+import org.jfree.util.Log;
 
 public final class CoreLicenseDefinition extends LicenseDefinition
   implements ICoreLicense
@@ -28,6 +27,7 @@ public final class CoreLicenseDefinition extends LicenseDefinition
   private String guid;
   private boolean freeMode;
   private TimerTask shutdownTask;
+  private List<Host> hosts;
 
   public final void addLicenseErrors(List<TranslatableMessage> errors)
   {
@@ -69,12 +69,7 @@ public final class CoreLicenseDefinition extends LicenseDefinition
 
   private void initializeLic()
   {
-    try {
-      this.guid = guid();
-    }
-    catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+    this.guid = guid();
     if (this.guid == null) {
       throw new RuntimeException("Unable to determine the machine id");
     }
@@ -95,7 +90,8 @@ public final class CoreLicenseDefinition extends LicenseDefinition
       ((ILifecycle)Providers.get(ILifecycle.class)).addStartupTask(new Runnable()
       {
         public void run() {
-          SystemEventType.raiseEvent(CoreLicenseDefinition.this.getEventType(), System.currentTimeMillis(), true, new TranslatableMessage("modules.event.freeMode", new Object[] { new TranslatableMessage(finalReason) }));
+          SystemEventType.raiseEvent(CoreLicenseDefinition.this.getEventType(), 
+        		  System.currentTimeMillis(), true, new TranslatableMessage("modules.event.freeMode", new Object[] { new TranslatableMessage(finalReason) }));
         }
       });
       ((ILifecycle)Providers.get(ILifecycle.class)).addShutdownTask(new Runnable()
@@ -129,49 +125,51 @@ public final class CoreLicenseDefinition extends LicenseDefinition
     return new SystemEventType("LICENSE_CHECK", 0, 3);
   }
 
-  private String guid() throws IOException
+  private String guid()
   {
-    File maFile = new File(System.getProperty("user.home"), ".ma");
-    String id = null;
+    loadHosts();
 
-    Properties ids = new Properties();
-    if (maFile.exists()) {
-      FileReader reader;
-      try { reader = new FileReader(maFile);
-      }
-      catch (FileNotFoundException e)
-      {
-        throw new ShouldNeverHappenException(e);
-      }
-      ids.load(reader);
-      reader.close();
+    String guid = null;
 
-      String userDir = System.getProperty("user.dir");
-      if (!StringUtils.equals(userDir, Common.M2M2_HOME)) {
-        String guid = (String)ids.remove(userDir);
-        if (guid != null) {
-          ids.put(Common.M2M2_HOME, guid);
+    guid = getSpecificGuid(Host.Specificity.Device);
+    if (guid != null) {
+      return guid;
+    }
+    guid = getSpecificGuid(Host.Specificity.Distro);
+    if (guid != null) {
+      return guid;
+    }
+    guid = getSpecificGuid(Host.Specificity.OS);
+    if (guid != null) {
+      return guid;
+    }
+    return getSpecificGuid(Host.Specificity.All);
+  }
 
-          FileWriter writer = new FileWriter(maFile);
-          ids.store(writer, null);
-          writer.close();
+  private void loadHosts() {
+    if (this.hosts == null) {
+      this.hosts = new ArrayList();
+      this.hosts.add(new DefaultHost());
+      this.hosts.add(new DreamPlug());
+    }
+  }
+
+  private String getSpecificGuid(Host.Specificity specificity) {
+    for (Host host : this.hosts) {
+      if ((host.getSpecificity() == specificity) && 
+        (host.matches())) {
+        try {
+          String guid = host.guid();
+          if (!StringUtils.isBlank(guid))
+            return guid;
+        }
+        catch (IOException e) {
+          Log.warn("Host exception: ", e);
         }
       }
 
-      id = ids.getProperty(Common.M2M2_HOME);
     }
 
-    if (StringUtils.isBlank(id))
-    {
-      id = "2-" + UUID.randomUUID().toString();
-
-      ids.setProperty(Common.M2M2_HOME, id);
-
-      FileWriter writer = new FileWriter(maFile);
-      ids.store(writer, null);
-      writer.close();
-    }
-
-    return id;
+    return null;
   }
 }

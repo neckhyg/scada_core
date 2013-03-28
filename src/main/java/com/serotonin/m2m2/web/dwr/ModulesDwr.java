@@ -20,7 +20,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.directwebremoting.WebContextFactory;
 
 import com.serotonin.ShouldNeverHappenException;
 import com.serotonin.db.pair.StringStringPair;
@@ -43,7 +42,6 @@ import com.serotonin.m2m2.shared.ModuleUtils;
 import com.serotonin.m2m2.util.timeout.TimeoutClient;
 import com.serotonin.m2m2.util.timeout.TimeoutTask;
 import com.serotonin.m2m2.web.dwr.util.DwrPermission;
-import com.serotonin.m2m2.web.mvc.controller.ControllerUtils;
 import com.serotonin.provider.Providers;
 import com.serotonin.web.http.HttpUtils4;
 
@@ -60,7 +58,7 @@ public class ModulesDwr extends BaseDwr {
     }
 
     @DwrPermission(admin = true)
-    synchronized public void scheduleRestart() {
+    synchronized public static void scheduleRestart() {
         if (RESTART_TASK == null) {
             SystemEventType.raiseEvent(new SystemEventType(SystemEventType.TYPE_SYSTEM_SHUTDOWN), System
                     .currentTimeMillis(), false, new TranslatableMessage("modules.restartScheduledBy", Common.getUser()
@@ -70,7 +68,7 @@ public class ModulesDwr extends BaseDwr {
             RESTART_TASK = new TimeoutTask(timeout, new TimeoutClient() {
                 @Override
                 public void scheduleTimeout(long fireTime) {
-                    File restartFlag = new File(Common.M2M2_HOME, "RESTART");
+                    File restartFlag = new File(Common.MA_HOME, "RESTART");
                     if (!restartFlag.exists()) {
                         try {
                             FileWriter fw = new FileWriter(restartFlag);
@@ -101,7 +99,6 @@ public class ModulesDwr extends BaseDwr {
             json.put("guid", Providers.get(ICoreLicense.class).getGuid());
             json.put("description", SystemSettingsDao.getValue(SystemSettingsDao.INSTANCE_DESCRIPTION));
             json.put("distributor", Common.envProps.getString("distributor"));
-            json.put("domain", ControllerUtils.getDomain(WebContextFactory.get().getHttpServletRequest()));
 
             Map<String, String> jsonModules = new HashMap<String, String>();
             json.put("modules", jsonModules);
@@ -179,7 +176,7 @@ public class ModulesDwr extends BaseDwr {
 
                 FileOutputStream out = null;
                 try {
-                    String saveDir = Common.M2M2_HOME;
+                    String saveDir = Common.MA_HOME;
                     if (!"core".equals(name))
                         saveDir += "/" + Constants.DIR_WEB + "/" + Constants.DIR_MODULES;
                     out = new FileOutputStream(new File(saveDir, filename));

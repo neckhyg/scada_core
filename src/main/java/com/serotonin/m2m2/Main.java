@@ -1,19 +1,5 @@
 package com.serotonin.m2m2;
 
-import com.serotonin.io.StreamUtils;
-import com.serotonin.m2m2.i18n.TranslatableMessage;
-import com.serotonin.m2m2.module.Module;
-import com.serotonin.m2m2.module.ModuleElementDefinition;
-import com.serotonin.m2m2.module.ModuleRegistry;
-import com.serotonin.m2m2.shared.DependencyData;
-import com.serotonin.m2m2.shared.ModuleUtils;
-import com.serotonin.m2m2.shared.VersionData;
-import com.serotonin.provider.Providers;
-import com.serotonin.util.DirectoryUtils;
-import com.serotonin.util.SerializationHelper;
-import com.serotonin.util.StringEncrypter;
-import com.serotonin.util.properties.ReloadingProperties;
-import com.serotonin.util.queue.ByteQueue;
 import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedReader;
@@ -30,20 +16,41 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import javax.crypto.Cipher;
+
+import com.serotonin.m2m2.i18n.Translations;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import com.serotonin.epoll.BufferingHandler;
+import com.serotonin.epoll.ProcessEPoll;
+import com.serotonin.epoll.ProcessHandler;
+import com.serotonin.io.StreamUtils;
+import com.serotonin.m2m2.i18n.TranslatableMessage;
+import com.serotonin.m2m2.module.Module;
+import com.serotonin.m2m2.module.ModuleElementDefinition;
+import com.serotonin.m2m2.module.ModuleRegistry;
+import com.serotonin.m2m2.shared.DependencyData;
+import com.serotonin.m2m2.shared.ModuleUtils;
+import com.serotonin.m2m2.shared.VersionData;
+import com.serotonin.m2m2.util.HostUtils;
+import com.serotonin.provider.Providers;
+import com.serotonin.util.SerializationHelper;
+import com.serotonin.util.StringEncrypter;
+import com.serotonin.util.properties.ReloadingProperties;
+import com.serotonin.util.queue.ByteQueue;
 
 public class Main
 {
@@ -53,9 +60,10 @@ public class Main
   public static void main(String[] args) throws Exception {
     Providers.add(ICoreLicense.class, new CoreLicenseDefinition());
 
-    Common.M2M2_HOME = System.getProperty("ma.home");
+    Common.MA_HOME = System.getProperty("ma.home");
+    Common.M2M2_HOME = Common.MA_HOME;
 
-    new File(Common.M2M2_HOME, "RESTART").delete();
+    new File(Common.MA_HOME, "RESTART").delete();
 
     Common.envProps = new ReloadingProperties("env");
 
@@ -84,61 +92,159 @@ public class Main
   }
 
   private static void openZipFiles() throws Exception {
-    File[] zipFiles = new File(new StringBuilder().append(Common.M2M2_HOME).append("/").append("web").append("/").append("modules").toString()).listFiles(new FilenameFilter()
-    {
-      public boolean accept(File dir, String name)
-      {
-        return name.endsWith(".zip");
-      }
-    });
-    if ((zipFiles == null) || (zipFiles.length == 0)) {
-      return;
-    }
-    for (File file : zipFiles) {
-      if (!file.isFile())
-      {
-        continue;
-      }
-      ZipFile zip = new ZipFile(file);
-      try
-      {
-        Properties props = getProperties(zip);
+    ProcessEPoll pep = new ProcessEPoll();
+    try {
+      new Thread(pep).start();
 
-        String moduleName = props.getProperty("name");
-        if (moduleName == null)
-          throw new RuntimeException("name not defined in module properties");
-        if (!ModuleUtils.validateName(moduleName)) {
-          throw new RuntimeException(new StringBuilder().append("Module name '").append(moduleName).append("' is invalid").toString());
+      File[] zipFiles = new File(new StringBuilder().append(Common.MA_HOME).append("/").append("web").append("/").append("modules").toString()).listFiles(new FilenameFilter()
+      {
+        public boolean accept(File dir, String name)
+        {
+          return name.endsWith(".zip");
         }
-        File moduleDir = new File(new StringBuilder().append(Common.M2M2_HOME).append("/").append("web").append("/").append("modules").toString(), moduleName);
+      });
+      if ((zipFiles == null) || (zipFiles.length == 0))
+        return;
+      for (File file : zipFiles) {
+        if (!file.isFile())
+        {
+          continue;
+        }
+        ZipFile zip = new ZipFile(file);
+        try
+        {
+          Properties props = getProperties(zip);
 
-        DirectoryUtils.deleteDirectory(moduleDir);
-        moduleDir.mkdirs();
+          String moduleName = props.getProperty("name");
+          if (moduleName == null) {
+            throw new RuntimeException("name not defined in module properties");
+          }
+          if (!ModuleUtils.validateName(moduleName)) {
+            throw new RuntimeException(new StringBuilder().append("Module name '").append(moduleName).append("' is invalid").toString());
+          }
+          File moduleDir = new File(new StringBuilder().append(Common.MA_HOME).append("/").append("web").append("/").append("modules").toString(), moduleName);
 
-        Enumeration entries = zip.entries();
-        while (entries.hasMoreElements()) {
-          ZipEntry entry = (ZipEntry)entries.nextElement();
-          String name = entry.getName();
-          File entryFile = new File(moduleDir, name);
-
-          if (entry.isDirectory())
-            entryFile.mkdirs();
+          if (moduleDir.exists())
+            LOG.info(new StringBuilder().append("Upgrading module ").append(moduleName).toString());
           else {
-            writeFile(entryFile, zip.getInputStream(entry));
+            LOG.info(new StringBuilder().append("Installing module ").append(moduleName).toString());
+          }
+          String persistDirs = props.getProperty("persistPaths");
+          File moduleSaveDir = new File(new StringBuilder().append(moduleDir).append(".save").toString());
+
+          if (!org.apache.commons.lang3.StringUtils.isBlank(persistDirs))
+          {
+            String[] paths = persistDirs.split(",");
+            for (String path : paths) {
+              path = path.trim();
+              if (!org.apache.commons.lang3.StringUtils.isBlank(path)) {
+                File from = new File(moduleDir, path);
+                File to = new File(moduleSaveDir, path);
+                if (from.exists()) {
+                  if (from.isDirectory())
+                    moveDir(from, to);
+                  else {
+                    FileUtils.moveFile(from, to);
+                  }
+                }
+              }
+            }
           }
 
-        }
+          deleteDir(moduleDir);
 
-        zip.close();
+          if (moduleSaveDir.exists())
+            moveDir(moduleSaveDir, moduleDir);
+          else {
+            moduleDir.mkdirs();
+          }
+          Enumeration entries = zip.entries();
+          while (entries.hasMoreElements()) {
+            ZipEntry entry = (ZipEntry)entries.nextElement();
+            String name = entry.getName();
+            File entryFile = new File(moduleDir, name);
+
+            if (entry.isDirectory())
+              entryFile.mkdirs();
+            else {
+              writeFile(entryFile, zip.getInputStream(entry));
+            }
+          }
+
+          File moduleWorkDir = new File(moduleDir, "work");
+          if (moduleWorkDir.exists()) {
+            moveDir(moduleWorkDir, new File(Common.MA_HOME, "work"));
+          }
+
+          if (HostUtils.isLinux()) {
+            String permissions = props.getProperty("permissions");
+            if (!org.apache.commons.lang3.StringUtils.isBlank(permissions)) {
+              String[] s = permissions.split(",");
+              for (String permission : s) {
+                setPermission(pep, moduleName, moduleDir, permission);
+              }
+
+            }
+
+          }
+
+          zip.close();
+        }
+        catch (Exception e)
+        {
+          LOG.warn(new StringBuilder().append("Error while opening zip file ").append(file.getName()).append(". Is this module built for the core version that you are using? Module ignored.").toString(), e);
+        }
+        finally
+        {
+          zip.close();
+        }
       }
-      catch (Exception e)
-      {
-        LOG.warn(new StringBuilder().append("Error while opening zip file ").append(file.getName()).append(". Is this module built for the core version that you are using? Module ignored.").toString(), e);
-      }
-      finally
-      {
-        zip.close();
-      }
+
+    }
+    finally
+    {
+      pep.waitForAll();
+      pep.terminate();
+    }
+  }
+
+  private static void setPermission(ProcessEPoll pep, String moduleName, File moduleDir, String permStr)
+  {
+    int pipe = permStr.indexOf(124);
+    if (pipe == -1) {
+      LOG.warn(new StringBuilder().append("Malformed permission string in module ").append(moduleName).append(": ").append(permStr).toString());
+    } else {
+      String mode = permStr.substring(0, pipe).trim();
+      final String fileStr = permStr.substring(pipe + 1).trim();
+
+      File file = new File(moduleDir, fileStr);
+      if (!file.exists())
+        LOG.warn(new StringBuilder().append("Can't set permissions in module ").append(moduleName).append(" on file ").append(fileStr).append(", file does not exist").toString());
+      else
+        try
+        {
+        	//moduleName, fileStr
+        	final String _moduleName = moduleName;
+          pep.add(new ProcessBuilder(new String[] { "chmod", mode, file.getPath() }), 3000L, new BufferingHandler()
+          {
+            public void done(ProcessHandler.DoneCause cause, int exitValue, Exception e) {
+              if (cause != ProcessHandler.DoneCause.FINISHED) {
+                Main.LOG.warn("Error setting permissions in module " + _moduleName + " on file " + fileStr + ", bad finish: " + cause, e);
+              }
+              if (exitValue != 0) {
+                Main.LOG.warn("Error setting permissions in module " + _moduleName + " on file " + fileStr + ", bad exit value: " + exitValue);
+              }
+              if (!org.apache.commons.lang3.StringUtils.isBlank(getInput())) {
+                Main.LOG.warn("Error setting permissions in module " + _moduleName + " on file " + fileStr + ", " + getInput());
+              }
+              if (!org.apache.commons.lang3.StringUtils.isBlank(getError()))
+                Main.LOG.warn("Error setting permissions in module " + _moduleName + " on file " + fileStr + ", " + getError());
+            }
+          });
+        }
+        catch (IOException e) {
+          LOG.warn(new StringBuilder().append("Error seting permissions in module ").append(moduleName).append(" on file ").append(fileStr).toString(), e);
+        }
     }
   }
 
@@ -147,22 +253,25 @@ public class Main
   {
     Common.documentationManifest.parseManifestFile("web/WEB-INF/dox");
 
-    File[] modules = new File(new StringBuilder().append(Common.M2M2_HOME).append("/").append("web").append("/").append("modules").toString()).listFiles();
+    File modulesPath = new File(new StringBuilder().append(Common.MA_HOME).append("/").append("web").append("/").append("modules").toString());
+    File[] modules = modulesPath.listFiles();
     if (modules == null) {
       modules = new File[0];
     }
     List classLoaderUrls = new ArrayList();
-    Map moduleClasses = new HashMap();
+    Map<Module, List<String>> moduleClasses = new HashMap<Module, List<String>>();
 
     VersionData coreVersion = Common.getVersion();
 
+    List<ModuleWrapper> moduleWrappers = new ArrayList();
     for (File moduleDir : modules) {
       if (!moduleDir.isDirectory()) {
         continue;
       }
       if (new File(moduleDir, "DELETE").exists())
       {
-        DirectoryUtils.deleteDirectory(moduleDir);
+        deleteDir(moduleDir);
+
         LOG.info(new StringBuilder().append("Deleted module directory ").append(moduleDir).toString());
       }
       else
@@ -214,101 +323,153 @@ public class Main
           String vendor = props.getProperty("vendor");
           String vendorUrl = props.getProperty("vendorUrl");
           String dependencies = props.getProperty("dependencies");
+          String loadOrderStr = props.getProperty("loadOrder");
 
-          Module module = new Module(moduleName, version, description, vendor, vendorUrl, dependencies);
-          ModuleRegistry.addModule(module);
-
-          LOG.info(new StringBuilder().append("Loading module '").append(moduleName).append("', v").append(version).append(" by ").append(vendor == null ? "(unknown vendor)" : vendor).toString());
-
-          String classes = props.getProperty("classes");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(classes)) {
-            String[] parts = classes.split(",");
-            for (String className : parts) {
-              if (!org.apache.commons.lang3.StringUtils.isBlank(className)) {
-                className = className.trim();
-                List classNames = (List)moduleClasses.get(module);
-                if (classNames == null) {
-                  classNames = new ArrayList();
-                  moduleClasses.put(module, classNames);
-                }
-                classNames.add(className);
-              }
+          int loadOrder = 50;
+          if (!org.apache.commons.lang3.StringUtils.isBlank(loadOrderStr)) {
+            try {
+              loadOrder = Integer.parseInt(loadOrderStr);
+            }
+            catch (Exception e) {
+              loadOrder = -1;
             }
 
-          }
+            if ((loadOrder < 1) || (loadOrder > 100)) {
+              LOG.warn(new StringBuilder().append("Module ").append(moduleName).append(": bad loadOrder value '").append(loadOrderStr).append("', must be a number between 1 and 100. Defaulting to 50").toString());
 
-          File classesDir = new File(moduleDir, "classes");
-          if (classesDir.exists()) {
-            classLoaderUrls.add(classesDir.toURI().toURL());
-          }
-
-          loadLib(moduleDir, classLoaderUrls);
-
-          String logo = props.getProperty("logo");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(logo)) {
-            Common.applicationLogo = new StringBuilder().append("modules/").append(moduleName).append("/").append(logo).toString();
-          }
-
-          String styles = props.getProperty("styles");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(styles)) {
-            for (String style : styles.split(",")) {
-              style = com.serotonin.util.StringUtils.trimWhitespace(style);
-              if (!org.apache.commons.lang3.StringUtils.isBlank(style)) {
-                Common.applicationStyles.add(new StringBuilder().append("modules/").append(moduleName).append("/").append(style).toString());
-              }
+              loadOrder = 50;
             }
           }
 
-          String scripts = props.getProperty("scripts");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(scripts)) {
-            for (String script : scripts.split(",")) {
-              script = com.serotonin.util.StringUtils.trimWhitespace(script);
-              if (!org.apache.commons.lang3.StringUtils.isBlank(script)) {
-                Common.applicationScripts.add(new StringBuilder().append("modules/").append(moduleName).append("/").append(script).toString());
-              }
-            }
-          }
-
-          String dox = props.getProperty("documentation");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(dox)) {
-            Common.documentationManifest.parseManifestFile(new StringBuilder().append("web/modules/").append(moduleName).append("/").append(dox).toString());
-          }
-
-          String locales = props.getProperty("locales");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(locales)) {
-            String[] s = locales.split(",");
-            for (String locale : s) {
-              module.addLocaleDefinition(locale.trim());
-            }
-          }
-
-          String tagdir = props.getProperty("tagdir");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(tagdir)) {
-            File from = new File(moduleDir, tagdir);
-            File to = new File(new StringBuilder().append(Common.M2M2_HOME).append("/web/WEB-INF/tags/").append(moduleName).toString());
-            DirectoryUtils.deleteDirectory(to);
-            if (from.exists()) {
-              DirectoryUtils.copyDirectory(from, to);
-            }
-          }
-
-          String graphics = props.getProperty("graphics");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(graphics)) {
-            graphics = com.serotonin.util.StringUtils.trimWhitespace(graphics);
-            if (!org.apache.commons.lang3.StringUtils.isBlank(graphics)) {
-              module.setGraphicsDir(graphics);
-            }
-          }
-
-          String emailTemplates = props.getProperty("emailTemplates");
-          if (!org.apache.commons.lang3.StringUtils.isBlank(emailTemplates)) {
-            emailTemplates = com.serotonin.util.StringUtils.trimWhitespace(emailTemplates);
-            if (!org.apache.commons.lang3.StringUtils.isBlank(emailTemplates))
-              module.setEmailTemplatesDir(emailTemplates);
-          }
+          Module module = new Module(moduleName, version, description, vendor, vendorUrl, dependencies, loadOrder);
+          moduleWrappers.add(new ModuleWrapper(module, props, moduleDir));
         }
       }
     }
+    Collections.sort(moduleWrappers, new Comparator<ModuleWrapper>()
+    {
+      public int compare(ModuleWrapper m1, ModuleWrapper m2) {
+        return m1.module.getLoadOrder() - m2.module.getLoadOrder();
+      }
+    });
+    for (ModuleWrapper moduleWrapper : moduleWrappers) {
+      Module module = moduleWrapper.module;
+      String moduleName = moduleWrapper.module.getName();
+      String version = moduleWrapper.module.getVersion();
+      String vendor = moduleWrapper.module.getVendor();
+      Properties props = moduleWrapper.props;
+      File moduleDir = moduleWrapper.moduleDir;
+
+      ModuleRegistry.addModule(module);
+
+      LOG.info(new StringBuilder().append("Loading module '").append(moduleName).append("', v").append(version).append(" by ").append(vendor == null ? "(unknown vendor)" : vendor).toString());
+
+      String classes = props.getProperty("classes");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(classes)) {
+        String[] parts = classes.split(",");
+        for (String className : parts) {
+          if (!org.apache.commons.lang3.StringUtils.isBlank(className)) {
+            className = className.trim();
+            List classNames = (List)moduleClasses.get(module);
+            if (classNames == null) {
+              classNames = new ArrayList();
+              moduleClasses.put(module, classNames);
+            }
+            classNames.add(className);
+          }
+        }
+
+      }
+
+      File classesDir = new File(moduleDir, "classes");
+      if (classesDir.exists()) {
+        classLoaderUrls.add(classesDir.toURI().toURL());
+      }
+
+      loadLib(moduleDir, classLoaderUrls);
+
+      String logo = props.getProperty("logo");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(logo)) {
+        Common.applicationLogo = new StringBuilder().append("/modules/").append(moduleName).append("/").append(logo).toString();
+      }
+
+      String favicon = props.getProperty("favicon");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(favicon)) {
+        Common.applicationFavicon = new StringBuilder().append("/modules/").append(moduleName).append("/").append(favicon).toString();
+      }
+
+      String styles = props.getProperty("styles");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(styles)) {
+        for (String style : styles.split(",")) {
+          style = com.serotonin.util.StringUtils.trimWhitespace(style);
+          if (!org.apache.commons.lang3.StringUtils.isBlank(style)) {
+            Common.moduleStyles.add(new StringBuilder().append("modules/").append(moduleName).append("/").append(style).toString());
+          }
+        }
+      }
+
+      String scripts = props.getProperty("scripts");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(scripts)) {
+        for (String script : scripts.split(",")) {
+          script = com.serotonin.util.StringUtils.trimWhitespace(script);
+          if (!org.apache.commons.lang3.StringUtils.isBlank(script)) {
+            Common.moduleScripts.add(new StringBuilder().append("modules/").append(moduleName).append("/").append(script).toString());
+          }
+        }
+      }
+
+      String jspfs = props.getProperty("jspfs");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(jspfs)) {
+        for (String jspf : jspfs.split(",")) {
+          jspf = com.serotonin.util.StringUtils.trimWhitespace(jspf);
+          if (!org.apache.commons.lang3.StringUtils.isBlank(jspf)) {
+            Common.moduleJspfs.add(new StringBuilder().append("/modules/").append(moduleName).append("/").append(jspf).toString());
+          }
+        }
+      }
+
+      String dox = props.getProperty("documentation");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(dox)) {
+        Common.documentationManifest.parseManifestFile(new StringBuilder().append("web/modules/").append(moduleName).append("/").append(dox).toString());
+      }
+
+      String locales = props.getProperty("locales");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(locales)) {
+        String[] s = locales.split(",");
+        for (String locale : s) {
+          module.addLocaleDefinition(locale.trim());
+        }
+      }
+
+      String tagdir = props.getProperty("tagdir");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(tagdir)) {
+        File from = new File(moduleDir, tagdir);
+        File to = new File(new StringBuilder().append(Common.MA_HOME).append("/web/WEB-INF/tags/").append(moduleName).toString());
+        deleteDir(to);
+
+        if (from.exists()) {
+          FileUtils.copyDirectory(from, to);
+        }
+
+      }
+
+      String graphics = props.getProperty("graphics");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(graphics)) {
+        graphics = com.serotonin.util.StringUtils.trimWhitespace(graphics);
+        if (!org.apache.commons.lang3.StringUtils.isBlank(graphics)) {
+          module.setGraphicsDir(graphics);
+        }
+      }
+
+      String emailTemplates = props.getProperty("emailTemplates");
+      if (!org.apache.commons.lang3.StringUtils.isBlank(emailTemplates)) {
+        emailTemplates = com.serotonin.util.StringUtils.trimWhitespace(emailTemplates);
+        if (!org.apache.commons.lang3.StringUtils.isBlank(emailTemplates)) {
+          module.setEmailTemplatesDir(emailTemplates);
+        }
+      }
+    }
+
     for (Module module : ModuleRegistry.getModules()) {
       String dependenciesStr = module.getDependencies();
       if (!org.apache.commons.lang3.StringUtils.isBlank(dependenciesStr)) {
@@ -354,26 +515,33 @@ public class Main
     URLClassLoader cl = new URLClassLoader(arr, Main.class.getClassLoader());
     Thread.currentThread().setContextClassLoader(cl);
 
-    for (Iterator it = moduleClasses.entrySet().iterator(); it.hasNext(); ) {Map.Entry mod = (Map.Entry)it.next();
-      for (String className : (List<String>)mod.getValue()) {
-        Class clazz = cl.loadClass(className);
-        boolean used = false;
+    for (Map.Entry mod : moduleClasses.entrySet()) {
+      try {
+        for (String className : (List<String>)mod.getValue()) {
+          Class clazz = cl.loadClass(className);
+          boolean used = false;
 
-        if (ModuleElementDefinition.class.isAssignableFrom(clazz)) {
-          ModuleElementDefinition def = (ModuleElementDefinition)clazz.newInstance();
-          ((Module)mod.getKey()).addDefinition(def);
-          used = true;
+          if (ModuleElementDefinition.class.isAssignableFrom(clazz)) {
+            ModuleElementDefinition def = (ModuleElementDefinition)clazz.newInstance();
+            ((Module)mod.getKey()).addDefinition(def);
+            used = true;
+          }
+
+          if (!used)
+            LOG.warn(new StringBuilder().append("Unused classes entry: ").append(className).toString());
         }
-
-        if (!used)
-          LOG.warn(new StringBuilder().append("Unused classes entry: ").append(className).toString());
+      }
+      catch (Exception e) {
+        throw new Exception(new StringBuilder().append("Exception loading classes in module ").append(((Module)mod.getKey()).getName()).toString(), e);
       }
     }
-    Map.Entry mod;
+
     return cl;
   }
 
-  private static void loadLib(File module, List<URL> urls) throws Exception {
+  private static void loadLib(File module, List<URL> urls)
+    throws Exception
+  {
     File[] jarFiles = new File(module, "lib").listFiles(new FilenameFilter()
     {
       public boolean accept(File dir, String name) {
@@ -414,6 +582,10 @@ public class Main
     if (signed.exists()) {
       FileInputStream fis = new FileInputStream(signed);
       Properties props = getProperties(fis, true);
+//        File newFile = new File(moduleDir,"module.properties");
+//        FileOutputStream fos = new FileOutputStream(newFile);
+//        props.store(fos,"");
+//        fos.close();
       fis.close();
       return props;
     }
@@ -471,6 +643,26 @@ public class Main
     return cipher;
   }
 
+  private static void deleteDir(File dir) throws IOException {
+    String message = null;
+//    while (true)
+      try {
+        FileUtils.deleteDirectory(dir);
+      }
+      catch (IOException e)
+      {
+        if (org.apache.commons.lang3.StringUtils.equals(message, e.getMessage()))
+          throw e;
+        message = e.getMessage();
+      }
+  }
+
+  private static void moveDir(File from, File to) throws IOException
+  {
+    FileUtils.copyDirectory(from, to);
+    deleteDir(from);
+  }
+
   static class ModulePropertiesException extends Exception
   {
     private static final long serialVersionUID = 1L;
@@ -478,6 +670,20 @@ public class Main
     public ModulePropertiesException(Throwable cause)
     {
       super();
+    }
+  }
+
+  static class ModuleWrapper
+  {
+    final Module module;
+    final Properties props;
+    final File moduleDir;
+
+    public ModuleWrapper(Module module, Properties props, File moduleDir)
+    {
+      this.module = module;
+      this.props = props;
+      this.moduleDir = moduleDir;
     }
   }
 }

@@ -1,10 +1,57 @@
 package com.serotonin.m2m2;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import javax.crypto.Cipher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.directwebremoting.Container;
+import org.directwebremoting.create.NewCreator;
+import org.directwebremoting.extend.Converter;
+import org.directwebremoting.extend.ConverterManager;
+import org.directwebremoting.extend.CreatorManager;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;//nio.SelectChannelConnector;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.webapp.WebAppContext;
+import org.joda.time.DateTimeZone;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.mvc.Controller;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import com.serotonin.ShouldNeverHappenException;
-import com.serotonin.epoll.InputStreamEPoll;
 import com.serotonin.m2m2.db.DatabaseProxy;
 import com.serotonin.m2m2.i18n.TranslatableMessage;
-import com.serotonin.m2m2.module.*;
+import com.serotonin.m2m2.module.DwrConversionDefinition;
+import com.serotonin.m2m2.module.DwrDefinition;
+import com.serotonin.m2m2.module.EventManagerListenerDefinition;
+import com.serotonin.m2m2.module.HandlerInterceptorDefinition;
+import com.serotonin.m2m2.module.LicenseDefinition;
+import com.serotonin.m2m2.module.Module;
+import com.serotonin.m2m2.module.ModuleRegistry;
+import com.serotonin.m2m2.module.ServletDefinition;
+import com.serotonin.m2m2.module.UriMappingDefinition;
+import com.serotonin.m2m2.module.UrlMappingDefinition;
 import com.serotonin.m2m2.rt.EventManager;
 import com.serotonin.m2m2.rt.RuntimeManager;
 import com.serotonin.m2m2.rt.event.type.AuditEventType;
@@ -36,47 +83,22 @@ import com.serotonin.m2m2.web.dwr.util.ModuleDwrCreator;
 import com.serotonin.m2m2.web.mvc.BlabberUrlHandlerMapping;
 import com.serotonin.m2m2.web.mvc.UrlHandler;
 import com.serotonin.m2m2.web.mvc.UrlHandlerController;
+import com.serotonin.provider.InputStreamEPollProvider;
+import com.serotonin.provider.ProcessEPollProvider;
 import com.serotonin.provider.Providers;
+import com.serotonin.provider.TimerProvider;
+import com.serotonin.provider.impl.InputStreamEPollProviderImpl;
+import com.serotonin.provider.impl.ProcessEPollProviderImpl;
+import com.serotonin.timer.AbstractTimer;
 import com.serotonin.timer.sync.Synchronizer;
 import com.serotonin.util.StringEncrypter;
 import com.serotonin.util.XmlUtilsTS;
+
 import freemarker.cache.FileTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.directwebremoting.Container;
-import org.directwebremoting.create.NewCreator;
-import org.directwebremoting.extend.Converter;
-import org.directwebremoting.extend.ConverterManager;
-import org.directwebremoting.extend.CreatorManager;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.joda.time.DateTimeZone;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.mvc.Controller;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.crypto.Cipher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class Lifecycle
   implements ILifecycle
@@ -105,10 +127,19 @@ public class Lifecycle
 
     Common.timer.init(new ThreadPoolExecutor(0, 1000, 30L, TimeUnit.SECONDS, new SynchronousQueue()));
 
+    Providers.add(TimerProvider.class, new TimerProvider()
+    {
+      public AbstractTimer getTimer() {
+        return Common.timer;
+      }
+    });
     Common.JSON_CONTEXT.addResolver(new EventTypeResolver(), new Class[] { EventType.class });
     Common.JSON_CONTEXT.addResolver(new BaseChartRenderer.Resolver(), new Class[] { ChartRenderer.class });
     Common.JSON_CONTEXT.addResolver(new BaseTextRenderer.Resolver(), new Class[] { TextRenderer.class });
     Common.JSON_CONTEXT.addResolver(new EmailRecipientResolver(), new Class[] { EmailRecipient.class });
+
+    Providers.add(InputStreamEPollProvider.class, new InputStreamEPollProviderImpl());
+    Providers.add(ProcessEPollProvider.class, new ProcessEPollProviderImpl());
 
 //    lic();
     freemarkerInitialize();
@@ -173,7 +204,7 @@ public class Lifecycle
         module.uninstall();
         this.LOG.info("Uninstalled module " + module.getName());
 
-        File deleteFlag = new File(Common.M2M2_HOME + module.getDirectoryPath(), "DELETE");
+        File deleteFlag = new File(Common.MA_HOME + module.getDirectoryPath(), "DELETE");
         if (!deleteFlag.exists()) {
           try {
             FileWriter fw = new FileWriter(deleteFlag);
@@ -191,10 +222,9 @@ public class Lifecycle
     databaseTerminate();
     utilitiesTerminate();
 
-    InputStreamEPoll epoll = Common.getInputStreamEPoll(false);
-    if (epoll != null) {
-      epoll.terminate();
-    }
+    ((InputStreamEPollProvider)Providers.get(InputStreamEPollProvider.class)).terminate();
+    ((ProcessEPollProvider)Providers.get(ProcessEPollProvider.class)).terminate(false);
+
     if (Common.timer.isInitialized()) {
       Common.timer.cancel();
       Common.timer.getExecutorService().shutdown();
@@ -249,7 +279,7 @@ public class Lifecycle
   {
     try
     {
-      File file = new File(Common.M2M2_HOME, se.decodeToString("bTJtMi5saWNlbnNlLnhtbA=="));
+      File file = new File(Common.MA_HOME, se.decodeToString("bTJtMi5saWNlbnNlLnhtbA=="));
 
       if (file.exists()) {
         Document doc = XmlUtilsTS.parse(file);
@@ -298,14 +328,14 @@ public class Lifecycle
     {
       List loaders = new ArrayList();
 
-      File override = new File(Common.M2M2_HOME, "overrides/ftl");
+      File override = new File(Common.MA_HOME, "overrides/ftl");
       if (override.exists()) {
         loaders.add(new FileTemplateLoader(override));
       }
 
-      loaders.add(new FileTemplateLoader(new File(Common.M2M2_HOME, "/web/WEB-INF/ftl")));
+      loaders.add(new FileTemplateLoader(new File(Common.MA_HOME, "ftl")));
 
-      String path = Common.M2M2_HOME + "/" + "web";
+      String path = Common.MA_HOME + "/" + "web";
       for (Module module : ModuleRegistry.getModules()) {
         if (module.getEmailTemplatesDir() != null) {
           loaders.add(0, new FileTemplateLoader(new File(path + module.getWebPath(), module.getEmailTemplatesDir())));
@@ -331,7 +361,6 @@ public class Lifecycle
   private void databaseTerminate() {
     if (Common.databaseProxy != null)
       Common.databaseProxy.terminate();
-    Common.databaseProxy = null;
   }
 
   private void utilitiesInitialize()
@@ -373,7 +402,7 @@ public class Lifecycle
   {
     Common.runtimeManager = new RuntimeManager();
 
-    File safeFile = new File(Common.M2M2_HOME, "SAFE");
+    File safeFile = new File(Common.MA_HOME, "SAFE");
     boolean safe = false;
     if ((safeFile.exists()) && (safeFile.isFile()))
     {
@@ -382,10 +411,10 @@ public class Lifecycle
       sb.append("**********************************************************\r\n");
       sb.append("*                     NOTE                               *\r\n");
       sb.append("**********************************************************\r\n");
-      sb.append("* Mango Automation is starting in safe mode. All data    *\r\n");
+      sb.append("* EazyScada System is starting in safe mode. All data    *\r\n");
       sb.append("* sources, publishers, and elements applicable from      *\r\n");
       sb.append("* modules will be disabled. To disable safe mode, remove *\r\n");
-      sb.append("* the SAFE file from the Mango Automation application    *\r\n");
+      sb.append("* the SAFE file from the EazyScada System *\r\n");
       sb.append("* directory.                                             *\r\n");
       sb.append("*                                                        *\r\n");
       sb.append("* To find all objects that were automatically disabled,  *\r\n");
@@ -428,13 +457,11 @@ public class Lifecycle
   private void webServerInitialize(ClassLoader classLoader)
   {
     this.SERVER = new Server();
-      ServerConnector conn = new ServerConnector(this.SERVER);
-      conn.setPort(Common.envProps.getInt("web.port", 8080));
-      this.SERVER.addConnector(conn);
 
-/*      SelectChannelConnector conn = new SelectChannelConnector();
+      ServerConnector conn = new ServerConnector(this.SERVER);
+//    SelectChannelConnector conn = new SelectChannelConnector();
     conn.setPort(Common.envProps.getInt("web.port", 8080));
-    this.SERVER.addConnector(conn);*/
+    this.SERVER.addConnector(conn);
 
     WebAppContext context = new OverridingWebAppContext(classLoader);
     this.SERVER.setHandler(context);
@@ -469,7 +496,8 @@ public class Lifecycle
       ServletHolder servletHolder = new ServletHolder(def.getServlet());
       servletHolder.setInitParameters(def.getInitParameters());
       servletHolder.setInitOrder(def.getInitOrder());
-      context.addServlet(servletHolder, def.getUriPattern());
+      for (String pathSpec : def.getUriPatterns())
+        context.addServlet(servletHolder, pathSpec);
     }
   }
 
@@ -599,6 +627,18 @@ public class Lifecycle
       for (HandlerInterceptorDefinition def : ModuleRegistry.getDefinitions(HandlerInterceptorDefinition.class))
         urlMap.addInterceptor(def.getInterceptor());
       urlMap.initInterceptors();
+
+      for (UriMappingDefinition def : ModuleRegistry.getDefinitions(UriMappingDefinition.class)) {
+        String modulePath = "/modules/" + def.getModule().getName();
+        String viewName = null;
+        if (def.getJspPath() != null) {
+          viewName = modulePath + "/" + def.getJspPath();
+        }
+        UrlHandler handler = def.getHandler();
+        Controller controller = new UrlHandlerController(handler, modulePath, viewName);
+
+        urlMap.registerHandler(def.getPath(), controller);
+      }
 
       for (UrlMappingDefinition def : ModuleRegistry.getDefinitions(UrlMappingDefinition.class)) {
         String modulePath = "/modules/" + def.getModule().getName();

@@ -82,9 +82,15 @@ public class DataPointDao extends BaseDao {
     }
 
     public List<DataPointVO> getDataPoints(int dataSourceId, Comparator<DataPointVO> comparator) {
+        return getDataPoints(dataSourceId, comparator, true);
+    }
+
+    public List<DataPointVO> getDataPoints(int dataSourceId, Comparator<DataPointVO> comparator,
+            boolean includeRelationalData) {
         List<DataPointVO> dps = query(DATA_POINT_SELECT + " where dp.dataSourceId=?", new Object[] { dataSourceId },
                 new DataPointRowMapper());
-        setRelationalData(dps);
+        if (includeRelationalData)
+            setRelationalData(dps);
         if (comparator != null)
             Collections.sort(dps, comparator);
         return dps;
@@ -171,8 +177,9 @@ public class DataPointDao extends BaseDao {
                 else
                     updateDataPoint(dp);
 
-                // Reset the point hierarchy so that the new or changed point gets reflected.
-                cachedPointHierarchy = null;
+                // Reset the point hierarchy so that the new or changed point
+                // gets reflected.
+                clearPointHierarchyCache();
             }
         });
     }
@@ -217,8 +224,10 @@ public class DataPointDao extends BaseDao {
         DataPointVO old = getDataPoint(dp.getId());
 
         if (old.getPointLocator().getDataTypeId() != dp.getPointLocator().getDataTypeId())
-            // Delete any point values where data type doesn't match the vo, just in case the data type was changed.
-            // Only do this if the data type has actually changed because it is just really slow if the database is
+            // Delete any point values where data type doesn't match the vo,
+            // just in case the data type was changed.
+            // Only do this if the data type has actually changed because it is
+            // just really slow if the database is
             // big or busy.
             new PointValueDao().deletePointValuesWithMismatchedType(dp.getId(), dp.getPointLocator().getDataTypeId());
 
@@ -252,7 +261,7 @@ public class DataPointDao extends BaseDao {
     }
 
     public void deleteDataPoints(final int dataSourceId) {
-        List<DataPointVO> old = getDataPoints(dataSourceId, null);
+        List<DataPointVO> old = getDataPoints(dataSourceId, null, true);
 
         for (DataPointVO dp : old) {
             for (DataPointChangeDefinition def : ModuleRegistry.getDefinitions(DataPointChangeDefinition.class))
@@ -306,7 +315,7 @@ public class DataPointDao extends BaseDao {
         ejt.update("delete from dataPointUsers where dataPointId in " + dataPointIdList);
         ejt.update("delete from dataPoints where id in " + dataPointIdList);
 
-        cachedPointHierarchy = null;
+        clearPointHierarchyCache();
     }
 
     public int countPointsForDataSourceType(String dataSourceType) {
@@ -425,7 +434,8 @@ public class DataPointDao extends BaseDao {
             }
         }
 
-        // Delete detectors for any remaining ids in the list of existing detectors.
+        // Delete detectors for any remaining ids in the list of existing
+        // detectors.
         for (PointEventDetectorVO ped : existingDetectors) {
             ejt.update("delete from eventHandlers where eventTypeName=? and eventTypeRef1=? and eventTypeRef2=?",
                     new Object[] { EventType.EventTypeNames.DATA_POINT, dp.getId(), ped.getId() });
@@ -586,6 +596,7 @@ public class DataPointDao extends BaseDao {
 
     public static void clearPointHierarchyCache() {
         cachedPointHierarchy = null;
+        PointHierarchyEventDispatcher.firePointHierarchyCleared();
     }
 
     private void addFoldersToHeirarchy(PointHierarchy ph, int parentId, Map<Integer, List<PointFolder>> folders) {
@@ -663,4 +674,15 @@ public class DataPointDao extends BaseDao {
                     + ")", folder.getId());
         }
     }
+
+// for use of energy management system
+        public List<DataPointVO> getDataPoints(String deviceName, Comparator<DataPointVO> comparator) {
+        List<DataPointVO> dps = query(DATA_POINT_SELECT + " where dp.deviceName=?", new Object[] { deviceName },
+                new DataPointRowMapper());
+        setRelationalData(dps);
+        if (comparator != null)
+            Collections.sort(dps, comparator);
+        return dps;
+    }
+
 }

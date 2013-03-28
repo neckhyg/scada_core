@@ -26,10 +26,10 @@ import com.serotonin.util.ILifecycle;
 
 /**
  * Data sources are things that produce data for consumption of this system. Anything that houses, creates, manages, or
- * otherwise can get data to Mango can be considered a data source. As such, this interface can more precisely be
+ * otherwise can get data to eazyscada can be considered a data source. As such, this interface can more precisely be
  * considered a proxy of the real thing.
  * 
- * Mango contains multiple objects that carry the name data source. This interface represents those types of objects
+ * EazyScada contains multiple objects that carry the name data source. This interface represents those types of objects
  * that execute and perform the actual task of getting information one way or another from the external data source and
  * into the system, and is known as the "run-time" (RT) data source. (Another type is the data source VO, which
  * represents the configuration of a data source RT, a subtle but useful distinction. In particular, a VO is

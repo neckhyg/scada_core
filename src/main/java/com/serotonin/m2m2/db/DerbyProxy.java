@@ -58,7 +58,7 @@ public class DerbyProxy extends DatabaseProxy {
         dataSource.setCreateDatabase("create");
 
         dataSource.setDatabaseName(getUrl(propertyPrefix));
-        dataSource.setDataSourceName("mangoDataSource");
+        dataSource.setDataSourceName("scadaDataSource");
 
         // Creation of a connection will optionally create the database.
         Connection c = DataSourceUtils.getConnection(dataSource);
