@@ -1,6 +1,7 @@
 <%--
 --%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <%@tag pageEncoding="utf-8" import="com.serotonin.m2m2.module.UrlMappingDefinition"%>
+<%@tag import="com.serotonin.m2m2.module.UriMappingDefinition"%>
 <%@tag import="com.serotonin.m2m2.module.ModuleRegistry"%>
 <%@tag import="com.serotonin.m2m2.Common"%>
 <%@include file="/WEB-INF/tags/decl.tagf"%>
@@ -27,23 +28,19 @@
   <meta name="Copyright" content="&copy;2008-2011 EazyTec Software Technologies Inc."/>
   <meta name="DESCRIPTION" content="EazyTec SCADA"/>
   <meta name="KEYWORDS" content="EazyTec SCADA"/>
- <%--
   <c:if test="${empty dojoURI}">
     <c:set var="dojoURI">http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/</c:set>
   </c:if>
-  --%>
 
   <!-- Style -->
   <link rel="icon" href="/images/favicon.ico"/>
   <link rel="shortcut icon" href="/images/favicon.ico"/>
-  <%--
   <style type="text/css">
     @import "${dojoURI}dojox/editor/plugins/resources/css/StatusBar.css";
     @import "${dojoURI}dojox/layout/resources/FloatingPane.css";
     @import "${dojoURI}dijit/themes/${theme}/${theme}.css";
     @import "${dojoURI}dojo/resources/dojo.css";
   </style>
-  --%>
   <link href="/resources/common.css" type="text/css" rel="stylesheet"/>
   <c:forEach items="<%= Common.moduleStyles %>" var="modStyle">
     <link href="/${modStyle}" type="text/css" rel="stylesheet"/></c:forEach>
@@ -51,9 +48,7 @@
   
   <link rel="stylesheet" media="screen" type="text/css" href="${modulePath}/web/css/common.css">
   <!-- Scripts -->
-  <!--
   <script type="text/javascript" src="${dojoURI}dojo/dojo.js" data-dojo-config="async: false, parseOnLoad: true, isDebug:true, extraLocale: ['${lang}']"></script>
-  -->
   <script type="text/javascript" src="/dwr/engine.js"></script>
   <script type="text/javascript" src="/dwr/util.js"></script>
   <script type="text/javascript" src="/dwr/interface/MiscDwr.js"></script>
@@ -72,8 +67,8 @@
     --%>
     <script type="text/javascript">
       dwr.util.setEscapeHtml(false);
-      //dojo.ready(storeCheck);
-      //dojo.ready(setRightContentSize);
+      dojo.require("dijit.layout.ContentPane");
+      dojo.ready(setRightContentSize);
       <c:if test="${!empty sessionUser}">
      //   dojo.ready(mango.header.onLoad);
      //   dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
@@ -100,30 +95,13 @@
           }
       }
 	function setRightContentSize(){
-
-	   var sideBarNavWidth = dojo.query(".sideBarNav").style("width"); 
-	   //dojo.style("menu","width");//dojo.query(".sideBarNav")[0].clientWidth; 
-	   var rightWidth = window.screen.width - sideBarNavWidth - 74;//
-
-	    
-	 //   dojo.byId("right_content").clientWidth = rightWidth;  
-	    
-
-	  var menuHeight = dojo.query("menu").style("height");
+	   var sideBarNavWidth = dojo.query(".sideBarNav").style("width");
+	   var rightWidth = window.screen.width - sideBarNavWidth - 74;
+	  var menuHeight = dojo.query("#menu").style("height");
 	  var rightHeight = window.screen.height - menuHeight  - 100;
-	//  dojo.query("right_content").style("width") = rightWidth;
-	  // dojo.query("right_content").style("height") = rightHeight;
-	//  dojo.query("right_content").setWidth (rightWidth);
-	//  dojo.query("right_content").setHeight( rightHeight );	  
-	
-	 dojo.style(dojo.byId('right_content'),{
-        width:"980px",
-        height: "600px",
-       // background:"#ccf"
-    });
-	     
-	  //  alert("width ="+$get("rightWidth")+"Height ="+$get("rightHeight"));
-	}				      
+	  dojo.query("#right_content").style("width",rightWidth + "px");
+	  dojo.query("#right_content").style("height",rightHeight + "px");
+	}
     </script>
   </c:if>
   <c:forEach items="<%= Common.moduleScripts %>" var="modScript">
@@ -190,13 +168,13 @@
     <div class="tit">
         <span class="innerTit">排污企业记录</span>
         <ul>
-		<li><a href="drain_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业记录</a></li>
+		<li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业记录</a></li>
         </ul>
     </div>
     <div class="tit">
         <span class="innerTit">用户管理</span>
         <ul>
-		<li><a href="user_managerment.shtm">&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a></li>
+		<li><a href="user_management.shtm">&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a></li>
         </ul>
     </div>
 </div>
@@ -205,9 +183,11 @@
       <div dojoType="SplitContainer" orientation="horizontal" sizerWidth="3" activeSizing="true" class="borderDiv"
               widgetId="splitContainer" style="width:100%; height: 300px;">
        -->
-         <div id="right_content">
+
         <jsp:doBody/>
-      </div>
+        <!--
+         <div dojoType="ContentPane" widgetId="right_content" name="right_content" id="right_content"> </div>
+         -->
         
        
 <%--

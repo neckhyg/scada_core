@@ -57,6 +57,11 @@ public class Main
   static final Log LOG = LogFactory.getLog(Main.class);
   static final StringEncrypter SE = new StringEncrypter();
 
+    /**
+     *
+     * @param args
+     * @throws Exception
+     */
   public static void main(String[] args) throws Exception {
     Providers.add(ICoreLicense.class, new CoreLicenseDefinition());
 

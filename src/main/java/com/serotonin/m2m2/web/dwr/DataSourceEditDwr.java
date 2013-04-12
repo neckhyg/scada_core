@@ -134,9 +134,9 @@ public class DataSourceEditDwr extends DataSourceListDwr {
         dp.setName(name);
         dp.setPointLocator(locator);
 
-        if (id == Common.NEW_ID)
+//        if (id == Common.NEW_ID)
             // Limit enforcement.
-            DataSourceTypePointsLimit.checkLimit(dp.getDataSourceTypeName(), response);
+//           DataSourceTypePointsLimit.checkLimit(dp.getDataSourceTypeName(), response);
 
         if (StringUtils.isBlank(xid))
             response.addContextualMessage("xid", "validate.required");

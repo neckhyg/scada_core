@@ -26,7 +26,7 @@ public class PublisherEditDwr extends BaseDwr {
         ProcessResult response = new ProcessResult();
 
         // Limit enforcement.
-        PublisherTypePointsLimit.checkLimit(p, response);
+//        PublisherTypePointsLimit.checkLimit(p, response);
 
         p.validate(response);
 

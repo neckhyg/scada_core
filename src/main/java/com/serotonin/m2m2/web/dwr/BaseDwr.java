@@ -84,7 +84,6 @@ abstract public class BaseDwr {
      *            a unique id for the browser side component. Required for set point snippets.
      * @param state
      * @param point
-     * @param status
      * @param model
      * @return
      */

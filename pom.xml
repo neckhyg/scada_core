@@ -221,28 +221,28 @@
             <artifactId>json</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../scada_modules/lib/com.serotonin.json.jar</systemPath>
+            <systemPath>${project.basedir}/../lib/com.serotonin.json.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.serotonin</groupId>
             <artifactId>providers</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../scada_modules/lib/com.serotonin.providers.jar</systemPath>
+            <systemPath>${project.basedir}/../lib/com.serotonin.providers.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.serotonin</groupId>
             <artifactId>timer</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../scada_modules/lib/com.serotonin.timer.jar</systemPath>
+            <systemPath>${project.basedir}/../lib/com.serotonin.timer.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.serotonin</groupId>
             <artifactId>utils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../scada_modules/lib/com.serotonin.utils.jar</systemPath>
+            <systemPath>${project.basedir}/../lib/com.serotonin.utils.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
