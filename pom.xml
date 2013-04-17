@@ -206,11 +206,6 @@
             <version>9.1.1.B60.25.p2</version>
         </dependency>
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jsp-2.1-jetty</artifactId>
-            <version>7.0.0.pre5</version>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.jdt</groupId>
             <artifactId>core</artifactId>
             <version>3.1.1</version>
@@ -221,28 +216,28 @@
             <artifactId>json</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../lib/com.serotonin.json.jar</systemPath>
+            <systemPath>${project.basedir}/lib/com.serotonin.json.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.serotonin</groupId>
             <artifactId>providers</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../lib/com.serotonin.providers.jar</systemPath>
+            <systemPath>${project.basedir}/lib/com.serotonin.providers.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.serotonin</groupId>
             <artifactId>timer</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../lib/com.serotonin.timer.jar</systemPath>
+            <systemPath>${project.basedir}/lib/com.serotonin.timer.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.serotonin</groupId>
             <artifactId>utils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../lib/com.serotonin.utils.jar</systemPath>
+            <systemPath>${project.basedir}/lib/com.serotonin.utils.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
@@ -274,12 +269,41 @@
                     <excludes>
                         <exclude>${project.basedir}/classes/**</exclude>
                     </excludes>
+                    <outputDirectory>
+                        ${project.basedir}/lib
+                    </outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>lib</directory>
+                            <includes>
+                                <include>*.jar</include>
+                            </includes>
+                            <excludes>
+                                <exclude>com.serotonin.utils.jar</exclude>
+                                <exclude>com.serotonin.json.jar</exclude>
+                                <exclude>com.serotonin.timer.jar</exclude>
+                                <exclude>com.serotonin.providers.jar</exclude>
+                            </excludes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 
-    <distributionManagement>
+<!--    <distributionManagement>
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Release Repository</name>
@@ -290,5 +314,5 @@
             <name>Nexus Snapshot Repository</name>
             <url>http://192.168.1.113:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
-    </distributionManagement>
+    </distributionManagement>-->
 </project>
