@@ -299,12 +299,14 @@ public class ModuleRegistry {
         postDefaults.add(new DefaultPagesDefinition() {
             @Override
             public String getLoginPageUri(HttpServletRequest request, HttpServletResponse response) {
-                return "/login.htm";
+//                return "/login.htm";
+                return "/eazy_login.htm";
             }
 
             @Override
             public String getLoggedInPageUri(HttpServletRequest request, HttpServletResponse response, User user) {
-                return "/data_point_details.shtm";
+//                return "/data_point_details.shtm";
+                return "/main.shtm";
             }
 
             @Override

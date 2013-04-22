@@ -95,14 +95,7 @@ public class DataPointDao extends BaseDao {
             Collections.sort(dps, comparator);
         return dps;
     }
-    public List<DataPointVO> getDataPoints(String deviceName, Comparator<DataPointVO> comparator) {
-        List<DataPointVO> dps = query(DATA_POINT_SELECT + " where dp.deviceName=?", new Object[] { deviceName },
-                new DataPointRowMapper());
-        setRelationalData(dps);
-        if (comparator != null)
-            Collections.sort(dps, comparator);
-        return dps;
-    }
+
     public DataPointVO getDataPoint(int id) {
         return getDataPoint(id, true);
     }
@@ -675,14 +668,14 @@ public class DataPointDao extends BaseDao {
         }
     }
 
-// for use of energy management system
-//        public List<DataPointVO> getDataPoints(String deviceName, Comparator<DataPointVO> comparator) {
-//        List<DataPointVO> dps = query(DATA_POINT_SELECT + " where dp.deviceName=?", new Object[] { deviceName },
-//                new DataPointRowMapper());
-//        setRelationalData(dps);
-//        if (comparator != null)
-//            Collections.sort(dps, comparator);
-//        return dps;
-//    }
+/*//for use of energy management system
+        public List<DataPointVO> getDataPoints(String deviceName, Comparator<DataPointVO> comparator) {
+        List<DataPointVO> dps = query(DATA_POINT_SELECT + " where dp.deviceName=?", new Object[] { deviceName },
+                new DataPointRowMapper());
+        setRelationalData(dps);
+        if (comparator != null)
+            Collections.sort(dps, comparator);
+        return dps;
+    }*/
 
 }
