@@ -102,10 +102,24 @@
 	  dojo.query("#right_content").style("width",rightWidth + "px");
 	  dojo.query("#right_content").style("height",rightHeight + "px");
 	}
+
+require(["dojo/ready","dojo/query!css3","dojo/NodeList-traverse"],function(ready,query,dom){
+    ready(function(){
+        query(".tit > ul").style('display','none');
+        query(".tit > ul").at(0).style('display','block');
+        query(".tit").onclick(function(e){
+        query(".tit > ul").style('display','none');
+        query(e.target).next().style('display','block');
+        });
+    });
+});
+
     </script>
   </c:if>
+
   <c:forEach items="<%= Common.moduleScripts %>" var="modScript">
     <script type="text/javascript" src="/${modScript}"></script></c:forEach>
+
 </head>
 
 <body class="${theme}">
@@ -212,5 +226,9 @@
 </c:if>
 --%>
 
+<script type="text/javascript">
+
+
+</script>
 </body>
 </html>
