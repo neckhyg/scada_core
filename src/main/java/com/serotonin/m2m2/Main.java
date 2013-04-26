@@ -101,7 +101,7 @@ public class Main
     try {
       new Thread(pep).start();
 
-      File[] zipFiles = new File(new StringBuilder().append(Common.MA_HOME).append("/").append("web").append("/").append("modules").toString()).listFiles(new FilenameFilter()
+      File[] zipFiles = new File(new StringBuilder().append(Common.MA_HOME).append("/web/modules").toString()).listFiles(new FilenameFilter()
       {
         public boolean accept(File dir, String name)
         {
@@ -127,7 +127,7 @@ public class Main
           if (!ModuleUtils.validateName(moduleName)) {
             throw new RuntimeException(new StringBuilder().append("Module name '").append(moduleName).append("' is invalid").toString());
           }
-          File moduleDir = new File(new StringBuilder().append(Common.MA_HOME).append("/").append("web").append("/").append("modules").toString(), moduleName);
+          File moduleDir = new File(new StringBuilder().append(Common.MA_HOME).append("/web/modules").toString(), moduleName);
 
           if (moduleDir.exists())
             LOG.info(new StringBuilder().append("Upgrading module ").append(moduleName).toString());
@@ -203,7 +203,10 @@ public class Main
         {
           zip.close();
         }
+
+         file.delete();
       }
+
 
     }
     finally
@@ -258,7 +261,7 @@ public class Main
   {
     Common.documentationManifest.parseManifestFile("web/WEB-INF/dox");
 
-    File modulesPath = new File(new StringBuilder().append(Common.MA_HOME).append("/").append("web").append("/").append("modules").toString());
+    File modulesPath = new File(new StringBuilder().append(Common.MA_HOME).append("/web/modules").toString());
     File[] modules = modulesPath.listFiles();
     if (modules == null) {
       modules = new File[0];

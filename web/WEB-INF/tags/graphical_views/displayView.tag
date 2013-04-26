@@ -2,7 +2,7 @@
     Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
     @author Matthew Lohbihler
 --%><%@include file="/WEB-INF/tags/decl.tagf"%><%--
---%><%@ taglib prefix="views" tagdir="/WEB-INF/tags/graphicalViews" %><%--
+--%><%@ taglib prefix="views" tagdir="/WEB-INF/tags/graphical_views" %><%--
 --%><%@tag body-content="empty"%><%--
 --%><%@attribute name="view" type="com.serotonin.m2m2.gviews.GraphicalView" required="true" rtexprvalue="true"%><%--
 --%><%@attribute name="emptyMessageKey" required="true"%>
