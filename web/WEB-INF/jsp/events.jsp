@@ -156,7 +156,7 @@
       <fmt:message key="events.acknowledgeAll"/>
       <tag:img png="tick" onclick="MiscDwr.acknowledgeAllPendingEvents()" title="events.acknowledgeAll"/>&nbsp;
       <fmt:message key="events.silenceAll"/>
-      <tag:img png="sound_mute" onclick="silenceAll()" title="events.silenceAll"/><br/>
+      <tag:img png="sound_mute_small" onclick="silenceAll()" title="events.silenceAll"/><br/>
     </div>
     <div id="pendingAlarms" style="clear:both;"></div>
     <div id="noAlarms" style="display:none;padding:6px;text-align:center;">

@@ -11,10 +11,10 @@
       <tag:img png="tick" id="ackImg${event.id}" onclick="ackEvent(${event.id})" title="events.acknowledge" style="display:inline;"/>
       <c:choose>
         <c:when test="${event.silenced}">
-          <tag:img png="sound_mute" id="silenceImg${event.id}" onclick="toggleSilence(${event.id})" title="events.unsilence" style="display:inline;"/>
+          <tag:img png="sound_mute_small" id="silenceImg${event.id}" onclick="toggleSilence(${event.id})" title="events.unsilence" style="display:inline;"/>
         </c:when>
         <c:otherwise>
-          <tag:img png="sound_none" id="silenceImg${event.id}" onclick="toggleSilence(${event.id})" title="events.silence" style="display:inline;"/>
+          <tag:img png="sound_none_small" id="silenceImg${event.id}" onclick="toggleSilence(${event.id})" title="events.silence" style="display:inline;"/>
         </c:otherwise>
       </c:choose>
     </c:otherwise>
