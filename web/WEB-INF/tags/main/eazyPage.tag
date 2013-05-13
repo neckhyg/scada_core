@@ -62,18 +62,18 @@
     mango.i18n = <sst:convert obj="${clientSideMessages}"/>;
   </script>
   <c:if test="${!simple}">
-  <%--
     <script type="text/javascript" src="/resources/header.js"></script>
-    --%>
     <script type="text/javascript">
       dwr.util.setEscapeHtml(false);
       dojo.require("dijit.layout.ContentPane");
       dojo.ready(setRightContentSize);
+
+      dwr.util.setEscapeHtml(false);
       <c:if test="${!empty sessionUser}">
-     //   dojo.ready(mango.header.onLoad);
-     //   dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
+        dojo.ready(mango.header.onLoad);
+        dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
       </c:if>
-      
+
       function setLocale(locale) {
           MiscDwr.setLocale(locale, function() { window.location = window.location });
       }
@@ -102,17 +102,6 @@
 	  dojo.query("#right_content").style("width",rightWidth + "px");
 	  dojo.query("#right_content").style("height",rightHeight + "px");
 	}
-
-require(["dojo/ready","dojo/query!css3","dojo/NodeList-traverse"],function(ready,query,dom){
-    ready(function(){
-        query(".tit > ul").style('display','none');
-        query(".tit > ul").at(0).style('display','block');
-        query(".tit").onclick(function(e){
-        query(".tit > ul").style('display','none');
-        query(e.target).next().style('display','block');
-        });
-    });
-});
 
     </script>
   </c:if>
@@ -151,7 +140,16 @@ require(["dojo/ready","dojo/query!css3","dojo/NodeList-traverse"],function(ready
 		</div>
 	</div>
 
-	<div class="top_mid"></div>
+	<div class="top_mid">
+	    <c:if test="${!simple}">
+        <a href="alarm.shtm" style="color:white">
+          <span id="__header__alarmLevelDiv" style="display:none;">
+            <img id="__header__alarmLevelImg" src="/images/spacer.gif" alt="" title=""/>
+            <span id="__header__alarmLevelText"></span>
+          </span>
+        </a>
+    </c:if>
+	</div>
 
 </div>
  
@@ -161,15 +159,15 @@ require(["dojo/ready","dojo/query!css3","dojo/NodeList-traverse"],function(ready
     <div class="tit">  
         <span class="innerTit">监测数据</span>
         <ul>  
-        <li><a href="monitoring_point.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
+        <li><a href="monitoring_point.shtm?viewId=7">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
         <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
         </ul>  
     </div>  
     <div class="tit">
         <span class="innerTit">报表统计</span>
         <ul>
-		<li><a href="data_analysis.shtm">&nbsp;&nbsp;&nbsp;&nbsp;数据分析</a></li>
-		<li><a href="statistic.shtm">&nbsp;&nbsp;&nbsp;&nbsp;统计</a></li>
+<!--		<li><a href="data_analysis.shtm">&nbsp;&nbsp;&nbsp;&nbsp;数据分析</a></li> 
+		<li><a href="statistic.shtm">&nbsp;&nbsp;&nbsp;&nbsp;统计</a></li> -->
 		<li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
         </ul>
     </div>
@@ -182,7 +180,8 @@ require(["dojo/ready","dojo/query!css3","dojo/NodeList-traverse"],function(ready
     <div class="tit">
         <span class="innerTit">排污企业记录</span>
         <ul>
-		<li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业记录</a></li>
+		<li><a href="company_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业</a></li>
+		<li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
         </ul>
     </div>
     <div class="tit">

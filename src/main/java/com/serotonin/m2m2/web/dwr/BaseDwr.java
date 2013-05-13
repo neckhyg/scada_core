@@ -222,9 +222,10 @@ abstract public class BaseDwr {
     /**
      * Logs a user comment after validation.
      * 
-     * @param eventId
+     * @param typeId
+     * @param referenceId
      * @param comment
-     * @return
+     * @return UserComment
      */
     @DwrPermission(user = true)
     public UserComment addUserComment(int typeId, int referenceId, String comment) {
