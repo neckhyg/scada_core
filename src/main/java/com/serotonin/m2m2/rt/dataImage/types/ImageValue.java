@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.rt.dataImage.types;
 
 import java.awt.Image;
@@ -18,9 +14,6 @@ import com.serotonin.m2m2.DataTypes;
 import com.serotonin.util.ArrayUtils;
 import com.serotonin.util.image.ImageUtils;
 
-/**
- * @author Matthew Lohbihler
- */
 public class ImageValue extends DataValue implements Comparable<ImageValue> {
     private static final String FILENAME_PREFIX = "img";
 

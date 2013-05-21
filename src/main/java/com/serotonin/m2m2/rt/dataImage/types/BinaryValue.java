@@ -1,14 +1,7 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.rt.dataImage.types;
 
 import com.serotonin.m2m2.DataTypes;
 
-/**
- * @author Matthew Lohbihler
- */
 public class BinaryValue extends DataValue implements Comparable<BinaryValue> {
     public static final BinaryValue ZERO = new BinaryValue(false);
     public static final BinaryValue ONE = new BinaryValue(true);

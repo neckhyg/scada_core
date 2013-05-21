@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.rt.dataImage.types;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -10,9 +6,6 @@ import com.serotonin.InvalidArgumentException;
 import com.serotonin.ShouldNeverHappenException;
 import com.serotonin.m2m2.DataTypes;
 
-/**
- * @author Matthew Lohbihler
- */
 abstract public class DataValue {
     public static DataValue stringToValue(String valueStr, int dataType) {
         switch (dataType) {

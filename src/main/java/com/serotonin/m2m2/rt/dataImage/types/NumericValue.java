@@ -6,10 +6,10 @@ package com.serotonin.m2m2.rt.dataImage.types;
 
 import com.serotonin.m2m2.DataTypes;
 
-/**
- * @author Matthew Lohbihler
- */
 public class NumericValue extends DataValue implements Comparable<NumericValue> {
+
+    private final double value;
+
     public static NumericValue parseNumeric(String s) {
         if (s == null)
             return new NumericValue(0);
@@ -21,8 +21,6 @@ public class NumericValue extends DataValue implements Comparable<NumericValue> 
         }
         return new NumericValue(0);
     }
-
-    private final double value;
 
     public NumericValue(double value) {
         this.value = value;

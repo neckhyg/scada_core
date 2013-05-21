@@ -1,15 +1,11 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.rt.dataImage.types;
 
 import com.serotonin.m2m2.DataTypes;
 
-/**
- * @author Matthew Lohbihler
- */
 public class MultistateValue extends DataValue implements Comparable<MultistateValue> {
+
+    private final int value;
+
     public static MultistateValue parseMultistate(String s) {
         if (s == null)
             return new MultistateValue(0);
@@ -21,8 +17,6 @@ public class MultistateValue extends DataValue implements Comparable<MultistateV
         }
         return new MultistateValue(0);
     }
-
-    private final int value;
 
     public MultistateValue(int value) {
         this.value = value;

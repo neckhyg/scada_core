@@ -314,26 +314,26 @@ public class ModuleRegistry {
             }
         });
 
-        preDefaults.add(createMenuItemDefinition(Visibility.USER, "header.dataPoints", "icon_comp",
+        preDefaults.add(createMenuItemDefinition(Visibility.USER, "header.dataPoints", "green_dot_32",
                 "/data_point_details.shtm"));
-        preDefaults.add(createMenuItemDefinition(Visibility.USER, "header.alarms", "alarm", "/events.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.USER, "header.alarms", "alarm_32", "/events.shtm"));
 
-        preDefaults.add(createMenuItemDefinition(Visibility.DATA_SOURCE, "header.eventHandlers", "events",
+        preDefaults.add(createMenuItemDefinition(Visibility.DATA_SOURCE, "header.eventHandlers", "event_32",
                 "/event_handlers.shtm"));
-        preDefaults.add(createMenuItemDefinition(Visibility.DATA_SOURCE, "header.dataSources", "icon_ds",
+        preDefaults.add(createMenuItemDefinition(Visibility.DATA_SOURCE, "header.dataSources", "pencil_32",
                 "/data_sources.shtm"));
 
         preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.pointHierarchy", "folder_brick",
                 "/point_hierarchy.shtm"));
-        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.mailingLists", "book",
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.mailingLists", "mail_32",
                 "/mailing_lists.shtm"));
         preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.publishers", "transmit",
                 "/publishers.shtm"));
-        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.systemSettings", "settings",
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.systemSettings", "settings_32",
                 "/system_settings.shtm"));
         preDefaults
                 .add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.modules", "modules", "/modules.shtm"));
-        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.emport", "emport", "/emport.shtm"));
+        preDefaults.add(createMenuItemDefinition(Visibility.ADMINISTRATOR, "header.emport", "emport_32", "/emport.shtm"));
 
         preDefaults.add(createMenuItemDefinition(Visibility.ANONYMOUS, "header.help", "help", "/help.shtm"));
     }

@@ -50,7 +50,7 @@
           <m2m2:menuItem href="/logout.htm" png="logout" key="header.logout"/>
           <tag:img id="userMutedImg" onclick="MiscDwr.toggleUserMuted(setUserMuted)" onmouseover="hideLayersIgnoreMissing('userHome', 'localeEdit')"/>
           <div style="display: inline;" onmouseover="hideLayersIgnoreMissing('localeEdit'); showMenu('userHome', null, 10, 10);">
-            <tag:img png="home" title="header.goHomeUrl" onclick="goHomeUrl();"/>
+            <tag:img png="icons/home_32" title="header.goHomeUrl" onclick="goHomeUrl();"/>
             <div id="userHome" style="visibility:hidden;left:0px;top:15px;" class="labelDiv" onmouseout="hideLayer(this)">
               <tag:img png="house_link" title="header.setHomeUrl" onclick="setHomeUrl()" onmouseover="hideLayersIgnoreMissing('localeEdit')"/>
               <tag:img png="house_delete" title="header.deleteHomeUrl" onclick="deleteHomeUrl()" onmouseover="hideLayersIgnoreMissing('localeEdit')"/>

@@ -1,20 +1,17 @@
 <%--
---%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<%@tag pageEncoding="utf-8" import="com.serotonin.m2m2.module.UrlMappingDefinition"%>
-<%@tag import="com.serotonin.m2m2.module.UriMappingDefinition"%>
-<%@tag import="com.serotonin.m2m2.module.ModuleRegistry"%>
-<%@tag import="com.serotonin.m2m2.Common"%>
-<%@include file="/WEB-INF/tags/decl.tagf"%>
-<%@ taglib prefix="page" tagdir="/WEB-INF/tags/page" %>
-<%@attribute name="styles" fragment="true" %>
-<%@attribute name="dwr" rtexprvalue="true" %>
-<%@attribute name="js" %>
-<%@attribute name="onload" %>
+--%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><%--
+--%><%@tag pageEncoding="utf-8" import="com.serotonin.m2m2.module.UrlMappingDefinition"%><%--
+--%><%@tag import="com.serotonin.m2m2.module.UriMappingDefinition"%><%--
+--%><%@tag import="com.serotonin.m2m2.module.ModuleRegistry"%><%--
+--%><%@tag import="com.serotonin.m2m2.Common"%><%--
+--%><%@include file="/WEB-INF/tags/decl.tagf"%><%--
+--%><%@ taglib prefix="page" tagdir="/WEB-INF/tags/page" %><%--
+--%><%@attribute name="styles" fragment="true" %><%--
+--%><%@attribute name="dwr" rtexprvalue="true" %><%--
+--%><%@attribute name="js" %><%--
+--%><%@attribute name="onload" %>
 
 <c:set var="theme">claro</c:set>
-<%-- <c:set var="theme">nihilo</c:set> --%>
-<%-- <c:set var="theme">soria</c:set> --%>
-<%-- <c:set var="theme">tundra</c:set> --%>
 <html>
 <head>
   <title><c:choose>
@@ -53,7 +50,7 @@
   <script type="text/javascript" src="/dwr/util.js"></script>
   <script type="text/javascript" src="/dwr/interface/MiscDwr.js"></script>
   <script type="text/javascript" src="/resources/soundmanager2-nodebug-jsmin.js"></script>
-  <script type="text/javascript" src="/resources/common.js"></script>
+  <script type="text/javascript" src="${modulePath}/web/js/common.js"></script>
   <c:forEach items="${dwr}" var="dwrname">
     <script type="text/javascript" src="/dwr/interface/${dwrname}.js"></script></c:forEach>
   <c:forEach items="${js}" var="jspath">
@@ -62,16 +59,23 @@
     mango.i18n = <sst:convert obj="${clientSideMessages}"/>;
   </script>
   <c:if test="${!simple}">
-    <script type="text/javascript" src="/resources/header.js"></script>
+    <script type="text/javascript" src="${modulePath}/web/js/header.js"></script>
     <script type="text/javascript">
       dwr.util.setEscapeHtml(false);
       dojo.require("dijit.layout.ContentPane");
+
       dojo.ready(setRightContentSize);
 
       dwr.util.setEscapeHtml(false);
       <c:if test="${!empty sessionUser}">
-        dojo.ready(mango.header.onLoad);
-        dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
+      require(["dojo/ready"],function(ready){
+     ready(function(){
+    mango.header.onLoad();
+    setUserMuted(${sessionUser.muted});
+     });
+      });
+       // dojo.ready(mango.header.onLoad);
+       // dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
       </c:if>
 
       function setLocale(locale) {
@@ -112,26 +116,14 @@
 </head>
 
 <body class="${theme}">
-<%--
-<table id="mainContainer" width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr id="headerArea">
-    <td>
-      <page:header/>
-      <page:toolbar/>
-    </td>
-  </tr>
---%>
-
 
  <div id="menu">
 	<div class="t2"></div>
 	<div class="top_left">
-          <img src="images/logo.png"
-			style="padding-left: 20px; float: left;">
+          <img src="images/logo.png" style="padding-left: 20px; float: left;">
 	</div>
 
 	<div class="top_right">
-
 		<div class="top_right1">
 			<ul>
 				<li><a href="http://localhost:8080/data_point_details.shtm"><img src="${modulePath}/web/images/home.png" /><span>配置主页</span></a></li>
@@ -142,20 +134,18 @@
 
 	<div class="top_mid">
 	    <c:if test="${!simple}">
-        <a href="alarm.shtm" style="color:white">
-          <span id="__header__alarmLevelDiv" style="display:none;">
-            <img id="__header__alarmLevelImg" src="/images/spacer.gif" alt="" title=""/>
-            <span id="__header__alarmLevelText"></span>
-          </span>
-        </a>
-    </c:if>
+            <a href="alarm.shtm" style="color:white">
+                <span id="__header__alarmLevelDiv" style="display:none;">
+                    <img id="__header__alarmLevelImg" src="/images/spacer.gif" alt="" title=""/>
+                <span id="__header__alarmLevelText"></span>
+                </span>
+            </a>
+        </c:if>
 	</div>
-
-</div>
+ </div>
  
     <div id="left_menu">
-      
-      <div class="sideBarNav">  
+      <div class="sideBarNav">
     <div class="tit">  
         <span class="innerTit">监测数据</span>
         <ul>  
@@ -166,8 +156,6 @@
     <div class="tit">
         <span class="innerTit">报表统计</span>
         <ul>
-<!--		<li><a href="data_analysis.shtm">&nbsp;&nbsp;&nbsp;&nbsp;数据分析</a></li> 
-		<li><a href="statistic.shtm">&nbsp;&nbsp;&nbsp;&nbsp;统计</a></li> -->
 		<li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
         </ul>
     </div>
@@ -192,42 +180,14 @@
     </div>
 </div>
 </div>
-<!-- 
-      <div dojoType="SplitContainer" orientation="horizontal" sizerWidth="3" activeSizing="true" class="borderDiv"
-              widgetId="splitContainer" style="width:100%; height: 300px;">
-       -->
+
 
         <jsp:doBody/>
-        <!--
-         <div dojoType="ContentPane" widgetId="right_content" name="right_content" id="right_content"> </div>
-         -->
-        
-       
-<%--
-  <tr id="footerArea">
-    <td>
-      <table width="100%" cellspacing="0" cellpadding="0" border="0">
-        <tr><td colspan="2">&nbsp;</td></tr>
-        <tr>
-          <td colspan="2" class="footer" align="center">&copy;2006-2012 EazyTec Software Technologies Inc., <fmt:message key="footer.rightsReserved"/></td>
-        </tr>
-        <tr>
-          <td colspan="2" align="center"><a href="http://www.eazytec.com/" ><b></b>Distributed by EazyTec Information Inc.</a></td>
-        </tr>
-      </table>
-    </td>
-  </tr>
---%>
 
-<%--
+
 <c:if test="${!empty onload}">
   <script type="text/javascript">dojo.ready(${onload});</script>
 </c:if>
---%>
 
-<script type="text/javascript">
-
-
-</script>
 </body>
 </html>

@@ -860,18 +860,18 @@ function toggleSilence(eventId) {
 function setSilenced(eventId, silenced) {
     var imgNode = $("silenceImg"+ eventId);
     if (silenced)
-        updateImg(imgNode, "/images/sound_mute.png", mango.i18n["events.unsilence"], true, "inline");
+        updateImg(imgNode, "/images/icons/sound_mute.png", mango.i18n["events.unsilence"], true, "inline");
     else
-        updateImg(imgNode, "/images/sound_none.png", mango.i18n["events.silence"], true, "inline");
+        updateImg(imgNode, "/images/icons/sound_none.png", mango.i18n["events.silence"], true, "inline");
 }
 
 function setUserMuted(muted) {
     mango.soundPlayer.setMute(muted);
     var imgNode = $("userMutedImg");
     if (muted)
-        updateImg(imgNode, "/images/sound_mute.png", mango.i18n["header.unmute"], true, "inline");
+        updateImg(imgNode, "/images/icons/sound_mute.png", mango.i18n["header.unmute"], true, "inline");
     else
-        updateImg(imgNode, "/images/sound_none.png", mango.i18n["header.mute"], true, "inline");
+        updateImg(imgNode, "/images/icons/sound_none.png", mango.i18n["header.mute"], true, "inline");
 }
 
 function ackEvent(eventId) {

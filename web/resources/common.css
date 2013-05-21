@@ -162,12 +162,12 @@ a.rowHeaderLink, a.rowHeaderLink:visited, a.rowHeaderLink:link, a.rowHeaderLink:
 .formWarning, .formWarning, .formWarning { padding-left: 10px; }
 select, input, textarea {
 	color: #333333;
-	border: 1px solid #CCCCCC;
+	border: 1px solid #F07800;
 	padding: 2px;
 	margin-bottom: 2px;
 }
 input[type="checkbox"], input[type="radio"] {
-	color: #CCCCCC;
+	color: #F07800;
 	border: 0;
 }
 .formVeryShort {
