@@ -27,8 +27,6 @@ import com.serotonin.m2m2.vo.publish.PublisherVO;
 
 /**
  * An event class specifies the type of event that was raised.
- * 
- * @author Matthew Lohbihler
  */
 //Required to prevent properties from being written
 @JsonEntity

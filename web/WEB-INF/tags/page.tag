@@ -26,8 +26,8 @@
   <meta http-equiv="content-type" content="application/xhtml+xml;charset=utf-8"/>
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="Copyright" content="&copy;2006-2011 Serotonin Software Technologies Inc."/>
-  <meta name="DESCRIPTION" content="Mango Automation from Infinite Automation Systems"/>
-  <meta name="KEYWORDS" content="Mango Automation from Infinite Automation Systems"/>
+  <meta name="DESCRIPTION" content="EazyTec Software"/>
+  <meta name="KEYWORDS" content="EazyTec Software"/>
   
   <c:if test="${empty dojoURI}">
     <c:set var="dojoURI">http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/</c:set>
