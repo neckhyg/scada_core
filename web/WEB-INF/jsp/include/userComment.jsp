@@ -1,6 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
 --%>
 <%--
   Usage:
@@ -10,6 +8,7 @@
     For data point comments, ...
 --%>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="com.serotonin.m2m2.vo.UserComment"%>
 <script type="text/javascript">
   dojo.require("dijit.Dialog");

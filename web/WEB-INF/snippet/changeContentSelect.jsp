@@ -6,6 +6,7 @@
   This snippet supports only multistate types. In particular, it only supports
   point views with a MultistateRenderer.
 --%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/snippet/common.jsp" %>
 <fmt:message key="common.chooseSetPoint"/>:<br/>
 <sst:select value="${m2m2:rawText(point, pointValue)}" onchange="mango.view.setPoint(${point.id}, '${componentId}', this.value)">

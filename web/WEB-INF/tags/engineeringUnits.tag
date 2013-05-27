@@ -1,6 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
 --%><%@include file="/WEB-INF/tags/decl.tagf"%><%--
 --%><%@tag import="org.joda.time.DateTimeConstants"%><%--
 --%><%@tag body-content="empty"%><%--

@@ -4,6 +4,9 @@
 --%>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 <%@page import="com.serotonin.m2m2.web.mvc.controller.DataPointEditController"%>
+
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <table>
   <tr>
     <td colspan="2" align="center">
