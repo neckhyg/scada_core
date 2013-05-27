@@ -1,8 +1,5 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+--%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%-- The snippet used for table charts in rollovers --%>
 <%@ include file="/WEB-INF/snippet/common.jsp" %>
 <c:choose>

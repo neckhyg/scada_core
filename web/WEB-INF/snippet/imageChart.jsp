@@ -1,6 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
 --%><%-- The snippet used for image charts in rollovers --%><%--
 --%><%@ include file="/WEB-INF/jsp/include/tech.jsp" %><%--
 --%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %><%--
