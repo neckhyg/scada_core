@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.email;
 
 import java.io.IOException;
@@ -19,9 +16,7 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateScalarModel;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class UsedImagesDirective implements TemplateDirectiveModel {
     private final List<String> imageList = new ArrayList<String>();
 

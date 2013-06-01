@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.web.mvc.controller;
 
 import java.util.ArrayList;
@@ -31,9 +27,7 @@ import com.serotonin.m2m2.vo.publish.PublisherVO;
 import com.serotonin.m2m2.web.dwr.beans.EventInstanceBean;
 import com.serotonin.m2m2.web.taglib.Functions;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PublisherEditController extends ParameterizableViewController {
     private String errorViewName;
 

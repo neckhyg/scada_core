@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.module;
 
 import java.util.Collections;
@@ -18,7 +14,6 @@ import javax.servlet.http.HttpServlet;
  * 
  * All methods in this definition are analogous to servlet and servlet-mapping elements of the web.xml file.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class ServletDefinition extends ModuleElementDefinition {
     /**

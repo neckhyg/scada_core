@@ -1,7 +1,8 @@
 <%--
---%><%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%>
+<%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 <div class="borderDiv marB marR">
   <table>
     <tr><td colspan="3">

@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt;
 
 import java.util.ArrayList;
@@ -30,9 +27,7 @@ import com.serotonin.m2m2.vo.event.EventHandlerVO;
 import com.serotonin.m2m2.vo.permission.Permissions;
 import com.serotonin.util.ILifecycle;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class EventManager implements ILifecycle {
 	private final Log log = LogFactory.getLog(EventManager.class);
 	private static final int RECENT_EVENT_PERIOD = 1000 * 60 * 10; // 10

@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.maint.work;
 
 import java.util.ArrayList;
@@ -11,9 +8,7 @@ import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 import com.serotonin.m2m2.rt.dataImage.SetPointSource;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class SetPointWorkItem implements WorkItem {
     private static final ThreadLocal<List<String>> threadLocal = new ThreadLocal<List<String>>();
     private static final int MAX_RECURSION = 10;

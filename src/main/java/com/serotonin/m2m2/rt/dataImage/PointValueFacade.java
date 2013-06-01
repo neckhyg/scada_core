@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.dataImage;
 
 import java.util.List;
@@ -9,9 +6,7 @@ import java.util.List;
 import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.db.dao.PointValueDao;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PointValueFacade {
     private final int dataPointId;
     private final DataPointRT point;

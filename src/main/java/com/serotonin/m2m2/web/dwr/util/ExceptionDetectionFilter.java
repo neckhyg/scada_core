@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.util;
 
 import java.lang.reflect.InvocationTargetException;
@@ -15,9 +12,7 @@ import org.directwebremoting.AjaxFilterChain;
 import com.serotonin.m2m2.rt.RTException;
 import com.serotonin.m2m2.vo.permission.PermissionException;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ExceptionDetectionFilter implements AjaxFilter {
     private static final Log LOG = LogFactory.getLog(ExceptionDetectionFilter.class);
 

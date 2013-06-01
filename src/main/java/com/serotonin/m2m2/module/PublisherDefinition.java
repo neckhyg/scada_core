@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.module;
 
 import com.serotonin.m2m2.db.dao.PublisherDao;
@@ -35,7 +31,6 @@ import com.serotonin.m2m2.web.dwr.PublisherEditDwr;
  * <dd>Online documentation files, translation files (strongly recommended), publisher commissioning tools.</dd>
  * </dl>
  * 
- * @author Matthew Lohbihler
  */
 abstract public class PublisherDefinition extends ModuleElementDefinition {
     /**

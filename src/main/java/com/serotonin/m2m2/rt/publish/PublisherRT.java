@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.publish;
 
 import java.util.ArrayList;
@@ -27,9 +24,7 @@ import com.serotonin.m2m2.vo.publish.PublisherVO;
 import com.serotonin.timer.FixedRateTrigger;
 import com.serotonin.timer.TimerTask;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class PublisherRT<T extends PublishedPointVO> implements TimeoutClient {
     public static final int POINT_DISABLED_EVENT = 1;
     public static final int QUEUE_SIZE_WARNING_EVENT = 2;

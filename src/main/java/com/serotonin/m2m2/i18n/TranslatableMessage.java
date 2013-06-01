@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.i18n;
 
 import java.text.MessageFormat;
@@ -9,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class TranslatableMessage {
     public static String translate(Translations translations, String key) {
         return translations.translate(key);

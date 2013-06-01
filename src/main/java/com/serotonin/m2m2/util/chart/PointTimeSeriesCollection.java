@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.util.chart;
 
 import java.util.ArrayList;
@@ -10,9 +7,7 @@ import java.util.TimeZone;
 
 import org.jfree.chart.plot.Marker;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PointTimeSeriesCollection {
     private final TimeZone timeZone;
     private List<NumericTimeSeries> numericTimeSeriesCollection;

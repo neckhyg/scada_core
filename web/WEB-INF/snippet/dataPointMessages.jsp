@@ -4,7 +4,7 @@
 --%>
 <%--
   This snippet supports all data types.
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+--%>
 <%@ include file="/WEB-INF/snippet/common.jsp" %>
 <c:if test="${!empty disabled}">
   <tag:img png="warn" title="common.pointWarning"/> <fmt:message key="common.pointWarning"/><br/>

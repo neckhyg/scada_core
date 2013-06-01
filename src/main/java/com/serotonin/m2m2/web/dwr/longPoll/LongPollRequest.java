@@ -1,16 +1,11 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.longPoll;
 
 import java.io.Serializable;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class LongPollRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 

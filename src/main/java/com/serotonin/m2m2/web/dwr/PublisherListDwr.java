@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr;
 
 import java.util.ArrayList;
@@ -17,9 +14,7 @@ import com.serotonin.m2m2.vo.publish.PublisherVO;
 import com.serotonin.m2m2.web.comparators.StringStringPairComparator;
 import com.serotonin.m2m2.web.dwr.util.DwrPermission;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PublisherListDwr extends BaseDwr {
     @DwrPermission(admin = true)
     public ProcessResult init() {

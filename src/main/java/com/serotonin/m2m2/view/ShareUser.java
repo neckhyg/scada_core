@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.view;
 
 import java.io.IOException;
@@ -18,9 +15,7 @@ import com.serotonin.m2m2.i18n.TranslatableJsonException;
 import com.serotonin.m2m2.util.ExportCodes;
 import com.serotonin.m2m2.vo.User;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ShareUser implements JsonSerializable {
     public static final int ACCESS_NONE = 0;
     public static final int ACCESS_READ = 1;

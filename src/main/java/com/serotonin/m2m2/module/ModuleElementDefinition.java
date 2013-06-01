@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.module;
 
 /**
@@ -9,7 +5,6 @@ package com.serotonin.m2m2.module;
  * classes should be extended since it is the sub classes that will be recognized and handled upon startup. Other
  * classes will be ignored.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class ModuleElementDefinition {
     private Module module;

@@ -2,7 +2,6 @@
     Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
     @author Matthew Lohbihler
 --%><%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %><%--
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %><%--
 --%><%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %><%--
 --%><%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %><%--
 --%><%@ taglib prefix="sst" uri="http://www.serotoninsoftware.com/tags" %><%--

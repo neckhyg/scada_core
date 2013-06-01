@@ -1,15 +1,10 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.event.detectors;
 
 import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class DifferenceDetectorRT extends TimeDelayedEventDetectorRT {
     /**
      * State field. Whether the event is currently active or not. This field is used to prevent multiple events being

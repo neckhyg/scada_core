@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.script;
 
 import java.util.Calendar;
@@ -14,9 +11,7 @@ import com.serotonin.m2m2.rt.dataImage.IDataPointValueSource;
 import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 import com.serotonin.m2m2.rt.dataImage.types.DataValue;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class AbstractPointWrapper {
     protected final IDataPointValueSource point;
     protected final ScriptEngine engine;

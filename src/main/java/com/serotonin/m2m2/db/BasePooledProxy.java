@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.db;
 
 import java.io.BufferedReader;
@@ -24,9 +20,7 @@ import com.serotonin.ShouldNeverHappenException;
 import com.serotonin.db.spring.ExtendedJdbcTemplate;
 import com.serotonin.m2m2.Common;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class BasePooledProxy extends DatabaseProxy {
     private final Log log = LogFactory.getLog(BasePooledProxy.class);
     private BasicDataSource dataSource;

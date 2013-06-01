@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.event.type;
 
 import java.io.IOException;
@@ -13,9 +10,7 @@ import com.serotonin.json.type.JsonObject;
 import com.serotonin.m2m2.db.dao.PublisherDao;
 import com.serotonin.m2m2.vo.publish.PublisherVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PublisherEventType extends EventType {
     private int publisherId;
     private int publisherEventTypeId;

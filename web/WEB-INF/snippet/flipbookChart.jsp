@@ -4,7 +4,6 @@
 --%>
 <%-- The snippet used for histories of images --%>
 <%@ include file="/WEB-INF/snippet/common.jsp" %>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@page import="com.serotonin.m2m2.web.servlet.ImageValueServlet"%>
 <c:choose>
   <c:when test="${empty chartData}"><fmt:message key="common.noData"/></c:when>

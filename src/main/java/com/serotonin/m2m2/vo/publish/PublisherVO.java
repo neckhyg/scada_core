@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.vo.publish;
 
 import java.io.IOException;
@@ -39,9 +36,7 @@ import com.serotonin.m2m2.vo.event.EventTypeVO;
 import com.serotonin.util.SerializationHelper;
 import com.serotonin.validation.StringValidation;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class PublisherVO<T extends PublishedPointVO> implements Serializable, JsonSerializable {
     public static final String XID_PREFIX = "PUB_";
 

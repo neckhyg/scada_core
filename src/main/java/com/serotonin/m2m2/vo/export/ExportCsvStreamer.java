@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.vo.export;
 
 import java.io.PrintWriter;
@@ -14,9 +11,7 @@ import com.serotonin.m2m2.i18n.Translations;
 import com.serotonin.m2m2.view.export.CsvWriter;
 import com.serotonin.m2m2.view.text.TextRenderer;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ExportCsvStreamer implements ExportDataStreamHandler {
     private final PrintWriter out;
     private final Translations translations;

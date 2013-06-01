@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.vo.publish;
 
 import java.io.IOException;
@@ -18,9 +15,7 @@ import com.serotonin.m2m2.db.dao.DataPointDao;
 import com.serotonin.m2m2.i18n.TranslatableJsonException;
 import com.serotonin.m2m2.vo.DataPointVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class PublishedPointVO implements Serializable, JsonSerializable {
     private int dataPointId;
 

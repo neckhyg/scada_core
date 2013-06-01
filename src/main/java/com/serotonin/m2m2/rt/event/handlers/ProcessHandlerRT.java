@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.event.handlers;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,9 +7,7 @@ import com.serotonin.m2m2.rt.event.EventInstance;
 import com.serotonin.m2m2.rt.maint.work.ProcessWorkItem;
 import com.serotonin.m2m2.vo.event.EventHandlerVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ProcessHandlerRT extends EventHandlerRT {
     public ProcessHandlerRT(EventHandlerVO vo) {
         this.vo = vo;

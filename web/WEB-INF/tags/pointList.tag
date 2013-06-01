@@ -1,7 +1,7 @@
 <%--
---%><%@tag import="com.serotonin.m2m2.Common"%><%--
---%><%@include file="/WEB-INF/tags/decl.tagf"%><%--
---%><%@attribute name="pointHelpId" %>
+--%><%@tag import="com.serotonin.m2m2.Common"%>
+<%@include file="/WEB-INF/tags/decl.tagf"%>
+<%@attribute name="pointHelpId" %>
 
 <table cellpadding="0" cellspacing="0" id="pointProperties" style="display:none;">
   <tr>

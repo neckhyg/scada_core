@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr;
 
 import java.io.IOException;
@@ -33,9 +30,7 @@ import com.serotonin.m2m2.vo.User;
 import com.serotonin.m2m2.web.dwr.emport.ImportTask;
 import com.serotonin.m2m2.web.dwr.util.DwrPermission;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class EmportDwr extends BaseDwr {
     public static final String EVENT_HANDLERS = "eventHandlers";
     public static final String DATA_SOURCES = "dataSources";

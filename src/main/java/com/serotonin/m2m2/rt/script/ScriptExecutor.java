@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.script;
 
 import java.util.ArrayList;
@@ -20,9 +17,7 @@ import com.serotonin.m2m2.rt.dataImage.IDataPointValueSource;
 import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 import com.serotonin.m2m2.rt.dataImage.types.DataValue;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ScriptExecutor {
     private static final String SCRIPT_PREFIX = "function __scriptExecutor__() {";
     private static final String SCRIPT_SUFFIX = "\r\n}\r\n__scriptExecutor__();";

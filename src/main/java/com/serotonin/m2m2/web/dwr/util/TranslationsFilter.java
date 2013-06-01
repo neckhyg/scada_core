@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.util;
 
 import java.lang.reflect.Method;
@@ -15,9 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.support.JstlUtils;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class TranslationsFilter implements AjaxFilter {
     private String messageSourceKey = "messageSource";
 

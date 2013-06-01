@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.module;
 
 import java.util.ArrayList;
@@ -27,7 +24,6 @@ import com.serotonin.m2m2.vo.User;
 /**
  * The registry of all modules in an MA instance.
  * 
- * @author Matthew Lohbihler
  */
 public class ModuleRegistry {
     private static final Object LOCK = new Object();

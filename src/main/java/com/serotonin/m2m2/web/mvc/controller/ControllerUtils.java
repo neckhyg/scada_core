@@ -24,9 +24,7 @@ import com.serotonin.m2m2.vo.DataPointSummary;
 import com.serotonin.m2m2.vo.User;
 import com.serotonin.m2m2.vo.permission.Permissions;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ControllerUtils {
     public static String translate(HttpServletRequest request, String key, Object... args) {
         if (args == null || args.length == 0)

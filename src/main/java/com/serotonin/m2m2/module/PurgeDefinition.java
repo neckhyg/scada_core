@@ -1,13 +1,8 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.module;
 
 /**
  * Provides a hook into the system purge process.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class PurgeDefinition extends ModuleElementDefinition {
     /**

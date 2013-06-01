@@ -4,7 +4,6 @@
 --%>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 <%@page import="com.serotonin.m2m2.vo.event.PointEventDetectorVO"%>
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="borderDiv">
   <table id="eventDetectorTable">
     <tr><td colspan="2">
