@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.maint.work;
 
 import java.io.IOException;
@@ -19,9 +16,7 @@ import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.i18n.TranslatableMessage;
 import com.serotonin.m2m2.rt.event.type.SystemEventType;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ProcessWorkItem implements WorkItem {
     static final Log LOG = LogFactory.getLog(ProcessWorkItem.class);
 

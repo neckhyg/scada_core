@@ -1,5 +1,7 @@
 <%--
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%>
 <%@ include file="/WEB-INF/snippet/common.jsp" %>
 <fmt:message key="common.enterSetPoint"/>:<br/>
 <input id="txtChange${componentId}" type="text" value="${m2m2:rawText(point, pointValue)}" 

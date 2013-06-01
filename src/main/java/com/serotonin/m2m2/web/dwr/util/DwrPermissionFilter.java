@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.util;
 
 import java.lang.reflect.Method;
@@ -13,9 +10,7 @@ import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.vo.User;
 import com.serotonin.m2m2.vo.permission.PermissionException;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DwrPermissionFilter implements AjaxFilter {
     public Object doFilter(Object obj, Method method, Object[] params, AjaxFilterChain chain) throws Exception {
         DwrPermission permission = method.getAnnotation(DwrPermission.class);

@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr;
 
 import java.util.Iterator;
@@ -18,9 +15,7 @@ import com.serotonin.m2m2.vo.publish.PublishedPointVO;
 import com.serotonin.m2m2.vo.publish.PublisherVO;
 import com.serotonin.m2m2.web.dwr.util.DwrPermission;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PublisherEditDwr extends BaseDwr {
     protected ProcessResult trySave(PublisherVO<? extends PublishedPointVO> p) {
         ProcessResult response = new ProcessResult();

@@ -1,9 +1,9 @@
 <%--
---%><%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%>
+<%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 <%@page import="com.serotonin.m2m2.web.mvc.controller.DataPointEditController"%>
-
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
 <table>
   <tr>
     <td colspan="2" align="center">

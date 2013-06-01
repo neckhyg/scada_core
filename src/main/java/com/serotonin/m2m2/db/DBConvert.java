@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.db;
 
 import java.sql.Connection;
@@ -19,9 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import com.serotonin.m2m2.module.DatabaseSchemaDefinition;
 import com.serotonin.m2m2.module.ModuleRegistry;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DBConvert {
     private static final Log LOG = LogFactory.getLog(DBConvert.class);
 

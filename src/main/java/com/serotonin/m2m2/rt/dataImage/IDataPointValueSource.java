@@ -1,14 +1,9 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.dataImage;
 
 import java.util.List;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public interface IDataPointValueSource {
     List<PointValueTime> getLatestPointValues(int limit);
 

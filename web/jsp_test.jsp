@@ -1,5 +1,5 @@
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
-<%@ taglib prefix="jview" tagdir="/WEB-INF/tags/jspViews" %>
+<%@ taglib prefix="jview" tagdir="/WEB-INF/tags/jsp_views" %>
 <html>
 <head>
   <link href="resources/common.css" type="text/css" rel="stylesheet"/>

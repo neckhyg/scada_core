@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.view.chart;
 
 import java.io.IOException;
@@ -16,9 +13,7 @@ import com.serotonin.m2m2.rt.dataImage.DataPointRT;
 import com.serotonin.m2m2.view.ImplDefinition;
 import com.serotonin.m2m2.vo.DataPointVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ImageFlipbookRenderer extends BaseChartRenderer {
     private static ImplDefinition definition = new ImplDefinition("chartRendererImageFlipbook", "FLIPBOOK",
             "chartRenderer.flipbook", new int[] { DataTypes.IMAGE });

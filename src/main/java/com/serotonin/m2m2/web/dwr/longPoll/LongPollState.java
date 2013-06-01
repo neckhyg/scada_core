@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.longPoll;
 
 import java.io.ObjectInputStream;
@@ -12,9 +9,7 @@ import java.util.Map;
 
 import com.serotonin.m2m2.web.dwr.beans.PointDetailsState;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class LongPollState implements Serializable {
     private static final long serialVersionUID = 1L;
 

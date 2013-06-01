@@ -1,14 +1,9 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.script;
 
 import com.serotonin.m2m2.util.DateUtils;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class WrapperContext {
     private final long runtime;
 

@@ -1,6 +1,11 @@
 <%--
---%><%-- This snippet supports only binary types. In particular, it only supports point views with a BinaryTextRenderer.
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%>
+<%--
+  This snippet supports only binary types. In particular, it only supports
+  point views with a BinaryTextRenderer.
+--%>
 <%@ include file="/WEB-INF/snippet/common.jsp" %>
 <fmt:message key="common.chooseSetPoint"/>:<br/>
 <input type="radio"${pointValue.booleanValue == false ? " checked=\"checked\"" : ""} name="rbChange${componentId}"

@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.vo.pair;
 
 import java.sql.ResultSet;
@@ -9,9 +6,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class IntegerPair {
     public static final RowMapper<IntegerPair> ROW_MAPPER = new RowMapper<IntegerPair>() {
         @Override

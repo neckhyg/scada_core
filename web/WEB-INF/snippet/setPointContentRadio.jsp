@@ -1,5 +1,7 @@
 <%--
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%>
 <input type="hidden" id="setPointValue${idSuffix}" value=""/>
 <input type="radio"${text == point.textRenderer.zeroLabel ? " checked=\"checked\"" : ""} 
         name="setPointValueRB${idSuffix}" id="setPointValueRBF${idSuffix}" 

@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.publish;
 
 import com.serotonin.m2m2.Common;
@@ -9,9 +6,7 @@ import com.serotonin.m2m2.rt.dataImage.DataPointListener;
 import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 import com.serotonin.m2m2.vo.publish.PublishedPointVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PublishedPointRT<T extends PublishedPointVO> implements DataPointListener {
     private final T vo;
     private final PublisherRT<T> parent;

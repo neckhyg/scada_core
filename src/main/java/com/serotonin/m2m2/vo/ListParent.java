@@ -1,14 +1,9 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.vo;
 
 import java.util.List;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ListParent<T, E> {
     private T parent;
     private List<E> list;

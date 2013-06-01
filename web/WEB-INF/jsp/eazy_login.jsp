@@ -1,5 +1,3 @@
-<%--
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 
 <c:if test='${m2m2:envBoolean("ssl.on", false)}'>

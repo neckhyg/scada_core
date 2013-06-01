@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.script;
 
 import java.util.List;
@@ -13,9 +10,7 @@ import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 import com.serotonin.m2m2.util.DateUtils;
 import com.serotonin.m2m2.view.stats.StartsAndRuntimeList;
 
-/**
- * @author Matthew Lohbihler
- */
+
 abstract public class DistinctPointWrapper extends AbstractPointWrapper {
     public DistinctPointWrapper(IDataPointValueSource point, ScriptEngine engine, PointValueSetter setter) {
         super(point, engine, setter);

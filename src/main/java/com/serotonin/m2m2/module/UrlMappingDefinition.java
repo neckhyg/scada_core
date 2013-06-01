@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.module;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +9,6 @@ import com.serotonin.m2m2.web.mvc.UrlHandler;
 /**
  * A URL mapping definition creates a page - and optionally a menu item - accessible by MA users.
  * 
- * @author Matthew Lohbihler
  * @deprecated Use {@link MenuItemDefinition} to create menu entries. Use {@link UriMappingDefinition} to create mapping
  *             definitions.
  */

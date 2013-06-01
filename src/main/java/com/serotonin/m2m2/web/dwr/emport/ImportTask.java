@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.emport;
 
 import java.util.ArrayList;
@@ -28,9 +25,7 @@ import com.serotonin.m2m2.web.dwr.emport.importers.PublisherImporter;
 import com.serotonin.m2m2.web.dwr.emport.importers.UserImporter;
 import com.serotonin.util.ProgressiveTask;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ImportTask extends ProgressiveTask {
     private final ImportContext importContext;
     private final User user;

@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.vo.export;
 
 import java.io.PrintWriter;
@@ -13,9 +10,7 @@ import com.serotonin.m2m2.rt.event.AlarmLevels;
 import com.serotonin.m2m2.rt.event.EventInstance;
 import com.serotonin.m2m2.view.export.CsvWriter;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class EventCsvStreamer {
     public EventCsvStreamer(PrintWriter out, List<EventInstance> events, Translations translations) {
         CsvWriter csvWriter = new CsvWriter();

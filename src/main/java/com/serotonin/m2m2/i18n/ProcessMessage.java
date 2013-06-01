@@ -1,8 +1,6 @@
 package com.serotonin.m2m2.i18n;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ProcessMessage {
     public enum Level {
         info, warning, error;

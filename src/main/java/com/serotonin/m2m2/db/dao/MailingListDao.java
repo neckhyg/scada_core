@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.db.dao;
 
 import java.sql.PreparedStatement;
@@ -27,9 +24,7 @@ import com.serotonin.m2m2.vo.mailingList.MailingList;
 import com.serotonin.m2m2.vo.mailingList.UserEntry;
 import com.serotonin.m2m2.web.dwr.beans.RecipientListEntryBean;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class MailingListDao extends BaseDao {
     public String generateUniqueXid() {
         return generateUniqueXid(MailingList.XID_PREFIX, "mailingLists");

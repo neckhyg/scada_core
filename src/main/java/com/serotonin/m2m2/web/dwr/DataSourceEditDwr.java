@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr;
 
 import java.util.ArrayList;
@@ -31,9 +28,7 @@ import com.serotonin.m2m2.web.dwr.util.DwrPermission;
 import com.serotonin.m2m2.web.taglib.Functions;
 import com.serotonin.validation.StringValidation;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DataSourceEditDwr extends DataSourceListDwr {
     //
     //

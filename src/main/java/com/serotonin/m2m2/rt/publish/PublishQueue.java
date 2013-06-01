@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.publish;
 
 import java.util.ArrayList;
@@ -15,9 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 import com.serotonin.m2m2.vo.publish.PublishedPointVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class PublishQueue<T extends PublishedPointVO> {
     private static final Log LOG = LogFactory.getLog(PublishQueue.class);
     private static final long SIZE_CHECK_DELAY = 5000;

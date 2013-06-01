@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.web.dwr.longPoll;
 
 import java.io.Serializable;
@@ -11,9 +8,7 @@ import javax.servlet.http.HttpSessionBindingListener;
 
 import com.serotonin.m2m2.web.dwr.BaseDwr;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class LongPollData implements HttpSessionBindingListener, Serializable {
     private static final long serialVersionUID = 1L;
 

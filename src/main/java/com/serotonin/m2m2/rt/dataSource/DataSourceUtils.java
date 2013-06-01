@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.rt.dataSource;
 
 import java.text.DateFormat;
@@ -22,9 +19,7 @@ import com.serotonin.m2m2.view.text.MultistateRenderer;
 import com.serotonin.m2m2.view.text.MultistateValue;
 import com.serotonin.m2m2.view.text.TextRenderer;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DataSourceUtils {
     public static DataValue getValue(Pattern valuePattern, String data, int dataTypeId, String binary0Value,
             TextRenderer textRenderer, DecimalFormat valueFormat, String pointName) throws TranslatableException {

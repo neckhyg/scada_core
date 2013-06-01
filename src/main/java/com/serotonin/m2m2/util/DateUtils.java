@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.util;
 
 import org.joda.time.DateTime;
@@ -10,9 +7,7 @@ import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.Common.TimePeriods;
 import com.serotonin.m2m2.i18n.TranslatableMessage;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DateUtils {
     public static long minus(long time, int periodType, int periods) {
         return minus(new DateTime(time), periodType, periods).getMillis();

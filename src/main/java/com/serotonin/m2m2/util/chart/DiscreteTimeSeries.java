@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.util.chart;
 
 import java.awt.Paint;
@@ -14,9 +11,7 @@ import com.serotonin.m2m2.rt.dataImage.types.DataValue;
 import com.serotonin.m2m2.view.stats.IValueTime;
 import com.serotonin.m2m2.view.text.TextRenderer;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DiscreteTimeSeries {
     private final String name;
     private final TextRenderer textRenderer;

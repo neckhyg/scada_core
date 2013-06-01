@@ -1,15 +1,17 @@
 <%--
---%><%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %><%--
---%><%@page import="com.serotonin.m2m2.db.DatabaseProxy"%><%--
---%><%@page import="com.serotonin.m2m2.module.SystemSettingsDefinition"%><%--
---%><%@page import="com.serotonin.m2m2.module.ModuleRegistry"%><%--
---%><%@page import="com.serotonin.m2m2.db.dao.SystemSettingsDao"%><%--
---%><%@page import="com.serotonin.m2m2.Common"%><%--
---%><%@page import="com.serotonin.m2m2.rt.event.AlarmLevels"%><%--
---%><%@page import="com.serotonin.m2m2.rt.event.type.EventType"%><%--
---%><%@page import="com.serotonin.m2m2.email.MangoEmailContent"%><%--
---%><%@page import="java.util.TimeZone"%><%--
---%><%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%>
+<%@page import="com.serotonin.m2m2.db.DatabaseProxy"%>
+<%@page import="com.serotonin.m2m2.module.SystemSettingsDefinition"%>
+<%@page import="com.serotonin.m2m2.module.ModuleRegistry"%>
+<%@page import="com.serotonin.m2m2.db.dao.SystemSettingsDao"%>
+<%@page import="com.serotonin.m2m2.Common"%>
+<%@page import="com.serotonin.m2m2.rt.event.AlarmLevels"%>
+<%@page import="com.serotonin.m2m2.rt.event.type.EventType"%>
+<%@page import="com.serotonin.m2m2.email.MangoEmailContent"%>
+<%@page import="java.util.TimeZone"%>
+<%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 
 <tag:page dwr="SystemSettingsDwr" onload="init">
   <script type="text/javascript">

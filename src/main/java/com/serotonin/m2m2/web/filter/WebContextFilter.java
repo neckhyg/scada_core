@@ -1,7 +1,3 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
 package com.serotonin.m2m2.web.filter;
 
 import java.io.IOException;
@@ -18,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.directwebremoting.impl.DefaultWebContextBuilder;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class WebContextFilter implements Filter {
     private final DefaultWebContextBuilder builder = new DefaultWebContextBuilder();
     private ServletContext servletContext;

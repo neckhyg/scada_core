@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.util;
 
 import java.io.File;
@@ -20,9 +17,7 @@ import org.w3c.dom.Element;
 import com.serotonin.m2m2.Common;
 import com.serotonin.util.XmlUtilsTS;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class DocumentationManifest {
     private static final Log LOG = LogFactory.getLog(DocumentationManifest.class);
 

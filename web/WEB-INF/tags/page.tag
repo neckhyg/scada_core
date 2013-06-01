@@ -1,13 +1,15 @@
 <%--
---%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><%--
---%><%@tag import="com.serotonin.m2m2.module.ModuleRegistry"%><%--
---%><%@tag import="com.serotonin.m2m2.Common"%><%--
---%><%@include file="/WEB-INF/tags/decl.tagf"%><%--
---%><%@ taglib prefix="page" tagdir="/WEB-INF/tags/page" %><%--
---%><%@attribute name="styles" fragment="true" %><%--
---%><%@attribute name="dwr" rtexprvalue="true" %><%--
---%><%@attribute name="js" %><%--
---%><%@attribute name="onload" %>
+    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
+    @author Matthew Lohbihler
+--%><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<%@tag import="com.serotonin.m2m2.module.ModuleRegistry"%>
+<%@tag import="com.serotonin.m2m2.Common"%>
+<%@include file="/WEB-INF/tags/decl.tagf"%>
+<%@ taglib prefix="page" tagdir="/WEB-INF/tags/page" %>
+<%@attribute name="styles" fragment="true" %>
+<%@attribute name="dwr" rtexprvalue="true" %>
+<%@attribute name="js" %>
+<%@attribute name="onload" %>
 
 <c:set var="theme">claro</c:set>
 <%-- <c:set var="theme">nihilo</c:set> --%>

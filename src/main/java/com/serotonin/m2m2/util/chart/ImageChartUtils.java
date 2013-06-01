@@ -1,7 +1,4 @@
-/*
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
- */
+
 package com.serotonin.m2m2.util.chart;
 
 import java.awt.Color;
@@ -41,9 +38,7 @@ import com.serotonin.m2m2.util.mindprod.StripEntities;
 import com.serotonin.m2m2.view.stats.IValueTime;
 import com.serotonin.m2m2.vo.DataPointVO;
 
-/**
- * @author Matthew Lohbihler
- */
+
 public class ImageChartUtils {
     public static void writeChart(PointTimeSeriesCollection pointTimeSeriesCollection, OutputStream out, int width,
             int height, long from, long to) throws IOException {
