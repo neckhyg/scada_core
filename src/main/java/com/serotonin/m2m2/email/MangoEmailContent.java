@@ -1,4 +1,3 @@
-
 package com.serotonin.m2m2.email;
 
 import java.io.IOException;
