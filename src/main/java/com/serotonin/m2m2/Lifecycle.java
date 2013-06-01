@@ -451,7 +451,7 @@ public class Lifecycle
     DataPurge.schedule();
 
     WorkItemMonitor.start();
-    LicMonitor.start();
+    //LicMonitor.start();
   }
 
   private void webServerInitialize(ClassLoader classLoader)
