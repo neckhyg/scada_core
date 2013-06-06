@@ -1,15 +1,14 @@
 
 package com.serotonin.m2m2.util.chart;
 
-import java.awt.Paint;
-import java.awt.Stroke;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.serotonin.m2m2.rt.dataImage.types.DataValue;
 import com.serotonin.m2m2.view.stats.IValueTime;
 import com.serotonin.m2m2.view.text.TextRenderer;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class DiscreteTimeSeries {

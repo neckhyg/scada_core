@@ -1,11 +1,10 @@
-
 package com.serotonin.m2m2.util.chart;
+
+import org.jfree.chart.plot.Marker;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
-
-import org.jfree.chart.plot.Marker;
 
 
 public class PointTimeSeriesCollection {

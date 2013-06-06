@@ -1,15 +1,11 @@
-
 package com.serotonin.m2m2.util.chart;
 
-import java.awt.Color;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Date;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.serotonin.ShouldNeverHappenException;
+import com.serotonin.io.StreamUtils;
+import com.serotonin.m2m2.db.dao.SystemSettingsDao;
+import com.serotonin.m2m2.util.mindprod.StripEntities;
+import com.serotonin.m2m2.view.stats.IValueTime;
+import com.serotonin.m2m2.vo.DataPointVO;
 import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
@@ -31,41 +27,41 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.ui.TextAnchor;
 
-import com.serotonin.ShouldNeverHappenException;
-import com.serotonin.io.StreamUtils;
-import com.serotonin.m2m2.db.dao.SystemSettingsDao;
-import com.serotonin.m2m2.util.mindprod.StripEntities;
-import com.serotonin.m2m2.view.stats.IValueTime;
-import com.serotonin.m2m2.vo.DataPointVO;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Date;
 
 
 public class ImageChartUtils {
     public static void writeChart(PointTimeSeriesCollection pointTimeSeriesCollection, OutputStream out, int width,
-            int height, long from, long to) throws IOException {
+                                  int height, long from, long to) throws IOException {
         writeChart(pointTimeSeriesCollection, pointTimeSeriesCollection.hasMultiplePoints(), out, width, height, from,
                 to);
     }
 
     public static byte[] getChartData(PointTimeSeriesCollection pointTimeSeriesCollection, int width, int height,
-            long from, long to) {
+                                      long from, long to) {
         return getChartData(pointTimeSeriesCollection, pointTimeSeriesCollection.hasMultiplePoints(), width, height,
                 from, to);
     }
 
     public static byte[] getChartData(PointTimeSeriesCollection pointTimeSeriesCollection, boolean showLegend,
-            int width, int height, long from, long to) {
+                                      int width, int height, long from, long to) {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             writeChart(pointTimeSeriesCollection, showLegend, out, width, height, from, to);
             return out.toByteArray();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new ShouldNeverHappenException(e);
         }
     }
 
     public static void writeChart(PointTimeSeriesCollection pointTimeSeriesCollection, boolean showLegend,
-            OutputStream out, int width, int height, long from, long to) throws IOException {
+                                  OutputStream out, int width, int height, long from, long to) throws IOException {
         JFreeChart chart = ChartFactory.createTimeSeriesChart(null, null, null, null, showLegend, false, false);
         chart.setBackgroundPaint(SystemSettingsDao.getColour(SystemSettingsDao.CHART_BACKGROUND_COLOUR));
 
@@ -117,8 +113,7 @@ public class ImageChartUtils {
                     plot.getRangeAxis().setLabel(desc);
                 }
             }
-        }
-        else
+        } else
             plot.getRangeAxis().setVisible(false);
 
         if (pointTimeSeriesCollection.getRangeMarkers() != null) {
@@ -236,8 +231,7 @@ public class ImageChartUtils {
     public static void addMillisecond(TimeSeries timeSeries, long time, Number value) {
         try {
             timeSeries.add(new Millisecond(new Date(time)), value);
-        }
-        catch (SeriesException e) { /* duplicate Second. Ignore. */
+        } catch (SeriesException e) { /* duplicate Second. Ignore. */
         }
     }
 }

@@ -1,9 +1,8 @@
 package com.serotonin.m2m2.util.chart;
 
-import java.awt.Paint;
-import java.awt.Stroke;
-
 import org.jfree.data.time.TimeSeries;
+
+import java.awt.*;
 
 public class NumericTimeSeries {
     private final int plotType;
