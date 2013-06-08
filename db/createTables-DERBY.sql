@@ -1,8 +1,4 @@
 --
---    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
---    @author Matthew Lohbihler
---
---
 -- System settings
 create table systemSettings (
   settingName varchar(64) not null,

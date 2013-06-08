@@ -1,7 +1,3 @@
-<#--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
--->
 <#include "alarmLevel.ftl">${evt.prettyActiveTimestamp} - <@fmt message=evt.message/>
 
 <#if evt.eventComments??>

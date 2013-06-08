@@ -1,7 +1,3 @@
-<#--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
--->
 <#if evt.alarmLevel==1>
   <img src="cid:<@img src="flag_blue.png"/>" alt="<@fmt key="common.alarmLevel.info"/>" title="<@fmt key="common.alarmLevel.info"/>"/>
 <#elseif evt.alarmLevel==2>

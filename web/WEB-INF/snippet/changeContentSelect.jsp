@@ -1,8 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%--
   This snippet supports only multistate types. In particular, it only supports
   point views with a MultistateRenderer.
 --%>

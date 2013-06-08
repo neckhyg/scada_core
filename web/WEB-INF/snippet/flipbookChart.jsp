@@ -1,9 +1,5 @@
-<%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%-- The snippet used for histories of images --%>
-<%@ include file="/WEB-INF/snippet/common.jsp" %>
+<%-- The snippet used for histories of images
+--%><%@ include file="/WEB-INF/snippet/common.jsp" %>
 <%@page import="com.serotonin.m2m2.web.servlet.ImageValueServlet"%>
 <c:choose>
   <c:when test="${empty chartData}"><fmt:message key="common.noData"/></c:when>

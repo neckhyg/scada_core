@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
-    
-    
     ###############################################################################
      DO NOT MODIFY THIS FILE...
      
@@ -14,8 +10,6 @@
      customizations will be safe.
  
     ###############################################################################
-    
-    
 -->
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration>

@@ -1,7 +1,3 @@
-<#--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
--->
           </td></tr>
         </table>
         <@fmt key="ftl.htmlFooter.mango"/><br/>

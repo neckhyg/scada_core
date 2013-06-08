@@ -1,8 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%--
   Usage:
     For event comments, your table of events should be id'd "eventsTable". Each events table row should include a
     table with a tbody id'd eventComments<eventId>.

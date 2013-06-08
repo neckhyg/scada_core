@@ -1,11 +1,6 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%--
   This snippet supports all data types.
---%>
-<%@ include file="/WEB-INF/snippet/common.jsp" %>
+--%><%@ include file="/WEB-INF/snippet/common.jsp" %>
 <c:if test="${!empty disabled}">
   <tag:img png="warn" title="common.pointWarning"/> <fmt:message key="common.pointWarning"/><br/>
 </c:if>

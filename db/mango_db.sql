@@ -1,11 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.4.5
--- http://www.phpmyadmin.net
---
--- 主机: localhost
--- 生成日期: 2013 年 05 月 24 日 02:33
--- 服务器版本: 5.5.16
--- PHP 版本: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";

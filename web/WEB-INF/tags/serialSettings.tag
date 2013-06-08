@@ -1,6 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
 --%><%@include file="/WEB-INF/tags/decl.tagf" %><%--
 --%><tr>
   <td class="formLabelRequired"><fmt:message key="dsEdit.serial.port"/></td>

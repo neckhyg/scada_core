@@ -1,7 +1,4 @@
-<#ftl strip_whitespace=false><#--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
--->
+<#ftl strip_whitespace=false>
 ${instanceDescription}
 ${evt.prettyRtnTimestamp} <@fmt key="ftl.eventInactive"/>: <@fmt message=evt.rtnMessage/>
 

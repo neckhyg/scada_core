@@ -17,19 +17,13 @@
 
   <item id="generalPublisherProperties" key="dox.generalPublisherProperties" filename="generalPublisherProperties.htm"/>
   
-  <item id="spinwavePP" key="dox.spinwavePP" filename="spinwavePP.htm"/>
-
   <item id="eventHandlers" key="dox.eventHandlers" filename="eventHandlers.htm"/>
   
   <item id="emailSettings" key="dox.emailSettings" filename="emailSettings.htm"/>
   
   <item id="httpSettings" key="dox.httpSettings" filename="httpSettings.htm"/>
 
-  <item id="nmeaListenerDS" key="dox.nmeaListenerDS" filename="nmeaListenerDS.htm">
-    <relation id="nmeaListenerPP"/>
-  </item>
-  
-  <item id="welcomeToMango" key="dox.welcomeToMango" filename="welcomeToMango.htm"/>
+  <item id="welcomeToScada" key="dox.welcomeToScada" filename="welcomeToScada.htm"/>
 
   <item id="regex" key="dox.regex" filename="regex.htm"/>
   
@@ -65,9 +59,7 @@
   <item id="systemInformation" key="dox.systemInformation" filename="systemInformation.htm"/>
   
   <item id="otherSettings" key="dox.otherSettings" filename="otherSettings.htm"/>
-  
-  <item id="spinwaveDS" key="dox.spinwaveDS" filename="spinwaveDS.htm"/>
-  
+
   <item id="languageSettings" key="dox.languageSettings" filename="languageSettings.htm"/>
   
   <item id="systemAlarmLevels" key="dox.systemAlarmLevels" filename="systemAlarmLevels.htm"/>
@@ -75,15 +67,7 @@
   <item id="auditAlarmLevels" key="systemSettings.auditAlarmLevels" filename="auditAlarmLevels.htm"/>
   
   <item id="emport" key="dox.emport" filename="emport.htm"/>
-  
-  <item id="viconicsDS" key="dox.viconicsDS" filename="viconicsDS.htm">
-    <relation id="viconicsPP"/>
-  </item>
-  
-  <item id="viconicsPP" key="dox.viconicsPP" filename="viconicsPP.htm">
-    <relation id="viconicsDS"/>
-  </item>
-  
+
   <item id="colourSettings" key="dox.colourSettings" filename="colourSettings.htm">
     <relation id="colours"/>
   </item>

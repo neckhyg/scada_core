@@ -1,6 +1,4 @@
 --
---    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
---    @author Matthew Lohbihler
 --
 alter table events add (typeName varchar(32) not null);
 alter table events add (subtypeName varchar(32));

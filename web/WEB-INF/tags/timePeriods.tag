@@ -1,6 +1,4 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
 --%><%@include file="/WEB-INF/tags/decl.tagf" %><%--
 --%><%@attribute name="id" rtexprvalue="true" %><%--
 --%><%@attribute name="name" %><%--

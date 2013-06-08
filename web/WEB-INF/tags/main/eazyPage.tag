@@ -126,7 +126,7 @@
 	<div class="top_right">
 		<div class="top_right1">
 			<ul>
-				<li><a href="http://localhost:8080/data_point_details.shtm"><img src="${modulePath}/web/images/home.png" /><span>配置主页</span></a></li>
+				<li><a href="data_point_details.shtm"><img src="${modulePath}/web/images/home.png" /><span>配置主页</span></a></li>
 				<li><a href="logout.htm"><img src="${modulePath}/web/images/quit.png" /><span>退出</span></a></li>
 			</ul>
 		</div>
