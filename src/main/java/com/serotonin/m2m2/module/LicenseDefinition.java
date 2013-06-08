@@ -8,7 +8,6 @@ import com.serotonin.m2m2.i18n.TranslatableMessage;
  * A license definition allows the module to check the validity of its license, take action as necessary. It also
  * provides a means to present messages to users about license conditions, either as errors or warnings.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class LicenseDefinition extends ModuleElementDefinition {
     /**

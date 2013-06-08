@@ -4,7 +4,6 @@ package com.serotonin.m2m2.vo.dataSource;
  * Used in data source editing to encapsulate basic data source info, so that if new properties are added not all
  * data source editing code needs to change.
  * 
- * @author Matthew Lohbihler
  */
 public class BasicDataSourceVO {
     private String xid;

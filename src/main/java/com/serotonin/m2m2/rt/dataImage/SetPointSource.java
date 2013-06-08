@@ -9,7 +9,6 @@ import com.serotonin.m2m2.i18n.TranslatableMessage;
  * date, making that program the set point source. This information is stored in the database as a point value
  * annotation.
  * 
- * @author Matthew Lohbihler
  */
 public interface SetPointSource {
     public String getSetPointSourceType();

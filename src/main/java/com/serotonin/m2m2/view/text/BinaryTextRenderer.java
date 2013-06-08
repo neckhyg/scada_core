@@ -17,7 +17,6 @@ import com.serotonin.util.SerializationHelper;
  * BA systems. However, the render method actually expects a boolean value which (arbitrarily) maps 0 to false and 1 to
  * true.
  * 
- * @author mlohbihler
  */
 public class BinaryTextRenderer extends BaseTextRenderer {
     private static ImplDefinition definition = new ImplDefinition("textRendererBinary", "BINARY",

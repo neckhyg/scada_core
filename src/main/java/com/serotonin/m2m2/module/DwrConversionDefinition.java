@@ -15,7 +15,6 @@ import com.serotonin.m2m2.web.dwr.util.DwrClassConversion;
  * By default classes are not allowed to be converted, so any classes that should be allowed need to be explicitly
  * declared.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DwrConversionDefinition extends ModuleElementDefinition {
     private final List<DwrClassConversion> conversions = new ArrayList<DwrClassConversion>();

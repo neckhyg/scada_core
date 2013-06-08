@@ -16,7 +16,6 @@ import com.serotonin.m2m2.i18n.ProcessMessage.Level;
  * When the TranslatableMessageConverter is used, {@link ProcessMessage} instances have their
  * {@link TranslatableMessage}s automatically converted to translated strings.
  * 
- * @author Matthew Lohbihler
  */
 public class ProcessResult {
     private List<ProcessMessage> messages = new ArrayList<ProcessMessage>();

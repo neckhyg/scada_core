@@ -11,7 +11,6 @@ import com.serotonin.m2m2.vo.event.PointEventDetectorVO;
  * duration. For example, a user may need to have an event raised when a temperature CUSUM exceeds some value for 10
  * minutes or more.
  * 
- * @author Matthew Lohbihler
  */
 public class PositiveCusumDetectorRT extends TimeDelayedEventDetectorRT {
     /**

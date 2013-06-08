@@ -9,8 +9,7 @@ import com.serotonin.ShouldNeverHappenException;
 import com.serotonin.m2m2.vo.DataPointSummary;
 
 /**
- * @author Matthew Lohbihler
- * 
+ *
  */
 public class PointHierarchy {
     private final PointFolder root;

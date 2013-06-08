@@ -52,7 +52,6 @@ import com.serotonin.m2m2.web.dwr.DataSourceEditDwr;
  * <dd>Online documentation files, translation files (strongly recommended), data source commissioning tools.</dd>
  * </dl>
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DataSourceDefinition extends ModuleElementDefinition {
     /**

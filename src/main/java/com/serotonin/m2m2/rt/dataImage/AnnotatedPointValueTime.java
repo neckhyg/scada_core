@@ -11,7 +11,6 @@ import com.serotonin.m2m2.rt.dataImage.types.DataValue;
  * from data source.
  * 
  * @see SetPointSource
- * @author Matthew Lohbihler
  */
 public class AnnotatedPointValueTime extends PointValueTime {
     private static final long serialVersionUID = -1;

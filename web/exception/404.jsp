@@ -1,8 +1,5 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
+--%><%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 <tag:page>
   <br/>
   <span class="bigTitle">Page Not Found!</span><br/>

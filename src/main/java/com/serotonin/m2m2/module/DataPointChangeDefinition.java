@@ -5,7 +5,6 @@ import com.serotonin.m2m2.vo.DataPointVO;
 /**
  * A definition allowing a hook into the data point delete event.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DataPointChangeDefinition extends ModuleElementDefinition {
     /**

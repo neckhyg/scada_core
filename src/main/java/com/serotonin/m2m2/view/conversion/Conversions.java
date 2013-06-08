@@ -9,8 +9,7 @@ import com.serotonin.m2m2.rt.dataImage.types.NumericValue;
 import com.serotonin.m2m2.util.EngineeringUnits;
 
 /**
- * @author Matthew Lohbihler
- * 
+ *
  */
 public class Conversions {
     private static final Map<ConversionType, Conversion> availableConversions = new HashMap<ConversionType, Conversion>();

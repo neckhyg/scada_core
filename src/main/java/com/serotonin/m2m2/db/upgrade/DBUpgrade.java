@@ -21,7 +21,6 @@ import com.serotonin.util.StringUtils;
  * 'Upgrade[version]', where '[version]' is the version that the class upgrades <b>from</b>. The subclass must be in
  * this package.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DBUpgrade extends BaseDao {
     private static final Log LOG = LogFactory.getLog(DBUpgrade.class);

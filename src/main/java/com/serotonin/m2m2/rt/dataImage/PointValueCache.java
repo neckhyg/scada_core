@@ -13,7 +13,6 @@ import com.serotonin.m2m2.db.dao.PointValueDao;
  * Because there is not a significant performance problem for time-based lookups, they are not handled here, but rather
  * are still handled by the database.
  * 
- * @author Matthew Lohbihler
  */
 public class PointValueCache {
     private final int dataPointId;

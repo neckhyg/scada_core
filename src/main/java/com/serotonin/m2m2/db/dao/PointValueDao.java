@@ -501,7 +501,6 @@ public class PointValueDao extends BaseDao {
     /**
      * Class that stored point value data when it could not be saved to the database due to concurrency errors.
      * 
-     * @author Matthew Lohbihler
      */
     class UnsavedPointValue {
         private final int pointId;

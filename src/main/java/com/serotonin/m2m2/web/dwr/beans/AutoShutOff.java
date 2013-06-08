@@ -4,7 +4,6 @@ package com.serotonin.m2m2.web.dwr.beans;
 /**
  * Checks every 10 seconds to see if it's last query time is older than one minute. If so, the shutOff method is called.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class AutoShutOff extends Thread {
     public static final long DEFAULT_TIMEOUT = 60000;

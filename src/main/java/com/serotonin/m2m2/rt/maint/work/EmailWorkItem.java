@@ -16,8 +16,7 @@ import com.serotonin.web.mail.EmailContent;
 import com.serotonin.web.mail.EmailSender;
 
 /**
- * @author Matthew Lohbihler
- * 
+ *
  */
 public class EmailWorkItem implements WorkItem {
     private static final Log LOG = LogFactory.getLog(EmailWorkItem.class);

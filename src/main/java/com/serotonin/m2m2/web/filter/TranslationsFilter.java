@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.JstlUtils;
 /**
  * Currently used to ensure that translations are available for all JSPs under the exception dir.
  * 
- * @author Matthew Lohbihler
  */
 public class TranslationsFilter implements Filter {
     private String messageSourceKey = "messageSource";

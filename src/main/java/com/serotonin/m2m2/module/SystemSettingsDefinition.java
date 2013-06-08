@@ -4,7 +4,6 @@ package com.serotonin.m2m2.module;
  * This class provides a means to insert a section into the system settings page. Use this if you need to store values
  * in the system settings table that users are allowed to modify.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class SystemSettingsDefinition extends ModuleElementDefinition {
     /**

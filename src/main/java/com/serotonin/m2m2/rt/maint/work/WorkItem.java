@@ -2,8 +2,7 @@
 package com.serotonin.m2m2.rt.maint.work;
 
 /**
- * @author Matthew Lohbihler
- * 
+ *
  */
 public interface WorkItem {
     /**

@@ -10,7 +10,6 @@ import com.serotonin.m2m2.web.dwr.emport.ImportContext;
  * via JSON files. An emport definition provides the information necessary to add new elements to the available emport
  * list.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class EmportDefinition extends ModuleElementDefinition {
     /**

@@ -19,7 +19,6 @@ import com.serotonin.m2m2.vo.event.PointEventDetectorVO;
  * currently below the low limit or not. The eventActive field describes whether the point's value has been below the
  * low limit for longer than the tolerance duration.
  * 
- * @author Matthew Lohbihler
  */
 public class AnalogLowLimitDetectorRT extends TimeDelayedEventDetectorRT {
     private final Log log = LogFactory.getLog(AnalogLowLimitDetectorRT.class);

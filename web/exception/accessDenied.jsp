@@ -1,8 +1,5 @@
 <%--
-    Copyright (C) 2006-2011 Serotonin Software Technologies Inc. All rights reserved.
-    @author Matthew Lohbihler
---%>
-<%@ page isErrorPage="true" %>
+--%><%@ page isErrorPage="true" %>
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
 
 <%

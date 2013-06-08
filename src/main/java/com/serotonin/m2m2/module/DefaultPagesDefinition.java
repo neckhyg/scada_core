@@ -11,7 +11,6 @@ import com.serotonin.m2m2.vo.User;
 /**
  * Used for overriding the default MA pages.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DefaultPagesDefinition extends ModuleElementDefinition {
     public static String getDefaultUri(HttpServletRequest request, HttpServletResponse response, User user) {

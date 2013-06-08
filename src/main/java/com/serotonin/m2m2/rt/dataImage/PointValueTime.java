@@ -17,7 +17,6 @@ import com.serotonin.m2m2.web.taglib.Functions;
  * The simple value of a point at a given time.
  * 
  * @see AnnotatedPointValueTime
- * @author Matthew Lohbihler
  */
 public class PointValueTime implements Serializable, IValueTime, Comparable<PointValueTime> {
     private static final long serialVersionUID = -1;

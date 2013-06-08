@@ -32,7 +32,6 @@ import com.serotonin.util.ILifecycle;
  * represents the configuration of a data source RT, a subtle but useful distinction. In particular, a VO is
  * serializable, while an RT is not.)
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DataSourceRT implements ILifecycle {
     public static final String ATTR_UNRELIABLE_KEY = "UNRELIABLE";

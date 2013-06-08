@@ -16,7 +16,6 @@ import com.serotonin.m2m2.vo.event.PointEventDetectorVO;
  * currently above the high limit or not. The eventActive field describes whether the point's value has been above the
  * high limit for longer than the tolerance duration.
  * 
- * @author Matthew Lohbihler
  */
 public class AnalogHighLimitDetectorRT extends TimeDelayedEventDetectorRT {
     /**

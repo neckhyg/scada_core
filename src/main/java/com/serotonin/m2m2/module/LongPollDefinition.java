@@ -10,7 +10,6 @@ import com.serotonin.m2m2.web.dwr.longPoll.LongPollHandler;
  * made, potentially exceeding the maximum number of requests allowed by a single page. Long poll requests also utilize
  * resources better than polling, and also result in better response times.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class LongPollDefinition extends ModuleElementDefinition {
     /**

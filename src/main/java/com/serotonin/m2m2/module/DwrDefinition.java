@@ -5,7 +5,6 @@ import com.serotonin.m2m2.web.dwr.ModuleDwr;
 /**
  * A DWR definition registers a DWR proxy.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DwrDefinition extends ModuleElementDefinition {
     /**

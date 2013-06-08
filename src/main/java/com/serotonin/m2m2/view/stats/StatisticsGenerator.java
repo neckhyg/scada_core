@@ -12,7 +12,6 @@ package com.serotonin.m2m2.view.stats;
  * <li>A period may or may not have an ending value (i.e. the first value that occurs after the period ends.)</li>
  * </ul>
  * 
- * @author Matthew Lohbihler
  */
 public interface StatisticsGenerator {
     /**

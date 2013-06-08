@@ -11,7 +11,6 @@ import com.serotonin.m2m2.web.mvc.form.LoginForm;
 /**
  * A definition allowing hooks into user authentication.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class AuthenticationDefinition extends ModuleElementDefinition {
     /**

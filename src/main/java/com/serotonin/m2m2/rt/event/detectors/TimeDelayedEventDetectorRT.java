@@ -7,7 +7,6 @@ import com.serotonin.m2m2.rt.dataImage.PointValueTime;
 /**
  * This is a base class for all subclasses that need to schedule timeouts for them to become active.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class TimeDelayedEventDetectorRT extends TimeoutDetectorRT {
     synchronized protected void scheduleJob() {

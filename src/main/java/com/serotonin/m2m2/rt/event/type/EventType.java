@@ -83,7 +83,6 @@ abstract public class EventType implements JsonSerializable {
      * This interface defines all of the possible actions that can occur if an event is raised for which type there
      * already exists an active event.
      * 
-     * @author Matthew Lohbihler
      */
     public interface DuplicateHandling {
         /**

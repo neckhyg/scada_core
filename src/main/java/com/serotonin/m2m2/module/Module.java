@@ -16,7 +16,6 @@ import com.serotonin.m2m2.util.license.ModuleLicense;
 /**
  * All information regarding a module required by the core.
  * 
- * @author Matthew Lohbihler
  */
 public class Module {
     public static final void sortByName(List<Module> modules) {

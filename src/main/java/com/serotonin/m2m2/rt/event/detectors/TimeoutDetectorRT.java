@@ -13,7 +13,6 @@ import com.serotonin.timer.TimerTask;
  * This class is a base class for detectors that need to schedule timeouts for their operation. Subclasses may use
  * schedules for timeouts that make them active, or that make them inactive.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class TimeoutDetectorRT extends PointEventDetectorRT implements TimeoutClient {
     /**

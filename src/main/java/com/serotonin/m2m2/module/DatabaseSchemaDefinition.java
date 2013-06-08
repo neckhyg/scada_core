@@ -13,7 +13,6 @@ import com.serotonin.db.spring.ExtendedJdbcTemplate;
  * presented to users, and the final blame for such being assigned to your module. Failure to fix such conditions will
  * result in bad module karma, if not outright module removal.
  * 
- * @author Matthew Lohbihler
  */
 abstract public class DatabaseSchemaDefinition extends ModuleElementDefinition {
     /**

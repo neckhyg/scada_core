@@ -12,8 +12,7 @@ import com.serotonin.m2m2.vo.User;
 import com.serotonin.m2m2.vo.event.EventTypeVO;
 
 /**
- * @author Matthew Lohbihler
- * 
+ *
  */
 public class Permissions {
     public interface DataPointAccessTypes {
