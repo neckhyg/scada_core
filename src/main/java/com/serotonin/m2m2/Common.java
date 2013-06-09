@@ -201,7 +201,7 @@ public class Common {
         case TimePeriods.YEARS:
             return Period.years(periods);
         default:
-            throw new ShouldNeverHappenException("Unsupported time period: " + periodType);
+            throw new ShouldNeverHappenException("不支持的时间周期：" + periodType);
         }
     }
 
@@ -233,7 +233,7 @@ public class Common {
             periodKey = "common.tp.years";
             break;
         default:
-            throw new ShouldNeverHappenException("Unsupported time period: " + periodType);
+            throw new ShouldNeverHappenException("不支持的时间周期：Unsupported time period: " + periodType);
         }
 
         return new TranslatableMessage("common.tp.description", periods, new TranslatableMessage(periodKey));

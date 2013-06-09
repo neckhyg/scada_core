@@ -71,7 +71,7 @@ public final class CoreLicenseDefinition extends LicenseDefinition
   {
     this.guid = guid();
     if (this.guid == null) {
-      throw new RuntimeException("Unable to determine the machine id");
+      throw new RuntimeException("无法确定机器ID");
     }
     String freeReason = null;
 

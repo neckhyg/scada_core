@@ -30,7 +30,7 @@ import org.directwebremoting.extend.Converter;
 import org.directwebremoting.extend.ConverterManager;
 import org.directwebremoting.extend.CreatorManager;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;//nio.SelectChannelConnector;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.joda.time.DateTimeZone;
@@ -411,14 +411,10 @@ public class Lifecycle
       sb.append("**********************************************************\r\n");
       sb.append("*                     NOTE                               *\r\n");
       sb.append("**********************************************************\r\n");
-      sb.append("* EazyScada System is starting in safe mode. All data    *\r\n");
-      sb.append("* sources, publishers, and elements applicable from      *\r\n");
-      sb.append("* modules will be disabled. To disable safe mode, remove *\r\n");
-      sb.append("* the SAFE file from the EazyScada System *\r\n");
-      sb.append("* directory.                                             *\r\n");
+      sb.append("* 本系统正运行在安全模式下。所有数据源，发布器等模块都不可用。  *\r\n");
+      sb.append("* 如果需要禁止安全模式，请删除系统文件夹下的SAFE文件。         *\r\n");
       sb.append("*                                                        *\r\n");
-      sb.append("* To find all objects that were automatically disabled,  *\r\n");
-      sb.append("* search for Audit Events on the alarms page.            *\r\n");
+      sb.append("* 如需查找所有自动禁止的模块，请在报警页面查找Audit事件。      *\r\n");
       sb.append("**********************************************************");
       this.LOG.warn(sb.toString());
       safe = true;
@@ -430,7 +426,7 @@ public class Lifecycle
       Common.runtimeManager.initialize(safe);
     }
     catch (Exception e) {
-      this.LOG.error("RuntimeManager initialization failure", e);
+      this.LOG.error("RuntimeManager初始化失败", e);
     }
     finally {
       if (safe)
@@ -515,7 +511,7 @@ public class Lifecycle
         String js = clazz.getSimpleName();
 
         if (creatorManager.getCreatorNames().contains(js)) {
-          this.LOG.info("Duplicate definition of DWR class ignored: " + clazz.getName());
+          this.LOG.info("忽略重复定义的DWR类：" + clazz.getName());
         } else {
           NewCreator c = new NewCreator();
           c.setClass(clazz.getName());
@@ -532,7 +528,7 @@ public class Lifecycle
         String js = clazz.getSimpleName();
 
         if (creatorManager.getCreatorNames().contains(js)) {
-          this.LOG.info("Duplicate definition of DWR class ignored: " + clazz.getName());
+          this.LOG.info("忽略重复定义的DWR类：" + clazz.getName());
         } else {
           NewCreator c = new NewCreator();
           c.setClass(clazz.getName());
@@ -549,7 +545,7 @@ public class Lifecycle
         String js = clazz.getSimpleName();
 
         if (creatorManager.getCreatorNames().contains(js)) {
-          this.LOG.info("Duplicate definition of DWR class ignored: " + clazz.getName());
+          this.LOG.info("忽略重复定义的DWR类：" + clazz.getName());
         } else {
           ModuleDwrCreator c = new ModuleDwrCreator(def.getModule());
           c.setClass(clazz.getName());
@@ -665,7 +661,7 @@ public class Lifecycle
         this.SERVER.stop();
     }
     catch (Exception e) {
-      this.LOG.warn("Exception while stopping web server", e);
+      this.LOG.warn("停止Web服务器时出现异常", e);
     }
   }
 
@@ -679,6 +675,6 @@ public class Lifecycle
       else if (g.isDynamicImage())
         Common.dynamicImages.add((DynamicImage)g);
       else
-        throw new ShouldNeverHappenException("Unknown view graphic type");
+        throw new ShouldNeverHappenException("未知视图的图形类型");
   }
 }
