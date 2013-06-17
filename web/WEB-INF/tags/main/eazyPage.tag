@@ -67,18 +67,15 @@
       dwr.util.setEscapeHtml(false);
       dojo.require("dijit.layout.ContentPane");
 
-      dojo.ready(setRightContentSize);
-
       dwr.util.setEscapeHtml(false);
       <c:if test="${!empty sessionUser}">
       require(["dojo/ready"],function(ready){
-     ready(function(){
-    mango.header.onLoad();
-    setUserMuted(${sessionUser.muted});
-     });
+        ready(function(){
+            mango.header.onLoad();
+            setUserMuted(${sessionUser.muted});
+            setRightContentSize();
+        });
       });
-       // dojo.ready(mango.header.onLoad);
-       // dojo.ready(function() { setUserMuted(${sessionUser.muted}); });
       </c:if>
 
       function setLocale(locale) {
@@ -141,7 +138,7 @@ setRightContentSize();
  <div id="menu">
 	<div class="t2"></div>
 	<div class="top_left">
-          <img src="images/logo.png" style="padding-left: 20px; float: left;">
+          <img src="${modulePath}/web/images/logo.png" style="padding-top:10px; padding-left: 20px; float: left;">
 	</div>
 
 	<div class="top_right">
@@ -203,9 +200,7 @@ setRightContentSize();
 </div>
 </div>
 
-
         <jsp:doBody/>
-
 
 <c:if test="${!empty onload}">
   <script type="text/javascript">dojo.ready(${onload});</script>

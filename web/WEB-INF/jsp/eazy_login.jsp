@@ -18,25 +18,30 @@
 
         <tr></tr>
         <tr></tr>
-        <tr> <td> <div id="login-title"><fmt:message key="login.title"/></div> <td>
-        </tr>
         <tr>
           <td>
           <div style="text-align:center">
             <div class="login-main">
               <table class="login-main-ie">
-             <spring:bind path="login.username">
-                <tr> <td><fmt:message key="login.username"/></td><td><input type="text" class="user_text"  name="username" size="12" maxlength="30" value=""/></td>
+                <tr>
+                  <td>
+                    <spring:bind path="login.username">
+                    <div class="userText">
+                      <input type="text" class="user_text"  name="username" size="12" maxlength="30" value=""/>
+                    </div>
+                    </spring:bind>
+                    <spring:bind path="login.password">
+                    <div class="userText">
+                      <input type="password" class="user_text"  name="password" size="12" maxlength="30" value=""/>
+                    </div>
+                    </spring:bind>
+                  </td>
+                  <td>
+                    <spring:bind path="login">
+                      <input id="login-button" type="submit" value="" style="cursor: pointer"/>
+                    </spring:bind>
+                  </td>
                 </tr>
-                </spring:bind>
-                <spring:bind path="login.password">
-                <tr> <td><fmt:message key="login.password"/></td><td><input type="password" class="user_text"  name="password" size="12" maxlength="30" value=""/></td>
-                </tr>
-                </spring:bind>
-                <spring:bind path="login">
-                <tr> <td colspan="2"> <input id="login-button" type="submit" value="<fmt:message key="login.login"/>" style="cursor: pointer"/></td>
-                </tr>
-                </spring:bind>
               </table>
             </div>
             </div>

@@ -1,22 +1,26 @@
 /* login style */
 html, body, form {margin: auto;font-size: 13px; height: 100%}
 #login{
-  background:url('../images/eazytec/login_bg.png') no-repeat; width: 100%;height:100%;
+  background:url('../images/eazytec/login_bg.jpg') repeat;
+  width: 100%;height:100%;
 }
 .login-main { 
-  width:407px ;
-  height: 283px;
+  width:524px ;
+  height: 344px;
   margin: 0px auto;
   vertical-align: middle;
   text-align:left;
-  background: url('../images/eazytec/login_bg_main.png')
+  background: url('../images/eazytec/login_main.png')
 }
-.login-main-ie{ position: relative; z-index: 100; top:150px; left: 85px;}
+.login-main-ie{ position: relative; z-index: 100; top:154px; left: 85px;}
 .user_text{ 
-  height: 21px; width: 126px; border: 0px; margin-top: 4px; }
+  width: 200px; border: 0px; 
+  margin-top: 14px; margin-left:58px;}
 #login-button { 
-  background: url('../images/eazytec/login_button.png') center center no-repeat; width: 97px; height: 31px; border: 0px; vertical-align: middle;
-  margin-left:60px;
+  background: url('../images/eazytec/btn_login.png') center center no-repeat; 
+  width: 60px; height: 60px; 
+  border: 0px; 
+  margin-left:30px;
   margin-top:10px;
 }
 #login-title{
