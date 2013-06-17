@@ -1,4 +1,5 @@
 <%@ include file="/WEB-INF/jsp/include/tech.jsp" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <c:if test='${m2m2:envBoolean("ssl.on", false)}'>
   <c:if test='${pageContext.request.scheme == "http"}'>
@@ -21,6 +22,7 @@
         </tr>
         <tr>
           <td>
+          <div style="text-align:center">
             <div class="login-main">
               <table class="login-main-ie">
              <spring:bind path="login.username">
@@ -37,9 +39,10 @@
                 </spring:bind>
               </table>
             </div>
+            </div>
         </tr>
         <tr></tr>
-        <tr><td><div id="login-footer">2008-2013 Eazytec Inf. Company</div></td></tr>
+        <tr><td><div id="login-footer">2008-2013 江苏卓易信息科技有限公司</div></td></tr>
         <tr></tr>
         <tr></tr>
       </table>

@@ -39,8 +39,11 @@
     @import "${dojoURI}dojo/resources/dojo.css";
   </style>
   <link href="/resources/common.css" type="text/css" rel="stylesheet"/>
+  <!--
   <c:forEach items="<%= Common.moduleStyles %>" var="modStyle">
-    <link href="/${modStyle}" type="text/css" rel="stylesheet"/></c:forEach>
+    <link href="/${modStyle}" type="text/css" rel="stylesheet"/>
+  </c:forEach>
+  -->
   <jsp:invoke fragment="styles"/>
   
   <link rel="stylesheet" media="screen" type="text/css" href="${modulePath}/web/css/common.css">
@@ -100,12 +103,30 @@
       }
 	function setRightContentSize(){
 	   var sideBarNavWidth = dojo.query(".sideBarNav").style("width");
-	   var rightWidth = window.screen.width - sideBarNavWidth - 74;
 	  var menuHeight = dojo.query("#menu").style("height");
-	  var rightHeight = window.screen.height - menuHeight  - 100;
+	  if(dojo.isIE){
+	   var rightWidth = window.screen.width - sideBarNavWidth - 74 - 10;
+	  var rightHeight = window.screen.height - menuHeight  - 100 - 40;
+
+	  }else{
+	   var rightWidth = window.screen.width - sideBarNavWidth - 74;
+	  var rightHeight = window.screen.height - menuHeight  - 100 - 40;
+
+	  }
 	  dojo.query("#right_content").style("width",rightWidth + "px");
 	  dojo.query("#right_content").style("height",rightHeight + "px");
 	}
+
+//var _semaphorRS = null;
+//dojo.connect(window,"resize",function(){
+// if (_semaphorRS != null) clearTimeout(_semaphorRS);
+// _semaphorRS = setTimeout(setRightContentSize, 500);
+// });
+
+var timeOut = null;
+window.onresize=function(){
+setRightContentSize();
+}
 
     </script>
   </c:if>
@@ -156,7 +177,6 @@
     <div class="tit">
         <span class="innerTit">报表统计</span>
         <ul>
-		<li><a href="huanbao_demo.shtm">&nbsp;&nbsp;&nbsp;&nbsp;统计分析</a></li>
 		<li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
 		<li><a href="statistic.shtm">&nbsp;&nbsp;&nbsp;&nbsp;实时曲线</a></li>
         </ul>
