@@ -1,4 +1,3 @@
-
 package com.serotonin.m2m2.rt.dataImage;
 
 import com.serotonin.m2m2.i18n.TranslatableMessage;

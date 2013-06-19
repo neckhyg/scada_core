@@ -12,6 +12,7 @@
 --%><%@attribute name="onload" %>
 
 <c:set var="theme">claro</c:set>
+
 <html>
 <head>
   <title><c:choose>
@@ -22,7 +23,7 @@
   <!-- Meta -->
   <meta http-equiv="content-type" content="application/xhtml+xml;charset=utf-8"/>
   <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="Copyright" content="&copy;2008-2011 EazyTec Software Technologies Inc."/>
+  <meta name="Copyright" content="&copy;2008-2013 EazyTec Software Technologies Inc."/>
   <meta name="DESCRIPTION" content="EazyTec SCADA"/>
   <meta name="KEYWORDS" content="EazyTec SCADA"/>
   <c:if test="${empty dojoURI}">
@@ -59,6 +60,10 @@
   <c:forEach items="${js}" var="jspath">
     <script type="text/javascript" src="${jspath}"></script></c:forEach>
   <script type="text/javascript">
+
+      require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer",
+      "dijit/layout/AccordionContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionPane"]);
+
     mango.i18n = <sst:convert obj="${clientSideMessages}"/>;
   </script>
   <c:if test="${!simple}">
@@ -73,7 +78,6 @@
         ready(function(){
             mango.header.onLoad();
             setUserMuted(${sessionUser.muted});
-            setRightContentSize();
         });
       });
       </c:if>
@@ -98,33 +102,7 @@
               alert(ss);
           }
       }
-	function setRightContentSize(){
-	   var sideBarNavWidth = dojo.query(".sideBarNav").style("width");
-	  var menuHeight = dojo.query("#menu").style("height");
-	  if(dojo.isIE){
-	   var rightWidth = window.screen.width - sideBarNavWidth - 74 - 10;
-	  var rightHeight = window.screen.height - menuHeight  - 100 - 40;
-
-	  }else{
-	   var rightWidth = window.screen.width - sideBarNavWidth - 74;
-	  var rightHeight = window.screen.height - menuHeight  - 100 - 40;
-
-	  }
-	  dojo.query("#right_content").style("width",rightWidth + "px");
-	  dojo.query("#right_content").style("height",rightHeight + "px");
-	}
-
-//var _semaphorRS = null;
-//dojo.connect(window,"resize",function(){
-// if (_semaphorRS != null) clearTimeout(_semaphorRS);
-// _semaphorRS = setTimeout(setRightContentSize, 500);
-// });
-
-var timeOut = null;
-window.onresize=function(){
-setRightContentSize();
 }
-
     </script>
   </c:if>
 
@@ -135,8 +113,10 @@ setRightContentSize();
 
 <body class="${theme}">
 
- <div id="menu">
-	<div class="t2"></div>
+ <div  data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 100%;" >
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'" id="menu">
+
+    <div class="t2"></div>
 	<div class="top_left">
           <img src="${modulePath}/web/images/logo.png" style="padding-top:10px; padding-left: 20px; float: left;">
 	</div>
@@ -161,21 +141,22 @@ setRightContentSize();
         </c:if>
 	</div>
  </div>
- 
-    <div id="left_menu">
-      <div class="sideBarNav">
+  <div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'leading'">
+    <div data-dojo-type="dijit/layout/AccordionPane" id="left_menu">
+     <div class="sideBarNav">
     <div class="tit">  
         <span class="innerTit">监测数据</span>
         <ul>  
         <li><a href="monitoring_point.shtm?viewId=3">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
         <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
-        </ul>  
+        <li><a href="history.shtm">&nbsp;&nbsp;&nbsp;&nbsp;历史数据</a></li>
+        </ul>
     </div>  
     <div class="tit">
         <span class="innerTit">报表统计</span>
         <ul>
 		<li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
-		<li><a href="statistic.shtm">&nbsp;&nbsp;&nbsp;&nbsp;实时曲线</a></li>
+		<li><a href="realtime.shtm">&nbsp;&nbsp;&nbsp;&nbsp;实时曲线</a></li>
         </ul>
     </div>
     <div class="tit">
@@ -187,7 +168,7 @@ setRightContentSize();
     <div class="tit">
         <span class="innerTit">排污企业记录</span>
         <ul>
-		<li><a href="company_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业</a></li>
+		<li><a href="sewage_company_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业</a></li>
 		<li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
         </ul>
     </div>
@@ -199,8 +180,14 @@ setRightContentSize();
     </div>
 </div>
 </div>
+</div>
 
-        <jsp:doBody/>
+
+<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region:'center'">
+<jsp:doBody/>
+</div>
+
+</div><!--BorderContainer DIV-->
 
 <c:if test="${!empty onload}">
   <script type="text/javascript">dojo.ready(${onload});</script>

@@ -1,4 +1,3 @@
-
 package com.serotonin.m2m2.rt.dataImage;
 
 import java.util.ArrayList;

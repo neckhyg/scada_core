@@ -1,4 +1,3 @@
-
 package com.serotonin.m2m2.rt.event.detectors;
 
 import org.apache.commons.lang3.StringUtils;
