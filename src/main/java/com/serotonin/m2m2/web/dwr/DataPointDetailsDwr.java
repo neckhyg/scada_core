@@ -1,4 +1,3 @@
-
 package com.serotonin.m2m2.web.dwr;
 
 import java.util.ArrayList;

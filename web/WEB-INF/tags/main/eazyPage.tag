@@ -12,7 +12,6 @@
 --%><%@attribute name="onload" %>
 
 <c:set var="theme">claro</c:set>
-
 <html>
 <head>
   <title><c:choose>
@@ -23,7 +22,7 @@
   <!-- Meta -->
   <meta http-equiv="content-type" content="application/xhtml+xml;charset=utf-8"/>
   <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="Copyright" content="&copy;2008-2013 EazyTec Software Technologies Inc."/>
+  <meta name="Copyright" content="&copy;2008-2011 EazyTec Software Technologies Inc."/>
   <meta name="DESCRIPTION" content="EazyTec SCADA"/>
   <meta name="KEYWORDS" content="EazyTec SCADA"/>
   <c:if test="${empty dojoURI}">
@@ -61,16 +60,15 @@
     <script type="text/javascript" src="${jspath}"></script></c:forEach>
   <script type="text/javascript">
 
-      require(["dojo/parser", "dijit/layout/BorderContainer", "dijit/layout/TabContainer",
-      "dijit/layout/AccordionContainer", "dijit/layout/ContentPane", "dijit/layout/AccordionPane"]);
-
     mango.i18n = <sst:convert obj="${clientSideMessages}"/>;
   </script>
   <c:if test="${!simple}">
     <script type="text/javascript" src="${modulePath}/web/js/header.js"></script>
     <script type="text/javascript">
       dwr.util.setEscapeHtml(false);
+      dojo.require("dojo.parser");
       dojo.require("dijit.layout.ContentPane");
+      dojo.require("dijit.layout.BorderContainer");
 
       dwr.util.setEscapeHtml(false);
       <c:if test="${!empty sessionUser}">
@@ -80,6 +78,7 @@
             setUserMuted(${sessionUser.muted});
         });
       });
+
       </c:if>
 
       function setLocale(locale) {
@@ -102,7 +101,6 @@
               alert(ss);
           }
       }
-}
     </script>
   </c:if>
 
@@ -113,77 +111,74 @@
 
 <body class="${theme}">
 
- <div  data-dojo-type="dijit/layout/BorderContainer" style="width: 100%; height: 100%;" >
-    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'" id="menu">
-
-    <div class="t2"></div>
-	<div class="top_left">
+ <div  data-dojo-type="dijit.layout.BorderContainer" style="width: 100%; height: 100%;" >
+    <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'top'" id="heading" >
+	    <div class="top_left">
           <img src="${modulePath}/web/images/logo.png" style="padding-top:10px; padding-left: 20px; float: left;">
-	</div>
+	    </div>
 
-	<div class="top_right">
-		<div class="top_right1">
-			<ul>
-				<li><a href="data_point_details.shtm"><img src="${modulePath}/web/images/home.png" /><span>配置主页</span></a></li>
-				<li><a href="logout.htm"><img src="${modulePath}/web/images/quit.png" /><span>退出</span></a></li>
-			</ul>
-		</div>
-	</div>
+	    <div class="top_right">
+		    <div class="top_right1">
+			    <ul>
+				    <li><a href="data_point_details.shtm"><img src="${modulePath}/web/images/home.png" /><span>配置主页</span></a></li>
+				    <li><a href="logout.htm"><img src="${modulePath}/web/images/quit.png" /><span>退出</span></a></li>
+			    </ul>
+		    </div>
+	    </div>
 
-	<div class="top_mid">
-	    <c:if test="${!simple}">
-            <a href="alarm.shtm" style="color:white">
-                <span id="__header__alarmLevelDiv" style="display:none;">
-                    <img id="__header__alarmLevelImg" src="/images/spacer.gif" alt="" title=""/>
-                <span id="__header__alarmLevelText"></span>
-                </span>
-            </a>
-        </c:if>
-	</div>
- </div>
-  <div data-dojo-type="dijit/layout/AccordionContainer" data-dojo-props="region:'leading'">
-    <div data-dojo-type="dijit/layout/AccordionPane" id="left_menu">
-     <div class="sideBarNav">
-    <div class="tit">  
-        <span class="innerTit">监测数据</span>
-        <ul>  
-        <li><a href="monitoring_point.shtm?viewId=3">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
-        <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
-        <li><a href="history.shtm">&nbsp;&nbsp;&nbsp;&nbsp;历史数据</a></li>
-        </ul>
-    </div>  
-    <div class="tit">
-        <span class="innerTit">报表统计</span>
-        <ul>
-		<li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
-		<li><a href="realtime.shtm">&nbsp;&nbsp;&nbsp;&nbsp;实时曲线</a></li>
-        </ul>
+	    <div class="top_mid">
+	        <c:if test="${!simple}">
+                <a href="alarm.shtm" style="color:white">
+                    <span id="__header__alarmLevelDiv" style="display:none;">
+                        <img id="__header__alarmLevelImg" src="/images/spacer.gif" alt="" title=""/>
+                        <span id="__header__alarmLevelText"></span>
+                    </span>
+                </a>
+            </c:if>
+	    </div>
     </div>
-    <div class="tit">
-        <span class="innerTit">超标报警</span>
-        <ul>
-		<li><a href="alarm.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报警</a></li>
-        </ul>
-    </div>
-    <div class="tit">
-        <span class="innerTit">排污企业记录</span>
-        <ul>
-		<li><a href="sewage_company_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业</a></li>
-		<li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
-        </ul>
-    </div>
-    <div class="tit">
+
+    <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'leading'" id="left_menu">
+        <div class="sideBarNav">
+        <div class="tit">
+            <span class="innerTit">监测数据</span>
+            <ul>
+                <li><a href="monitoring_point.shtm?viewId=3">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
+                <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
+                <li><a href="history.shtm">&nbsp;&nbsp;&nbsp;&nbsp;历史数据</a></li>
+            </ul>
+        </div>
+        <div class="tit">
+            <span class="innerTit">报表统计</span>
+            <ul>
+		        <li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
+		        <li><a href="realtime.shtm">&nbsp;&nbsp;&nbsp;&nbsp;实时曲线</a></li>
+            </ul>
+        </div>
+        <div class="tit">
+            <span class="innerTit">超标报警</span>
+            <ul>
+		        <li><a href="alarm.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报警</a></li>
+            </ul>
+        </div>
+        <div class="tit">
+            <span class="innerTit">排污企业记录</span>
+            <ul>
+		        <li><a href="sewage_comp_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业</a></li>
+		        <li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
+            </ul>
+        </div>
+        <div class="tit">
         <span class="innerTit">用户管理</span>
-        <ul>
-		<li><a href="user_management.shtm">&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a></li>
-        </ul>
+            <ul>
+		        <li><a href="user_management.shtm">&nbsp;&nbsp;&nbsp;&nbsp;用户管理</a></li>
+            </ul>
+        </div>
+        </div>
     </div>
-</div>
-</div>
-</div>
 
 
-<div data-dojo-type="dijit/layout/TabContainer" data-dojo-props="region:'center'">
+<div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'" id="right_content">
 <jsp:doBody/>
 </div>
 

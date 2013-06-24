@@ -301,7 +301,7 @@ public class ModuleRegistry {
             @Override
             public String getLoggedInPageUri(HttpServletRequest request, HttpServletResponse response, User user) {
 //                return "/data_point_details.shtm";
-                return "/main.shtm";
+                return "/index.shtm";
             }
 
             @Override

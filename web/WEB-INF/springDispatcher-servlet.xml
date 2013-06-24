@@ -40,6 +40,7 @@
         <prop key="/system_settings.shtm">systemSettingsController</prop>
         <prop key="/users.shtm">usersController</prop>
         <prop key="/webcam_live_feed.htm">webcamLiveFeedController</prop>
+        <prop key="/index.shtm">indexController</prop>
       </props>
     </property>
     
@@ -132,8 +133,11 @@
   <bean id="webcamLiveFeedController" class="com.serotonin.m2m2.web.mvc.controller.WebcamLiveFeedController">
     <property name="viewName"><value>/WEB-INF/jsp/webcamLiveFeed.jsp</value></property>
   </bean>
-  
-  
+
+    <bean id="indexController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName"><value>/WEB-INF/jsp/index.jsp</value></property>
+    </bean>
+
   
   <!-- Interceptors -->
   <bean id="commonData" class="com.serotonin.m2m2.web.mvc.interceptor.CommonDataInterceptor"/>
