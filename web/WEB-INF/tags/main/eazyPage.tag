@@ -145,14 +145,16 @@
             <ul>
                 <li><a href="monitoring_point.shtm?viewId=3">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
                 <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
-                <li><a href="history.shtm">&nbsp;&nbsp;&nbsp;&nbsp;历史数据</a></li>
             </ul>
         </div>
         <div class="tit">
             <span class="innerTit">报表统计</span>
             <ul>
+                <li><a href="history.shtm">&nbsp;&nbsp;&nbsp;&nbsp;历史数据</a></li>
 		        <li><a href="report.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报表</a></li>
+<%--
 		        <li><a href="realtime.shtm">&nbsp;&nbsp;&nbsp;&nbsp;实时曲线</a></li>
+--%>
             </ul>
         </div>
         <div class="tit">

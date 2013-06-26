@@ -437,14 +437,15 @@ public class EventDao extends BaseDao {
 
                         for (String keyword : keywords) {
                             if (keyword.startsWith("-")) {
-                                if (com.serotonin.util.StringUtils.globWhiteListMatchIgnoreCase(values,
-                                        keyword.substring(1))) {
+//                                if (com.serotonin.util.StringUtils.globWhiteListMatchIgnoreCase(values, keyword.substring(1))) {
+                                if(text.indexOf(keyword.substring(1))>=0){
                                     add = false;
                                     break;
                                 }
                             }
                             else {
-                                if (!com.serotonin.util.StringUtils.globWhiteListMatchIgnoreCase(values, keyword)) {
+//                                if (!com.serotonin.util.StringUtils.globWhiteListMatchIgnoreCase(values, keyword)) {
+                                if(!(text.indexOf(keyword)>=0)){
                                     add = false;
                                     break;
                                 }
