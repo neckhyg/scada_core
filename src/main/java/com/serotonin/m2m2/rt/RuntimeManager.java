@@ -1,26 +1,18 @@
 
 package com.serotonin.m2m2.rt;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.serotonin.m2m2.db.dao.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.joda.time.DateTime;
 import org.springframework.util.Assert;
 
 import com.serotonin.ShouldNeverHappenException;
 import com.serotonin.m2m2.Common;
-import com.serotonin.m2m2.db.dao.DataPointDao;
-import com.serotonin.m2m2.db.dao.DataSourceDao;
-import com.serotonin.m2m2.db.dao.PointValueDao;
-import com.serotonin.m2m2.db.dao.PublisherDao;
 import com.serotonin.m2m2.module.DataSourceDefinition;
 import com.serotonin.m2m2.module.ModuleRegistry;
 import com.serotonin.m2m2.module.RuntimeManagerDefinition;
@@ -463,6 +455,12 @@ public class RuntimeManager {
         if (ds != null)
             // The data source may have been disabled. Just make sure.
             ds.forcePointRead(dataPoint);
+    }
+
+    public int purgeAlarmDataValues(){
+        EventDao eventDao = new EventDao();
+//        DateTime dateTime = new DateTime();
+        return eventDao.purgeEventsBefore( DateTime.now().getMillis()  );
     }
 
     public long purgeDataPointValues() {

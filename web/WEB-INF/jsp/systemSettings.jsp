@@ -50,10 +50,8 @@
                     return td;
                 }
             };
-            setEventTypeData("systemEventAlarmLevelsList", settings.systemEventTypes, alarmFunctions, alarmOptions,
-                    systemEventAlarmLevels);
-            setEventTypeData("auditEventAlarmLevelsList", settings.auditEventTypes, alarmFunctions, alarmOptions,
-                    auditEventAlarmLevels);
+            setEventTypeData("systemEventAlarmLevelsList", settings.systemEventTypes, alarmFunctions, alarmOptions, systemEventAlarmLevels);
+            setEventTypeData("auditEventAlarmLevelsList", settings.auditEventTypes, alarmFunctions, alarmOptions, auditEventAlarmLevels);
             
             $set("<c:out value="<%= SystemSettingsDao.HTTP_CLIENT_USE_PROXY %>"/>", settings.<c:out value="<%= SystemSettingsDao.HTTP_CLIENT_USE_PROXY %>"/>);
             $set("<c:out value="<%= SystemSettingsDao.HTTP_CLIENT_PROXY_SERVER %>"/>", settings.<c:out value="<%= SystemSettingsDao.HTTP_CLIENT_PROXY_SERVER %>"/>);
@@ -318,6 +316,16 @@
             });
         }
     }
+
+    function checkPurgeAllAlarmData() {
+        if (confirm("<fmt:message key="systemSettings.purgeAlarmDataConfirm"/>")) {
+            setUserMessage("miscMessage", "<fmt:message key="systemSettings.purgeAlamrDataInProgress"/>");
+            SystemSettingsDwr.purgeAllAlarmData(function(msg) {
+                setUserMessage("miscMessage", msg);
+                dbSizeUpdate();
+            });
+        }
+    }
   </script>
   
   <tag:labelledSection labelKey="systemSettings.systemInformation">
@@ -555,6 +563,7 @@
         <td colspan="2" align="center">
           <input id="saveMiscSettingsBtn" type="button" value="<fmt:message key="common.save"/>" onclick="saveMiscSettings()"/>
           <input type="button" value="<fmt:message key="systemSettings.purgeData"/>" onclick="checkPurgeAllData()"/>
+          <input type="button" value="<fmt:message key="systemSettings.purgeAlarmData"/>" onclick="checkPurgeAllAlarmData()"/>
           <tag:help id="otherSettings"/>
         </td>
       </tr>

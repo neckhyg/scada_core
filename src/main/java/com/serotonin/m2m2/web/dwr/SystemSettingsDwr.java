@@ -276,6 +276,12 @@ public class SystemSettingsDwr extends BaseDwr {
     }
 
     @DwrPermission(admin = true)
+    public TranslatableMessage purgeAllAlarmData() {
+        int cnt  = Common.runtimeManager.purgeAlarmDataValues();
+        return new TranslatableMessage("systemSettings.purgeAlarmDataComplete", cnt);
+    }
+
+    @DwrPermission(admin = true)
     public void saveSettings(Map<String, String> settings) {
         SystemSettingsDao systemSettingsDao = new SystemSettingsDao();
 
