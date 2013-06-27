@@ -143,7 +143,7 @@
         <div class="tit">
             <span class="innerTit">监测数据</span>
             <ul>
-                <li><a href="monitoring_point.shtm?viewId=3">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
+                <li><a href="monitoring_point.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
                 <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
             </ul>
         </div>
