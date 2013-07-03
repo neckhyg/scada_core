@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.StandardChartTheme;
 import org.jfree.chart.annotations.XYTextAnnotation;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -62,6 +63,17 @@ public class ImageChartUtils {
 
     public static void writeChart(PointTimeSeriesCollection pointTimeSeriesCollection, boolean showLegend,
                                   OutputStream out, int width, int height, long from, long to) throws IOException {
+        //创建主题样式
+        StandardChartTheme standardChartTheme=new StandardChartTheme("CN");
+        //设置标题字体
+        standardChartTheme.setExtraLargeFont(new Font("隶书",Font.BOLD,18));
+        //设置图例的字体
+        standardChartTheme.setRegularFont(new Font("宋书",Font.PLAIN,14));
+        //设置轴向的字体
+        standardChartTheme.setLargeFont(new Font("宋书",Font.PLAIN,14));
+        //应用主题样式
+        ChartFactory.setChartTheme(standardChartTheme);
+
         JFreeChart chart = ChartFactory.createTimeSeriesChart(null, null, null, null, showLegend, false, false);
         chart.setBackgroundPaint(SystemSettingsDao.getColour(SystemSettingsDao.CHART_BACKGROUND_COLOUR));
 
