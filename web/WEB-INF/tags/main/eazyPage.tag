@@ -164,10 +164,10 @@
             </ul>
         </div>
         <div class="tit">
-            <span class="innerTit">排污企业记录</span>
+            <span class="innerTit">排污记录</span>
             <ul>
-		        <li><a href="sewage_comp_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业</a></li>
-		        <li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
+		        <li><a href="sewage_comp_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业记录</a></li>
+		    <li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
             </ul>
         </div>
         <div class="tit">

@@ -19,7 +19,6 @@ import com.serotonin.m2m2.vo.DataPointVO;
 //Required to prevent properties from being written
 @JsonEntity
 abstract public class AbstractPointLocatorVO implements PointLocatorVO {
-    @Override
     public TranslatableMessage getDataTypeMessage() {
         return DataTypes.getDataTypeMessage(getDataTypeId());
     }
@@ -63,7 +62,6 @@ abstract public class AbstractPointLocatorVO implements PointLocatorVO {
     /**
      * Defaults to returning null. Override to return something else.
      */
-    @Override
     public DataPointSaveHandler getDataPointSaveHandler() {
         return null;
     }
@@ -71,7 +69,6 @@ abstract public class AbstractPointLocatorVO implements PointLocatorVO {
     /**
      * Defaults to returning false. Override to return something else.
      */
-    @Override
     public boolean isRelinquishable() {
         return false;
     }
@@ -79,7 +76,6 @@ abstract public class AbstractPointLocatorVO implements PointLocatorVO {
     /**
      * Defaults to calling the response only version of the method so that subclasses are not forced to implement.
      */
-    @Override
     public void validate(ProcessResult response, DataPointVO dpvo) {
         validate(response);
     }

@@ -23,7 +23,6 @@ public class UsedImagesDirective implements TemplateDirectiveModel {
         return imageList;
     }
 
-    @Override
     public void execute(Environment env, @SuppressWarnings("rawtypes") Map params, TemplateModel[] loopVars,
             TemplateDirectiveBody body) throws TemplateException, IOException {
         boolean writeLogo = false;

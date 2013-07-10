@@ -252,12 +252,10 @@ public class PointEventDetectorVO implements Cloneable, JsonSerializable, Change
         }
     }
 
-    @Override
     public String getTypeKey() {
         return "event.audit.pointEventDetector";
     }
 
-    @Override
     public void addProperties(List<TranslatableMessage> list) {
         AuditEventType.addPropertyMessage(list, "common.xid", xid);
         AuditEventType.addPropertyMessage(list, "pointEdit.detectors.alias", alias);
@@ -267,7 +265,6 @@ public class PointEventDetectorVO implements Cloneable, JsonSerializable, Change
         AuditEventType.addPropertyMessage(list, "pointEdit.detectors.weight", weight);
     }
 
-    @Override
     public void addPropertyChanges(List<TranslatableMessage> list, PointEventDetectorVO from) {
         AuditEventType.maybeAddPropertyChangeMessage(list, "common.xid", from.xid, xid);
         AuditEventType.maybeAddPropertyChangeMessage(list, "pointEdit.detectors.alias", from.alias, alias);
@@ -299,7 +296,6 @@ public class PointEventDetectorVO implements Cloneable, JsonSerializable, Change
         this.alarmLevel = alarmLevel;
     }
 
-    @Override
     public int getId() {
         return id;
     }
@@ -411,7 +407,6 @@ public class PointEventDetectorVO implements Cloneable, JsonSerializable, Change
         TYPE_CODES.addElement(TYPE_NEGATIVE_CUSUM, "NEGATIVE_CUSUM");
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("xid", xid);
         writer.writeEntry("type", TYPE_CODES.getCode(detectorType));
@@ -463,7 +458,6 @@ public class PointEventDetectorVO implements Cloneable, JsonSerializable, Change
         }
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         String text = jsonObject.getString("type");
         if (text == null)

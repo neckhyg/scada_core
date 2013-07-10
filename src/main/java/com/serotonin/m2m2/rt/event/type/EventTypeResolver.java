@@ -13,7 +13,6 @@ import com.serotonin.m2m2.module.ModuleRegistry;
 import com.serotonin.m2m2.rt.event.type.EventType.EventTypeNames;
 
 public class EventTypeResolver implements TypeResolver {
-    @Override
     public Type resolve(JsonValue jsonValue) throws JsonException {
         if (jsonValue == null)
             throw new TranslatableJsonException("emport.error.eventType.null");

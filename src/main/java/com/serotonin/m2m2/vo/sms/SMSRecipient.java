@@ -1,10 +1,5 @@
 
-package com.serotonin.m2m2.vo.mailingList;
-
-import java.io.IOException;
-import java.util.Set;
-
-import org.joda.time.DateTime;
+package com.serotonin.m2m2.vo.sms;
 
 import com.serotonin.json.JsonException;
 import com.serotonin.json.JsonReader;
@@ -12,8 +7,12 @@ import com.serotonin.json.ObjectWriter;
 import com.serotonin.json.spi.JsonSerializable;
 import com.serotonin.json.type.JsonObject;
 import com.serotonin.m2m2.util.ExportCodes;
+import org.joda.time.DateTime;
 
-abstract public class EmailRecipient implements JsonSerializable {
+import java.io.IOException;
+import java.util.Set;
+
+abstract public class SMSRecipient implements JsonSerializable {
     public static final int TYPE_MAILING_LIST = 1;
     public static final int TYPE_USER = 2;
     public static final int TYPE_ADDRESS = 3;
@@ -36,7 +35,7 @@ abstract public class EmailRecipient implements JsonSerializable {
     abstract public String getReferenceAddress();
 
     /**
-     * @throws JsonException
+     * @throws com.serotonin.json.JsonException
      */
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("recipientType", TYPE_CODES.getCode(getRecipientType()));

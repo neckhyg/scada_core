@@ -27,7 +27,7 @@ public class UserDao extends BaseDao {
 
     private static final String USER_SELECT = //
     "SELECT id, username, password, email, phone, admin, disabled, homeUrl, " //
-            + "lastLogin, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted FROM users ";
+            + "lastLogin, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted,sewageCompany,sewageRecord FROM users ";
 
     public User getUser(int id) {
         User user = queryForObject(USER_SELECT + "where id=?", new Object[] { id }, new UserRowMapper(), null);
@@ -43,7 +43,6 @@ public class UserDao extends BaseDao {
     }
 
     class UserRowMapper implements RowMapper<User> {
-        @Override
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             User user = new User();
             int i = 0;
@@ -60,6 +59,8 @@ public class UserDao extends BaseDao {
             user.setReceiveOwnAuditEvents(charToBool(rs.getString(++i)));
             user.setTimezone(rs.getString(++i));
             user.setMuted(charToBool(rs.getString(++i)));
+            user.setSewageCompany(charToBool(rs.getString(++i)));
+            user.setSewageRecord(charToBool(rs.getString(++i)));
             return user;
         }
     }
@@ -78,8 +79,9 @@ public class UserDao extends BaseDao {
     }
 
     private void populateUserPermissions(List<User> users) {
-        for (User user : users)
-            populateUserPermissions(user);
+        for (User user : users){
+        	 populateUserPermissions(user);
+        }
     }
 
     private static final String SELECT_DATA_SOURCE_PERMISSIONS = "select dataSourceId from dataSourceUsers where userId=?";
@@ -93,7 +95,6 @@ public class UserDao extends BaseDao {
                 Integer.class));
         user.setDataPointPermissions(query(SELECT_DATA_POINT_PERMISSIONS, new Object[] { user.getId() },
                 new RowMapper<DataPointAccess>() {
-                    @Override
                     public DataPointAccess mapRow(ResultSet rs, int rowNum) throws SQLException {
                         DataPointAccess a = new DataPointAccess();
                         a.setDataPointId(rs.getInt(1));
@@ -105,7 +106,6 @@ public class UserDao extends BaseDao {
 
     public void saveUser(final User user) {
         getTransactionTemplate().execute(new TransactionCallbackWithoutResult() {
-            @Override
             protected void doInTransactionWithoutResult(TransactionStatus status) {
                 if (user.getId() == Common.NEW_ID)
                     insertUser(user);
@@ -116,8 +116,8 @@ public class UserDao extends BaseDao {
     }
 
     private static final String USER_INSERT = "insert into users (username, password, email, phone, admin, " //
-            + "disabled, homeUrl, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted) " //
-            + "values (?,?,?,?,?,?,?,?,?,?,?)";
+            + "disabled, homeUrl, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted,sewageCompany,sewageRecord) " //
+            + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     void insertUser(User user) {
         int id = doInsert(
@@ -125,16 +125,16 @@ public class UserDao extends BaseDao {
                 new Object[] { user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(),
                         boolToChar(user.isAdmin()), boolToChar(user.isDisabled()), user.getHomeUrl(),
                         user.getReceiveAlarmEmails(), boolToChar(user.isReceiveOwnAuditEvents()), user.getTimezone(),
-                        boolToChar(user.isMuted()) }, new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER, Types.VARCHAR,
-                        Types.VARCHAR, Types.VARCHAR });
+                        boolToChar(user.isMuted()),boolToChar(user.isSewageCompany()), boolToChar(user.isSewageRecord()) }, 
+                        new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
+                		Types.VARCHAR, Types.INTEGER, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR });
         user.setId(id);
         saveRelationalData(user);
     }
 
     private static final String USER_UPDATE = "update users set " //
             + "  username=?, password=?, email=?, phone=?, admin=?, disabled=?, homeUrl=?, receiveAlarmEmails=?, " //
-            + "  receiveOwnAuditEvents=?, timezone=?, muted=? " //
+            + "  receiveOwnAuditEvents=?, timezone=?, muted=?, sewageCompany=?, sewageRecord=? " //
             + "where id=?";
 
     void updateUser(User user) {
@@ -152,9 +152,10 @@ public class UserDao extends BaseDao {
                     new Object[] { user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(),
                             boolToChar(user.isAdmin()), boolToChar(user.isDisabled()), user.getHomeUrl(),
                             user.getReceiveAlarmEmails(), boolToChar(user.isReceiveOwnAuditEvents()),
-                            user.getTimezone(), boolToChar(user.isMuted()), user.getId() }, new int[] { Types.VARCHAR,
-                            Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
-                            Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER });
+                            user.getTimezone(), boolToChar(user.isMuted()), boolToChar(user.isSewageCompany()), 
+                            boolToChar(user.isSewageRecord()), user.getId() }, new int[] { Types.VARCHAR,Types.VARCHAR, 
+                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.INTEGER, 
+                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER });
             saveRelationalData(user);
         }
         catch (DataIntegrityViolationException e) {
@@ -172,12 +173,10 @@ public class UserDao extends BaseDao {
         // Save the new ones.
         ejt.batchUpdate("insert into dataSourceUsers (dataSourceId, userId) values (?,?)",
                 new BatchPreparedStatementSetter() {
-                    @Override
                     public int getBatchSize() {
                         return user.getDataSourcePermissions().size();
                     }
 
-                    @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setInt(1, user.getDataSourcePermissions().get(i));
                         ps.setInt(2, user.getId());
@@ -185,12 +184,10 @@ public class UserDao extends BaseDao {
                 });
         ejt.batchUpdate("insert into dataPointUsers (dataPointId, userId, permission) values (?,?,?)",
                 new BatchPreparedStatementSetter() {
-                    @Override
                     public int getBatchSize() {
                         return user.getDataPointPermissions().size();
                     }
 
-                    @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         ps.setInt(1, user.getDataPointPermissions().get(i).getDataPointId());
                         ps.setInt(2, user.getId());
@@ -226,6 +223,15 @@ public class UserDao extends BaseDao {
     public void saveMuted(int userId, boolean muted) {
         ejt.update("UPDATE users SET muted=? where id=?", new Object[] { boolToChar(muted), userId });
     }
+    
+    public void saveSewageCompany(int userId, boolean sewageCompany) {
+    	ejt.update("UPDATE users SET sewageCompany=? where id=?", new Object[] { boolToChar(sewageCompany), userId });
+    }
+    
+    public void saveSewageRecord(int userId, boolean sewageRecord) {
+    	ejt.update("UPDATE users SET sewageRecord=? where id=?", new Object[] { boolToChar(sewageRecord), userId });
+    }
+    
 
     //
     //

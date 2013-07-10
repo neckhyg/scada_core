@@ -45,13 +45,11 @@ public class DataPointAccess implements JsonSerializable {
         this.permission = permission;
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("dataPointXid", new DataPointDao().getDataPoint(dataPointId).getXid());
         writer.writeEntry("permission", ACCESS_CODES.getCode(permission));
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         String text = jsonObject.getString("dataPointXid");
         if (StringUtils.isBlank(text))

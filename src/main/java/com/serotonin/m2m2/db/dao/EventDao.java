@@ -108,12 +108,10 @@ public class EventDao extends BaseDao {
 
     public void insertUserEvents(final int eventId, final List<Integer> userIds, final boolean alarm) {
         ejt.batchUpdate(USER_EVENTS_INSERT, new BatchPreparedStatementSetter() {
-            @Override
             public int getBatchSize() {
                 return userIds.size();
             }
 
-            @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setInt(1, eventId);
                 ps.setInt(2, userIds.get(i));
@@ -195,7 +193,6 @@ public class EventDao extends BaseDao {
             this.userId = userId;
         }
 
-        @Override
         public void run() {
             addToCache(userId, getPendingEvents(EventType.EventTypeNames.DATA_POINT, -1, userId));
         }
@@ -245,7 +242,6 @@ public class EventDao extends BaseDao {
     }
 
     public static class EventInstanceRowMapper implements RowMapper<EventInstance> {
-        @Override
         public EventInstance mapRow(ResultSet rs, int rowNum) throws SQLException {
             EventType type = createEventType(rs, 2);
             EventInstance event = new EventInstance(type, rs.getLong(6), charToBool(rs.getString(7)), rs.getInt(10),
@@ -329,7 +325,6 @@ public class EventDao extends BaseDao {
         // Find a list of event ids with no remaining acknowledgments pending.
         final ExtendedJdbcTemplate ejt2 = ejt;
         int count = getTransactionTemplate().execute(new TransactionCallback<Integer>() {
-            @Override
             public Integer doInTransaction(TransactionStatus status) {
                 int count = ejt2.update("delete from events where activeTs<?", new Object[] { time });
 
@@ -413,7 +408,6 @@ public class EventDao extends BaseDao {
         final int[] data = new int[2];
 
         ejt.query(sql.toString(), params.toArray(), new ResultSetExtractor<Object>() {
-            @Override
             public Object extractData(ResultSet rs) throws SQLException, DataAccessException {
                 int row = 0;
                 long dateTs = date == null ? -1 : date.getTime();
@@ -508,7 +502,6 @@ public class EventDao extends BaseDao {
         return queryForObject(
                 "select eventTypeName, eventSubtypeName, eventTypeRef1, eventTypeRef2 from eventHandlers where id=?",
                 new Object[] { handlerId }, new RowMapper<EventType>() {
-                    @Override
                     public EventType mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return createEventType(rs, 1);
                     }
@@ -563,7 +556,6 @@ public class EventDao extends BaseDao {
     }
 
     class EventHandlerRowMapper implements RowMapper<EventHandlerVO> {
-        @Override
         public EventHandlerVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             EventHandlerVO h = (EventHandlerVO) SerializationHelper
                     .readObjectInContext(rs.getBlob(4).getBinaryStream());

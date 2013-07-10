@@ -63,7 +63,6 @@ public class ModulesDwr extends BaseDwr {
 
             long timeout = Common.getMillis(Common.TimePeriods.SECONDS, 10);
             RESTART_TASK = new TimeoutTask(timeout, new TimeoutClient() {
-                @Override
                 public void scheduleTimeout(long fireTime) {
                     File restartFlag = new File(Common.MA_HOME, "RESTART");
                     if (!restartFlag.exists()) {
@@ -159,7 +158,6 @@ public class ModulesDwr extends BaseDwr {
             this.modules = modules;
         }
 
-        @Override
         public void run() {
             HttpClient httpClient = Common.getHttpClient();
 

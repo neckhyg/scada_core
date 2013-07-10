@@ -19,17 +19,14 @@ public class WebContextFilter implements Filter {
     private final DefaultWebContextBuilder builder = new DefaultWebContextBuilder();
     private ServletContext servletContext;
 
-    @Override
     public void init(FilterConfig config) {
         servletContext = config.getServletContext();
     }
 
-    @Override
     public void destroy() {
         // no op
     }
 
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
         try {

@@ -113,7 +113,6 @@ public class DataPointDao extends BaseDao {
     }
 
     class DataPointRowMapper implements RowMapper<DataPointVO> {
-        @Override
         public DataPointVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             int i = 0;
             DataPointVO dp = (DataPointVO) SerializationHelper.readObjectInContext(rs.getBlob(++i).getBinaryStream());
@@ -362,7 +361,6 @@ public class DataPointDao extends BaseDao {
             this.dp = dp;
         }
 
-        @Override
         public PointEventDetectorVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             PointEventDetectorVO detector = new PointEventDetectorVO();
             int i = 0;
@@ -449,19 +447,16 @@ public class DataPointDao extends BaseDao {
         final List<Tuple<Integer, Integer>> ups = query(
                 "select userId, permission from dataPointUsers where dataPointId=?", new Object[] { fromDataPointId },
                 new RowMapper<Tuple<Integer, Integer>>() {
-                    @Override
                     public Tuple<Integer, Integer> mapRow(ResultSet rs, int rowNum) throws SQLException {
                         return new Tuple<Integer, Integer>(rs.getInt(1), rs.getInt(2));
                     }
                 });
 
         ejt.batchUpdate("insert into dataPointUsers values (?,?,?)", new BatchPreparedStatementSetter() {
-            @Override
             public int getBatchSize() {
                 return ups.size();
             }
 
-            @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setInt(1, toDataPointId);
                 ps.setInt(2, ups.get(i).getElement1());
@@ -485,7 +480,6 @@ public class DataPointDao extends BaseDao {
         List<PointHistoryCount> counts = query(
                 "select dataPointId, count(*) from pointValues group by dataPointId order by 2 desc",
                 new RowMapper<PointHistoryCount>() {
-                    @Override
                     public PointHistoryCount mapRow(ResultSet rs, int rowNum) throws SQLException {
                         PointHistoryCount c = new PointHistoryCount();
                         c.setPointId(rs.getInt(1));
@@ -530,7 +524,6 @@ public class DataPointDao extends BaseDao {
     }
 
     class DataPointSummaryRowMapper implements RowMapper<DataPointSummary> {
-        @Override
         public DataPointSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
             int i = 0;
             DataPointSummary d = new DataPointSummary();
@@ -556,7 +549,6 @@ public class DataPointDao extends BaseDao {
 
             // Get the folder list.
             ejt.query("select id, parentId, name from dataPointHierarchy order by name", new RowCallbackHandler() {
-                @Override
                 public void processRow(ResultSet rs) throws SQLException {
                     PointFolder f = new PointFolder(rs.getInt(1), rs.getString(3));
                     int parentId = rs.getInt(2);

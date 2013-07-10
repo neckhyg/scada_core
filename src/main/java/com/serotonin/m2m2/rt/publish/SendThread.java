@@ -14,13 +14,11 @@ abstract public class SendThread extends Thread implements ILifecycle {
         super(threadName);
     }
 
-    @Override
     public void initialize() {
         running = true;
         start();
     }
 
-    @Override
     public void terminate() {
         running = false;
 
@@ -37,7 +35,6 @@ abstract public class SendThread extends Thread implements ILifecycle {
         return running;
     }
 
-    @Override
     public void joinTermination() {
         try {
             join();

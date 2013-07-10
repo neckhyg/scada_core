@@ -87,7 +87,6 @@ public class BinaryValue extends DataValue implements Comparable<BinaryValue> {
         return true;
     }
 
-    @Override
     public int compareTo(BinaryValue that) {
         return (that.value == value ? 0 : (value ? 1 : -1));
     }

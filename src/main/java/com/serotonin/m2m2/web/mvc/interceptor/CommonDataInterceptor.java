@@ -12,7 +12,6 @@ import com.serotonin.m2m2.web.mvc.controller.ControllerUtils;
 
 
 public class CommonDataInterceptor implements HandlerInterceptor {
-    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         request.setAttribute("availableLanguages", Common.getLanguages());
         request.setAttribute("lang", ControllerUtils.getLocale(request).getLanguage());
@@ -21,13 +20,11 @@ public class CommonDataInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
             ModelAndView modelAndView) {
         // no op
     }
 
-    @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         // no op
     }

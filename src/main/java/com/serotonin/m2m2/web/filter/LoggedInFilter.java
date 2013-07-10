@@ -35,7 +35,6 @@ public class LoggedInFilter implements Filter {
     private final List<String> usedIpAddresses = new ArrayList<String>();
     private String exceededIpLimitUrl;
 
-    @Override
     public void init(FilterConfig config) {
         exceededIpLimitUrl = config.getInitParameter("exceededIpLimitUrl");
 
@@ -51,7 +50,6 @@ public class LoggedInFilter implements Filter {
         }
     }
 
-    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         // Assume an http request.
@@ -106,7 +104,6 @@ public class LoggedInFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    @Override
     public void destroy() {
         // no op
     }

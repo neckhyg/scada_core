@@ -186,12 +186,10 @@ abstract public class EventType implements JsonSerializable {
     //
     // Serialization
     //
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         // no op. See the factory
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("sourceType", getEventType());
     }

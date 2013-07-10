@@ -303,6 +303,7 @@ public class PointValueDao extends BaseDao {
                 new Object[] { dataPointId }, limit);
     }
 
+
     public List<PointValueTime> getLatestPointValues(int dataPointId, int limit, long before) {
         return pointValuesQuery(POINT_VALUE_SELECT + " where pv.dataPointId=? and pv.ts<? order by pv.ts desc",
                 new Object[] { dataPointId, before }, limit);
@@ -322,7 +323,6 @@ public class PointValueDao extends BaseDao {
     }
 
     class PointValueRowMapper implements RowMapper<PointValueTime> {
-        @Override
         public PointValueTime mapRow(ResultSet rs, int rowNum) throws SQLException {
             DataValue value = createDataValue(rs, 1);
             long time = rs.getLong(5);
@@ -385,7 +385,6 @@ public class PointValueDao extends BaseDao {
      * Note: this does not extract source information from the annotation.
      */
     class IdPointValueRowMapper implements RowMapper<IdPointValueTime> {
-        @Override
         public IdPointValueTime mapRow(ResultSet rs, int rowNum) throws SQLException {
             int dataPointId = rs.getInt(1);
             DataValue value = createDataValue(rs, 2);
@@ -422,7 +421,6 @@ public class PointValueDao extends BaseDao {
 
     public void deleteOrphanedPointValueAnnotations() {
         RowMapper<Long> rm = new RowMapper<Long>() {
-            @Override
             public Long mapRow(ResultSet rs, int row) throws SQLException {
                 return rs.getLong(1);
             }
@@ -483,7 +481,6 @@ public class PointValueDao extends BaseDao {
         return queryForObject(
                 "select min(ts),max(ts) from pointValues where dataPointId in ("
                         + createDelimitedList(dataPointIds, ",", null) + ")", null, new RowMapper<LongPair>() {
-                    @Override
                     public LongPair mapRow(ResultSet rs, int index) throws SQLException {
                         long l = rs.getLong(1);
                         if (rs.wasNull())
@@ -615,7 +612,6 @@ public class PointValueDao extends BaseDao {
             this.ejt = ejt;
         }
 
-        @Override
         public void execute() {
             try {
                 BatchWriteBehindEntry[] inserts;
@@ -683,7 +679,6 @@ public class PointValueDao extends BaseDao {
             }
         }
 
-        @Override
         public int getPriority() {
             return WorkItem.PRIORITY_HIGH;
         }

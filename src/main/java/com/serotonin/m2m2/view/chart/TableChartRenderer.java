@@ -21,7 +21,6 @@ public class TableChartRenderer extends BaseChartRenderer {
         return definition;
     }
 
-    @Override
     public String getTypeName() {
         return definition.getName();
     }
@@ -45,19 +44,16 @@ public class TableChartRenderer extends BaseChartRenderer {
         this.limit = limit;
     }
 
-    @Override
     public void addDataToModel(Map<String, Object> model, DataPointVO point) {
         DataPointRT rt = Common.runtimeManager.getDataPoint(point.getId());
         if (rt != null)
             model.put("chartData", rt.getLatestPointValues(limit));
     }
 
-    @Override
     public ImplDefinition getDef() {
         return definition;
     }
 
-    @Override
     public String getChartSnippetFilename() {
         return "tableChart.jsp";
     }

@@ -92,7 +92,6 @@ abstract public class DataSourceVO<T extends DataSourceVO<?>> implements Seriali
         this.enabled = enabled;
     }
 
-    @Override
     public int getId() {
         return id;
     }
@@ -209,12 +208,10 @@ abstract public class DataSourceVO<T extends DataSourceVO<?>> implements Seriali
         }
     }
 
-    @Override
     public String getTypeKey() {
         return "event.audit.dataSource";
     }
 
-    @Override
     public final void addProperties(List<TranslatableMessage> list) {
         AuditEventType.addPropertyMessage(list, "dsEdit.head.name", name);
         AuditEventType.addPropertyMessage(list, "common.xid", xid);
@@ -225,7 +222,6 @@ abstract public class DataSourceVO<T extends DataSourceVO<?>> implements Seriali
         addPropertiesImpl(list);
     }
 
-    @Override
     public final void addPropertyChanges(List<TranslatableMessage> list, T from) {
         AuditEventType.maybeAddPropertyChangeMessage(list, "dsEdit.head.name", from.getName(), name);
         AuditEventType.maybeAddPropertyChangeMessage(list, "common.xid", from.getXid(), xid);
@@ -279,7 +275,6 @@ abstract public class DataSourceVO<T extends DataSourceVO<?>> implements Seriali
         }
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("xid", xid);
         writer.writeEntry("type", definition.getDataSourceTypeName());
@@ -300,7 +295,6 @@ abstract public class DataSourceVO<T extends DataSourceVO<?>> implements Seriali
         writer.writeEntry("purgeType", Common.TIME_PERIOD_CODES.getCode(purgeType));
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         // Can't change the type.
 

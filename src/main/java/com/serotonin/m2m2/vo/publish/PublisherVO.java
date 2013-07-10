@@ -281,7 +281,6 @@ abstract public class PublisherVO<T extends PublishedPointVO> implements Seriali
         }
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("xid", xid);
         writer.writeEntry("type", definition.getPublisherTypeName());
@@ -289,7 +288,6 @@ abstract public class PublisherVO<T extends PublishedPointVO> implements Seriali
         writer.writeEntry("snapshotSendPeriodType", Common.TIME_PERIOD_CODES.getCode(snapshotSendPeriodType));
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         JsonArray arr = jsonObject.getJsonArray("points");
         if (arr != null) {

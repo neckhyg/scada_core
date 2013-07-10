@@ -150,7 +150,6 @@ public class SetPointHandlerRT extends EventHandlerRT implements SetPointSource 
     //
     // SetPointSource implementation
     //
-    @Override
     public String getSetPointSourceType() {
         return "SET_POINT_EVENT_HANDLER";
     }
@@ -159,7 +158,6 @@ public class SetPointHandlerRT extends EventHandlerRT implements SetPointSource 
         return vo.getId();
     }
 
-    @Override
     public TranslatableMessage getSetPointSourceMessage() {
         return new TranslatableMessage("annotation.eventHandler");
     }

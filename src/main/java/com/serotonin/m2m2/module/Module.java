@@ -20,7 +20,6 @@ import com.serotonin.m2m2.util.license.ModuleLicense;
 public class Module {
     public static final void sortByName(List<Module> modules) {
         Collections.sort(modules, new Comparator<Module>() {
-            @Override
             public int compare(Module m1, Module m2) {
                 return m1.getName().compareTo(m2.getName());
             }

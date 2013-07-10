@@ -96,7 +96,6 @@ public class NumericValue extends DataValue implements Comparable<NumericValue> 
         return true;
     }
 
-    @Override
     public int compareTo(NumericValue that) {
         return Double.compare(value, that.value);
     }

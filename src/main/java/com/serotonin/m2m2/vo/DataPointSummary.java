@@ -21,7 +21,6 @@ public class DataPointSummary implements IDataPoint {
         pointFolderId = vo.getPointFolderId();
     }
 
-    @Override
     public int getId() {
         return id;
     }
@@ -30,7 +29,6 @@ public class DataPointSummary implements IDataPoint {
         this.id = id;
     }
 
-    @Override
     public String getXid() {
         return xid;
     }
@@ -39,7 +37,6 @@ public class DataPointSummary implements IDataPoint {
         this.xid = xid;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -48,7 +45,6 @@ public class DataPointSummary implements IDataPoint {
         this.name = name;
     }
 
-    @Override
     public int getDataSourceId() {
         return dataSourceId;
     }
@@ -57,7 +53,6 @@ public class DataPointSummary implements IDataPoint {
         this.dataSourceId = dataSourceId;
     }
 
-    @Override
     public String getDeviceName() {
         return deviceName;
     }
@@ -66,7 +61,6 @@ public class DataPointSummary implements IDataPoint {
         this.deviceName = deviceName;
     }
 
-    @Override
     public int getPointFolderId() {
         return pointFolderId;
     }
@@ -75,7 +69,6 @@ public class DataPointSummary implements IDataPoint {
         this.pointFolderId = pointFolderId;
     }
 
-    @Override
     public String getExtendedName() {
         return DataPointVO.getExtendedName(this);
     }

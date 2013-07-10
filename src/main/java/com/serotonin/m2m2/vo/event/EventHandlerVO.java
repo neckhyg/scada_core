@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.serotonin.m2m2.rt.event.handlers.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.serotonin.ShouldNeverHappenException;
@@ -28,10 +29,6 @@ import com.serotonin.m2m2.db.dao.UserDao;
 import com.serotonin.m2m2.i18n.ProcessResult;
 import com.serotonin.m2m2.i18n.TranslatableJsonException;
 import com.serotonin.m2m2.i18n.TranslatableMessage;
-import com.serotonin.m2m2.rt.event.handlers.EmailHandlerRT;
-import com.serotonin.m2m2.rt.event.handlers.EventHandlerRT;
-import com.serotonin.m2m2.rt.event.handlers.ProcessHandlerRT;
-import com.serotonin.m2m2.rt.event.handlers.SetPointHandlerRT;
 import com.serotonin.m2m2.rt.event.type.AuditEventType;
 import com.serotonin.m2m2.util.ChangeComparable;
 import com.serotonin.m2m2.util.ExportCodes;
@@ -46,12 +43,14 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
     public static final int TYPE_SET_POINT = 1;
     public static final int TYPE_EMAIL = 2;
     public static final int TYPE_PROCESS = 3;
+    public static final int TYPE_SMS= 4;
 
     public static ExportCodes TYPE_CODES = new ExportCodes();
     static {
         TYPE_CODES.addElement(TYPE_SET_POINT, "SET_POINT", "eventHandlers.type.setPoint");
         TYPE_CODES.addElement(TYPE_EMAIL, "EMAIL", "eventHandlers.type.email");
         TYPE_CODES.addElement(TYPE_PROCESS, "PROCESS", "eventHandlers.type.process");
+        TYPE_CODES.addElement(TYPE_SMS, "SMS", "eventHandlers.type.sms");
     }
 
     public static final int RECIPIENT_TYPE_ACTIVE = 1;
@@ -111,6 +110,9 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
     private String inactiveProcessCommand;
     private int inactiveProcessTimeout = 15;
 
+    // SMS handler fields.
+
+
     public EventHandlerRT createRuntime() {
         switch (handlerType) {
         case TYPE_SET_POINT:
@@ -119,6 +121,8 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             return new EmailHandlerRT(this);
         case TYPE_PROCESS:
             return new ProcessHandlerRT(this);
+        case TYPE_SMS:
+            return new SMSHandlerRT(this);
         }
         throw new ShouldNeverHappenException("Unknown handler type: " + handlerType);
     }
@@ -149,6 +153,8 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             return new TranslatableMessage("eventHandlers.type.email");
         case TYPE_PROCESS:
             return new TranslatableMessage("eventHandlers.type.process");
+            case TYPE_SMS:
+                return new TranslatableMessage("eventHandlers.type.sms");
         }
         return new TranslatableMessage("common.unknown");
     }
@@ -161,7 +167,6 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
         this.targetPointId = targetPointId;
     }
 
-    @Override
     public int getId() {
         return id;
     }
@@ -346,7 +351,6 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
         this.inactiveProcessTimeout = inactiveProcessTimeout;
     }
 
-    @Override
     public String getTypeKey() {
         return "event.audit.eventHandler";
     }
@@ -446,9 +450,11 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             if (!StringUtils.isBlank(inactiveProcessCommand) && inactiveProcessTimeout <= 0)
                 response.addGenericMessage("validate.greaterThanZero");
         }
+        else if(handlerType == TYPE_SMS){ // SMS fields validation
+//TODO
+        }
     }
 
-    @Override
     public void addProperties(List<TranslatableMessage> list) {
         DataPointDao dataPointDao = new DataPointDao();
         AuditEventType.addPropertyMessage(list, "common.xid", xid);
@@ -497,9 +503,11 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             AuditEventType.addPropertyMessage(list, "eventHandlers.inactiveCommand", inactiveProcessCommand);
             AuditEventType.addPropertyMessage(list, "eventHandlers.inactiveTimeout", inactiveProcessTimeout);
         }
+        else if(handlerType == TYPE_SMS){
+            //TODO
+        }
     }
 
-    @Override
     public void addPropertyChanges(List<TranslatableMessage> list, EventHandlerVO from) {
         DataPointDao dataPointDao = new DataPointDao();
         AuditEventType.maybeAddPropertyChangeMessage(list, "common.xid", from.xid, xid);
@@ -551,6 +559,10 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             AuditEventType.maybeAddPropertyChangeMessage(list, "eventHandlers.inactiveTimeout",
                     from.inactiveProcessTimeout, inactiveProcessTimeout);
         }
+        else if(handlerType == TYPE_SMS){
+            //TODO
+        }
+
     }
 
     private static TranslatableMessage createRecipientMessage(List<RecipientListEntryBean> recipients) {
@@ -609,6 +621,9 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             SerializationHelper.writeSafeUTF(out, inactiveProcessCommand);
             out.writeInt(inactiveProcessTimeout);
         }
+        else if(handlerType == TYPE_SMS){
+           //TODO
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -644,6 +659,9 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
                 inactiveProcessCommand = SerializationHelper.readSafeUTF(in);
                 inactiveProcessTimeout = 15;
             }
+            else if(handlerType == TYPE_SMS){
+                //TODO
+            }
         }
         else if (ver == 2) {
             handlerType = in.readInt();
@@ -673,10 +691,12 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
                 inactiveProcessCommand = SerializationHelper.readSafeUTF(in);
                 inactiveProcessTimeout = in.readInt();
             }
+            else if(handlerType == TYPE_SMS){
+                //TODO
+            }
         }
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         DataPointDao dataPointDao = new DataPointDao();
         writer.writeEntry("eventType", new EventDao().getEventHandlerType(id));
@@ -733,7 +753,6 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         DataPointDao dataPointDao = new DataPointDao();
 
@@ -864,6 +883,9 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             i = jsonObject.getInt("inactiveProcessTimeout");
             if (i != null)
                 inactiveProcessTimeout = i;
+        }
+        else if(handlerType == TYPE_SMS){
+           //TODO
         }
     }
 }

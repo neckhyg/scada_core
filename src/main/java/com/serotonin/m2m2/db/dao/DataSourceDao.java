@@ -51,7 +51,6 @@ public class DataSourceDao extends BaseDao {
     }
 
     static class DataSourceNameComparator implements Comparator<DataSourceVO<?>> {
-        @Override
         public int compare(DataSourceVO<?> ds1, DataSourceVO<?> ds2) {
             if (StringUtils.isBlank(ds1.getName()))
                 return -1;
@@ -69,7 +68,6 @@ public class DataSourceDao extends BaseDao {
     }
 
     class DataSourceExtractor implements ResultSetExtractor<List<DataSourceVO<?>>> {
-        @Override
         public List<DataSourceVO<?>> extractData(ResultSet rs) throws SQLException, DataAccessException {
             DataSourceRowMapper rowMapper = new DataSourceRowMapper();
             List<DataSourceVO<?>> results = new ArrayList<DataSourceVO<?>>();
@@ -94,7 +92,6 @@ public class DataSourceDao extends BaseDao {
     }
 
     class DataSourceRowMapper implements RowMapper<DataSourceVO<?>> {
-        @Override
         public DataSourceVO<?> mapRow(ResultSet rs, int rowNum) throws SQLException {
             DataSourceVO<?> ds = (DataSourceVO<?>) SerializationHelper.readObjectInContext(rs.getBlob(5)
                     .getBinaryStream());
@@ -178,12 +175,10 @@ public class DataSourceDao extends BaseDao {
                 new Object[] { fromDataSourceId }, Integer.class);
 
         ejt.batchUpdate("insert into dataSourceUsers values (?,?)", new BatchPreparedStatementSetter() {
-            @Override
             public int getBatchSize() {
                 return userIds.size();
             }
 
-            @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ps.setInt(1, toDataSourceId);
                 ps.setInt(2, userIds.get(i));
@@ -193,7 +188,6 @@ public class DataSourceDao extends BaseDao {
 
     public int copyDataSource(final int dataSourceId, final String name, final String xid, final String deviceName) {
         return getTransactionTemplate().execute(new TransactionCallback<Integer>() {
-            @Override
             public Integer doInTransaction(TransactionStatus status) {
                 DataPointDao dataPointDao = new DataPointDao();
 
@@ -241,7 +235,6 @@ public class DataSourceDao extends BaseDao {
     public Object getPersistentData(int id) {
         return query("select rtdata from dataSources where id=?", new Object[] { id },
                 new ResultSetExtractor<Serializable>() {
-                    @Override
                     public Serializable extractData(ResultSet rs) throws SQLException, DataAccessException {
                         if (!rs.next())
                             return null;

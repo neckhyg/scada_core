@@ -27,7 +27,6 @@ public class MultiValueTime implements Comparable<MultiValueTime> {
         return "MultiValueTime(" + Arrays.toString(values) + " @ " + DateFunctions.getTime(time) + ")";
     }
 
-    @Override
     public int compareTo(MultiValueTime that) {
         return LongCompare.compare(time, that.time);
     }

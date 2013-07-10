@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 
 public class PvtTimeComparator implements Comparator<PointValueTime> {
-    @Override
     public int compare(PointValueTime o1, PointValueTime o2) {
         long diff = o1.getTime() - o2.getTime();
         if (diff < 0)

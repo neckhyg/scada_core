@@ -20,12 +20,10 @@ public class MultistateRenderer extends BaseTextRenderer {
         return definition;
     }
 
-    @Override
     public String getTypeName() {
         return definition.getName();
     }
 
-    @Override
     public ImplDefinition getDef() {
         return definition;
     }
@@ -86,12 +84,10 @@ public class MultistateRenderer extends BaseTextRenderer {
         return null;
     }
 
-    @Override
     public String getChangeSnippetFilename() {
         return "changeContentSelect.jsp";
     }
 
-    @Override
     public String getSetPointSnippetFilename() {
         return "setPointContentSelect.jsp";
     }

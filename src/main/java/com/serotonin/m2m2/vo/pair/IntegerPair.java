@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class IntegerPair {
     public static final RowMapper<IntegerPair> ROW_MAPPER = new RowMapper<IntegerPair>() {
-        @Override
         public IntegerPair mapRow(ResultSet rs, int index) throws SQLException {
             return new IntegerPair(rs.getInt(1), rs.getInt(2));
         }

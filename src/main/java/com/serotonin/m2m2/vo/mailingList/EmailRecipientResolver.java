@@ -10,7 +10,6 @@ import com.serotonin.json.type.JsonValue;
 import com.serotonin.m2m2.i18n.TranslatableJsonException;
 
 public class EmailRecipientResolver implements TypeResolver {
-    @Override
     public Type resolve(JsonValue jsonValue) throws JsonException {
         if (jsonValue == null)
             return null;

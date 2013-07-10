@@ -56,21 +56,18 @@ abstract public class BaseTextRenderer implements TextRenderer, JsonSerializable
         return result;
     }
 
-    @Override
     public String getText(int hint) {
         if (hint == HINT_RAW)
             return "";
         return UNKNOWN_VALUE;
     }
 
-    @Override
     public String getText(PointValueTime valueTime, int hint) {
         if (valueTime == null)
             return getText(hint);
         return getText(valueTime.getValue(), hint);
     }
 
-    @Override
     public String getText(DataValue value, int hint) {
         if (value == null)
             return getText(hint);
@@ -79,46 +76,38 @@ abstract public class BaseTextRenderer implements TextRenderer, JsonSerializable
 
     abstract protected String getTextImpl(DataValue value, int hint);
 
-    @Override
     public String getText(double value, int hint) {
         return Double.toString(value);
     }
 
-    @Override
     public String getText(int value, int hint) {
         return Integer.toString(value);
     }
 
-    @Override
     public String getText(boolean value, int hint) {
         return value ? "1" : "0";
     }
 
-    @Override
     public String getText(String value, int hint) {
         return value;
     }
 
-    @Override
     public String getMetaText() {
         return null;
     }
 
     //
     // Colours
-    @Override
     public String getColour() {
         return null;
     }
 
-    @Override
     public String getColour(PointValueTime valueTime) {
         if (valueTime == null)
             return getColour();
         return getColour(valueTime.getValue());
     }
 
-    @Override
     public String getColour(DataValue value) {
         if (value == null)
             return getColour();
@@ -127,29 +116,24 @@ abstract public class BaseTextRenderer implements TextRenderer, JsonSerializable
 
     abstract protected String getColourImpl(DataValue value);
 
-    @Override
     public String getColour(double value) {
         return null;
     }
 
-    @Override
     public String getColour(int value) {
         return null;
     }
 
-    @Override
     public String getColour(boolean value) {
         return null;
     }
 
-    @Override
     public String getColour(String value) {
         return null;
     }
 
     //
     // Parse
-    @Override
     public DataValue parseText(String s, int dataType) {
         return DataValue.stringToValue(s, dataType);
     }
@@ -169,18 +153,15 @@ abstract public class BaseTextRenderer implements TextRenderer, JsonSerializable
         in.readInt(); // Read the version. Value is currently not used.
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("type", getDef().getExportName());
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         // no op. The type value is used by the factory.
     }
 
     public static class Resolver implements TypeResolver {
-        @Override
         public Type resolve(JsonValue jsonValue) throws JsonException {
             JsonObject json = jsonValue.toJsonObject();
 

@@ -16,7 +16,6 @@ abstract public class AsyncUserProcess implements Runnable {
         user = Common.getUser();
     }
 
-    @Override
     public void run() {
         try {
             BackgroundContext.set(user);

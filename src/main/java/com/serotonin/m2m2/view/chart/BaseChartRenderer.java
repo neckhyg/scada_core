@@ -71,18 +71,15 @@ abstract public class BaseChartRenderer implements ChartRenderer, JsonSerializab
         in.readInt();
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("type", getDef().getExportName());
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         // no op. The type value is used by the factory.
     }
 
     public static class Resolver implements TypeResolver {
-        @Override
         public Type resolve(JsonValue jsonValue) throws JsonException {
             if (jsonValue == null)
                 return null;

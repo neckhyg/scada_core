@@ -49,7 +49,8 @@ public class UsersDwr extends BaseDwr {
 
             // Users
             initData.put("admin", true);
-            initData.put("users", new UserDao().getUsers());
+            List<User> usrList = new UserDao().getUsers();
+            initData.put("users", usrList);
 
             // Data sources
             List<DataSourceVO<?>> dataSourceVOs = new DataSourceDao().getDataSources();
@@ -97,7 +98,8 @@ public class UsersDwr extends BaseDwr {
     @DwrPermission(admin = true)
     public ProcessResult saveUserAdmin(int id, String username, String password, String email, String phone,
             boolean admin, boolean disabled, int receiveAlarmEmails, boolean receiveOwnAuditEvents, String timezone,
-            List<Integer> dataSourcePermissions, List<DataPointAccess> dataPointPermissions) {
+            boolean sewageCompany, boolean sewageRecord,List<Integer> dataSourcePermissions, 
+            List<DataPointAccess> dataPointPermissions) {
         // Validate the given information. If there is a problem, return an appropriate error message.
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         User currentUser = Common.getUser(request);
@@ -118,6 +120,8 @@ public class UsersDwr extends BaseDwr {
         user.setReceiveAlarmEmails(receiveAlarmEmails);
         user.setReceiveOwnAuditEvents(receiveOwnAuditEvents);
         user.setTimezone(timezone);
+        user.setSewageCompany(sewageCompany);
+        user.setSewageRecord(sewageRecord);
         user.setDataSourcePermissions(dataSourcePermissions);
         user.setDataPointPermissions(dataPointPermissions);
 

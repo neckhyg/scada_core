@@ -101,7 +101,6 @@ public class DerbyProxy extends DatabaseProxy {
         List<IdentityStart> starts = ejt.query("select t.tablename, c.columnname, c.autoincrementvalue " + //
                 "from sys.syscolumns c join sys.systables t on c.referenceid = t.tableid " + //
                 "where t.tabletype='T' and c.autoincrementvalue is not null", new RowMapper<IdentityStart>() {
-            @Override
             public IdentityStart mapRow(ResultSet rs, int index) throws SQLException {
                 IdentityStart is = new IdentityStart();
                 is.table = rs.getString(1);
@@ -141,7 +140,6 @@ public class DerbyProxy extends DatabaseProxy {
             finalOut = out;
 
         Common.databaseProxy.doInConnection(new ConnectionCallbackVoid() {
-            @Override
             public void doInConnection(Connection conn) {
                 try {
                     ij.runScript(conn, in, "ASCII", finalOut, Common.UTF8);
@@ -194,7 +192,6 @@ public class DerbyProxy extends DatabaseProxy {
     private void compressTable(ExtendedJdbcTemplate ejt, final String tableName) {
         List<SqlParameter> list = Collections.emptyList();
         ejt.call(new CallableStatementCreator() {
-            @Override
             public CallableStatement createCallableStatement(Connection conn) throws SQLException {
                 CallableStatement cs = conn.prepareCall("call SYSCS_UTIL.SYSCS_COMPRESS_TABLE(?, ?, ?)");
                 cs.setString(1, "APP");

@@ -68,7 +68,6 @@ public class RecipientListEntryBean implements Serializable, JsonSerializable {
         referenceId = refId;
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("recipientType", EmailRecipient.TYPE_CODES.getCode(recipientType));
         if (recipientType == EmailRecipient.TYPE_MAILING_LIST)
@@ -79,7 +78,6 @@ public class RecipientListEntryBean implements Serializable, JsonSerializable {
             writer.writeEntry("address", referenceAddress);
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         String text = jsonObject.getString("recipientType");
         if (text == null)

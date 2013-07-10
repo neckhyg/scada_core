@@ -22,7 +22,6 @@ public class UrlHandlerController implements Controller {
         this.viewName = viewName;
     }
 
-    @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("modulePath", modulePath);

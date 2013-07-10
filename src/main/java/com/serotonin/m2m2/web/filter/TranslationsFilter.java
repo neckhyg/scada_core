@@ -24,7 +24,6 @@ public class TranslationsFilter implements Filter {
     private String messageSourceKey = "messageSource";
     private ServletContext servletContext;
 
-    @Override
     public void init(FilterConfig config) throws ServletException {
         String key = config.getInitParameter("messageSourceKey");
         if (key != null)
@@ -32,7 +31,6 @@ public class TranslationsFilter implements Filter {
         servletContext = config.getServletContext();
     }
 
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
         WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext);
@@ -41,7 +39,6 @@ public class TranslationsFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    @Override
     public void destroy() {
         // no op
     }

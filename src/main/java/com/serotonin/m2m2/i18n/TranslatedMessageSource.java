@@ -9,7 +9,6 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 
 public class TranslatedMessageSource implements MessageSource {
-    @Override
     public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
         String t = Translations.getTranslations(locale).translateAllowNull(code);
         if (t == null)
@@ -17,12 +16,10 @@ public class TranslatedMessageSource implements MessageSource {
         return MessageFormat.format(t, args);
     }
 
-    @Override
     public String getMessage(String code, Object[] args, Locale locale) throws NoSuchMessageException {
         return TranslatableMessage.translate(Translations.getTranslations(locale), code, args);
     }
 
-    @Override
     public String getMessage(MessageSourceResolvable resolvable, Locale locale) throws NoSuchMessageException {
         Translations translations = Translations.getTranslations(locale);
         for (String key : resolvable.getCodes()) {

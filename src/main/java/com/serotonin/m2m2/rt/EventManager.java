@@ -318,7 +318,6 @@ public class EventManager implements ILifecycle {
 	//
 	// Lifecycle interface
 	//
-	@Override
 	public void initialize() {
 		eventDao = new EventDao();
 		userDao = new UserDao();
@@ -329,12 +328,10 @@ public class EventManager implements ILifecycle {
 		resetHighestAlarmLevel(lastAlarmTimestamp);
 	}
 
-	@Override
 	public void terminate() {
 		// no op
 	}
 
-	@Override
 	public void joinTermination() {
 		// no op
 	}

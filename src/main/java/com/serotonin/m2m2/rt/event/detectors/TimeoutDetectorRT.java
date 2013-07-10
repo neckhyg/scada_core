@@ -66,7 +66,6 @@ abstract public class TimeoutDetectorRT extends PointEventDetectorRT implements 
         cancelTask();
     }
 
-    @Override
     synchronized public final void scheduleTimeout(long fireTime) {
         scheduleTimeoutImpl(fireTime);
         task = null;

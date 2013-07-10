@@ -20,12 +20,10 @@ public class PlainRenderer extends BaseTextRenderer {
         return definition;
     }
 
-    @Override
     public String getTypeName() {
         return definition.getName();
     }
 
-    @Override
     public ImplDefinition getDef() {
         return definition;
     }
@@ -75,12 +73,10 @@ public class PlainRenderer extends BaseTextRenderer {
         return null;
     }
 
-    @Override
     public String getChangeSnippetFilename() {
         return "changeContentText.jsp";
     }
 
-    @Override
     public String getSetPointSnippetFilename() {
         return "setPointContentText.jsp";
     }

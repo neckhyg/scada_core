@@ -184,11 +184,11 @@ public class Functions {
         return Common.envProps.getBoolean(key, defaultValue);
     }
 
-    private static String dtfFullMinute = "yyyy/MM/dd HH:mm";
-    private static String dtfFullSecond = "yyyy/MM/dd HH:mm:ss";
-    private static String dtfLong = "yyyy/MM/dd";
-    private static String dtfMed = "MMM dd HH:mm";
-    private static String dtfShort = "HH:mm:ss";
+    private static String dtfFullMinute = "yyyy-MM-dd HH:mm";
+    private static String dtfFullSecond = "yyyy-MM-dd HH:mm:ss";
+    private static String dtfLong = "yyyy-MM-dd";
+    private static String dtfMed = "yyyy-MM-dd HH:mm";
+    private static String dtfShort = "yyyy-MM-dd HH:mm:ss";
 
     public static String getTime(long time) {
         DateTime valueTime = new DateTime(time);

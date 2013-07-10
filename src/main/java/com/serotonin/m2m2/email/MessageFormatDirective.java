@@ -23,7 +23,6 @@ public class MessageFormatDirective implements TemplateDirectiveModel {
         this.translations = translations;
     }
 
-    @Override
     public void execute(Environment env, @SuppressWarnings("rawtypes") Map params, TemplateModel[] loopVars,
             TemplateDirectiveBody body) throws TemplateException, IOException {
         TemplateModel key = (TemplateModel) params.get("key");

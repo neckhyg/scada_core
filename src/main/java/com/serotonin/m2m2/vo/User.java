@@ -68,6 +68,10 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
     private String timezone;
     @JsonProperty
     private boolean muted = true;
+    @JsonProperty
+    private boolean sewageRecord = false;
+    @JsonProperty
+    private boolean sewageCompany = false;
 
     //
     // Session data. The user object is stored in session, and some other session-based information is cached here
@@ -99,22 +103,18 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
     //
     // SetPointSource implementation
     //
-    @Override
     public int getSetPointSourceId() {
         return id;
     }
 
-    @Override
     public String getSetPointSourceType() {
         return "USER";
     }
 
-    @Override
     public TranslatableMessage getSetPointSourceMessage() {
         return new TranslatableMessage("annotation.user", username);
     }
 
-    @Override
     public void raiseRecursionFailureEvent() {
         throw new ShouldNeverHappenException("");
     }
@@ -143,14 +143,12 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
     //
     // HttpSessionBindingListener implementation
     //
-    @Override
     public void valueBound(HttpSessionBindingEvent evt) {
         // User is bound to a session when logged in. Notify the event manager.
         SystemEventType.raiseEvent(new SystemEventType(SystemEventType.TYPE_USER_LOGIN, id),
                 System.currentTimeMillis(), true, new TranslatableMessage("event.login", username));
     }
 
-    @Override
     public void valueUnbound(HttpSessionBindingEvent evt) {
         // User is unbound from a session when logged out or the session expires.
         SystemEventType.returnToNormal(new SystemEventType(SystemEventType.TYPE_USER_LOGIN, id),
@@ -359,7 +357,23 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
         return timezone;
     }
 
-    public void setTimezone(String timezone) {
+    public boolean isSewageRecord() {
+		return sewageRecord;
+	}
+
+	public void setSewageRecord(boolean sewageRecord) {
+		this.sewageRecord = sewageRecord;
+	}
+
+	public boolean isSewageCompany() {
+		return sewageCompany;
+	}
+
+	public void setSewageCompany(boolean sewageCompany) {
+		this.sewageCompany = sewageCompany;
+	}
+
+	public void setTimezone(String timezone) {
         this.timezone = timezone;
         _tz = null;
         _dtz = null;
@@ -408,14 +422,13 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
                 + phone + ", admin=" + admin + ", disabled=" + disabled + ", dataSourcePermissions="
                 + dataSourcePermissions + ", dataPointPermissions=" + dataPointPermissions + ", homeUrl=" + homeUrl
                 + ", lastLogin=" + lastLogin + ", receiveAlarmEmails=" + receiveAlarmEmails
-                + ", receiveOwnAuditEvents=" + receiveOwnAuditEvents + ", timezone=" + timezone + "]";
+                + ", receiveOwnAuditEvents=" + receiveOwnAuditEvents + ", timezone=" + timezone + ",sewageRecord="+sewageRecord+",sewageCompany="+sewageCompany+"]";
     }
 
     //
     //
     // Serialization
     //
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         if (!admin) {
             List<String> dsXids = new ArrayList<String>();
@@ -427,7 +440,6 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
         }
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         // Note: data source permissions are explicitly deserialized by the import/export because the data sources and
         // points need to be certain to exist before we can resolve the xids.

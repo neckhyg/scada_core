@@ -106,7 +106,6 @@ public class Upgrade3 extends DBUpgrade {
     }
 
     class DataPointRowMapper implements RowMapper<DataPointVO> {
-        @Override
         public DataPointVO mapRow(ResultSet rs, int rowNum) throws SQLException {
             DataPointVO dp = (DataPointVO) SerializationHelper.readObjectInContext(rs.getBlob(4).getBinaryStream());
             dp.setId(rs.getInt(1));

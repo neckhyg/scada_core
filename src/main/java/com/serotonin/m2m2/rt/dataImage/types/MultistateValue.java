@@ -89,7 +89,6 @@ public class MultistateValue extends DataValue implements Comparable<MultistateV
         return true;
     }
 
-    @Override
     public int compareTo(MultistateValue that) {
         return (value < that.value ? -1 : (value == that.value ? 0 : 1));
     }

@@ -48,7 +48,6 @@ abstract public class PublishedPointVO implements Serializable, JsonSerializable
         }
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         DataPointDao dataPointDao = new DataPointDao();
         DataPointVO dp = dataPointDao.getDataPoint(dataPointId);
@@ -61,7 +60,6 @@ abstract public class PublishedPointVO implements Serializable, JsonSerializable
         writer.writeEntry("dataPointId", xid);
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         DataPointDao dataPointDao = new DataPointDao();
         String xid = jsonObject.getString("dataPointId");

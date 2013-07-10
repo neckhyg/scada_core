@@ -66,7 +66,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
     //
     // Single value
     //
-    @Override
     public PointValueTime getPointValueBefore(long time) {
         for (PointValueTime pvt : valueCache.getCacheContents()) {
             if (pvt.getTime() < time)
@@ -85,7 +84,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         return new PointValueDao().getPointValueAt(vo.getId(), time);
     }
 
-    @Override
     public PointValueTime getPointValueAfter(long time) {
         List<PointValueTime> pvts = valueCache.getCacheContents();
         for (int i = pvts.size() - 1; i >= 0; i--) {
@@ -101,12 +99,10 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
     //
     // Value lists
     //
-    @Override
     public List<PointValueTime> getLatestPointValues(int limit) {
         return valueCache.getLatestPointValues(limit);
     }
 
-    @Override
     public List<PointValueTime> getPointValues(long since) {
         List<PointValueTime> result = new PointValueDao().getPointValues(vo.getId(), since);
 
@@ -121,7 +117,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         return result;
     }
 
-    @Override
     public List<PointValueTime> getPointValuesBetween(long from, long to) {
         List<PointValueTime> result = new PointValueDao().getPointValuesBetween(vo.getId(), from, to);
 
@@ -142,12 +137,10 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
      * 
      * @param newValue
      */
-    @Override
     public void updatePointValue(PointValueTime newValue) {
         savePointValue(newValue, null, true);
     }
 
-    @Override
     public void updatePointValue(PointValueTime newValue, boolean async) {
         savePointValue(newValue, null, async);
     }
@@ -161,7 +154,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
      *            the source of the set. This can be a user object if the point was set from the UI, or could be a
      *            program run by schedule or on event.
      */
-    @Override
     public void setPointValue(PointValueTime newValue, SetPointSource source) {
         if (source == null)
             savePointValue(newValue, source, true);
@@ -323,7 +315,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         }
     }
 
-    @Override
     public void scheduleTimeout(long fireTime) {
         synchronized (intervalLoggingLock) {
             DataValue value;
@@ -375,7 +366,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         return vo.getId();
     }
 
-    @Override
     public PointValueTime getPointValue() {
         return pointValue;
     }
@@ -393,7 +383,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         return vo;
     }
 
-    @Override
     public int getDataTypeId() {
         return vo.getPointLocator().getDataTypeId();
     }
@@ -464,7 +453,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
             this.backdate = backdate;
         }
 
-        @Override
         public void execute() {
             if (backdate)
                 listener.pointBackdated(newValue);
@@ -482,7 +470,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
             }
         }
 
-        @Override
         public int getPriority() {
             return WorkItem.PRIORITY_MEDIUM;
         }
@@ -492,7 +479,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
     //
     // Lifecycle
     //
-    @Override
     public void initialize() {
         // Get the latest value for the point from the database.
         pointValue = valueCache.getLatestPointValue();
@@ -515,7 +501,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         initializeIntervalLogging();
     }
 
-    @Override
     public void terminate() {
         terminateIntervalLogging();
 
@@ -528,7 +513,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         Common.eventManager.cancelEventsForDataPoint(vo.getId());
     }
 
-    @Override
     public void joinTermination() {
         // no op
     }

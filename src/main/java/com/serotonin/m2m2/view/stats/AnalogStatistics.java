@@ -53,7 +53,6 @@ public class AnalogStatistics implements StatisticsGenerator {
         }
     }
 
-    @Override
     public void addValueTime(IValueTime vt) {
         addValueTime(vt.getValue(), vt.getTime());
     }
@@ -89,7 +88,6 @@ public class AnalogStatistics implements StatisticsGenerator {
         lastTime = time;
     }
 
-    @Override
     public void done(IValueTime endVT) {
         done(endVT == null ? null : endVT.getValue().getDoubleValue());
     }
@@ -128,12 +126,10 @@ public class AnalogStatistics implements StatisticsGenerator {
         lastTime = time;
     }
 
-    @Override
     public long getPeriodStartTime() {
         return periodStart;
     }
 
-    @Override
     public long getPeriodEndTime() {
         return periodEnd;
     }

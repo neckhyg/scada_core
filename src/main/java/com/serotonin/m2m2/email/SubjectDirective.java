@@ -32,7 +32,6 @@ public class SubjectDirective implements TemplateDirectiveModel {
         return subject;
     }
 
-    @Override
     public void execute(Environment env, @SuppressWarnings("rawtypes") Map params, TemplateModel[] loopVars,
             TemplateDirectiveBody body) throws TemplateException {
         if (params.containsKey("message")) {

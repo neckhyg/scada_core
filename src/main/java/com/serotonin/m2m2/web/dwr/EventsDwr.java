@@ -26,7 +26,7 @@ import com.serotonin.m2m2.web.dwr.beans.EventExportDefinition;
 import com.serotonin.m2m2.web.dwr.util.DwrPermission;
 
 public class EventsDwr extends BaseDwr {
-    private static final int PAGE_SIZE = 50;
+    private static final int PAGE_SIZE = 20;
     private static final int PAGINATION_RADIUS = 3;
 
     public static final String STATUS_ALL = "*";

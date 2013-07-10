@@ -22,7 +22,6 @@ import com.serotonin.m2m2.vo.permission.Permissions;
 public class M2M2ContextListener implements ServletContextListener {
     private final Log log = LogFactory.getLog(M2M2ContextListener.class);
 
-    @Override
     public void contextInitialized(ServletContextEvent evt) {
         log.info("EazyScada context starting");
 
@@ -35,7 +34,6 @@ public class M2M2ContextListener implements ServletContextListener {
         log.info("EazyScada context started");
     }
 
-    @Override
     public void contextDestroyed(ServletContextEvent evt) {
         // no op
     }

@@ -23,18 +23,15 @@ public class BucketsBucketCalculator implements BucketCalculator {
         this.duration = endTime.getMillis() - startTime.getMillis();
     }
 
-    @Override
     public DateTime getStartTime() {
         return startTime;
     }
 
-    @Override
     public DateTime getNextPeriodTo() {
         double interval = ((double) duration) / buckets * ++periodCounter;
         return startTime.plus((long) (interval + 0.5));
     }
 
-    @Override
     public DateTime getEndTime() {
         return endTime;
     }

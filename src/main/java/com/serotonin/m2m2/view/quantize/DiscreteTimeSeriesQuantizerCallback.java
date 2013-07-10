@@ -16,7 +16,6 @@ public class DiscreteTimeSeriesQuantizerCallback implements DataQuantizerCallbac
         this.dts = dts;
     }
 
-    @Override
     public void quantizedData(List<IValueTime> vts) {
         for (IValueTime vt : vts)
             dts.addValueTime(vt);

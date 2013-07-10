@@ -66,7 +66,6 @@ public class RuntimeManager {
         // Get the RTM defs and sort by init priority.
         List<RuntimeManagerDefinition> defs = ModuleRegistry.getDefinitions(RuntimeManagerDefinition.class);
         Collections.sort(defs, new Comparator<RuntimeManagerDefinition>() {
-            @Override
             public int compare(RuntimeManagerDefinition def1, RuntimeManagerDefinition def2) {
                 return def1.getInitializationPriority() - def2.getInitializationPriority();
             }
@@ -143,7 +142,6 @@ public class RuntimeManager {
         // Get the RTM defs and sort by reverse init priority.
         List<RuntimeManagerDefinition> defs = ModuleRegistry.getDefinitions(RuntimeManagerDefinition.class);
         Collections.sort(defs, new Comparator<RuntimeManagerDefinition>() {
-            @Override
             public int compare(RuntimeManagerDefinition def1, RuntimeManagerDefinition def2) {
                 return def2.getInitializationPriority() - def1.getInitializationPriority();
             }

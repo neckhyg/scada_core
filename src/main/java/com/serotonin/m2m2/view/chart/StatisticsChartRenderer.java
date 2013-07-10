@@ -26,12 +26,10 @@ public class StatisticsChartRenderer extends TimePeriodChartRenderer {
         return definition;
     }
 
-    @Override
     public String getTypeName() {
         return definition.getName();
     }
 
-    @Override
     public ImplDefinition getDef() {
         return definition;
     }
@@ -56,7 +54,6 @@ public class StatisticsChartRenderer extends TimePeriodChartRenderer {
         this.includeSum = includeSum;
     }
 
-    @Override
     public void addDataToModel(Map<String, Object> model, DataPointVO point) {
         long startTime = getStartTime();
         long endTime = startTime + getDuration();
@@ -105,7 +102,6 @@ public class StatisticsChartRenderer extends TimePeriodChartRenderer {
         model.put("logEntries", values.size());
     }
 
-    @Override
     public String getChartSnippetFilename() {
         return "statsChart.jsp";
     }

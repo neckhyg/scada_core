@@ -14,7 +14,6 @@ public class StringStringPairComparator implements Comparator<StringStringPair> 
         Collections.sort(list, INSTANCE);
     }
 
-    @Override
     public int compare(StringStringPair ssp1, StringStringPair ssp2) {
         return ssp1.getValue().compareToIgnoreCase(ssp2.getValue());
     }

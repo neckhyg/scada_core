@@ -58,12 +58,10 @@ public class PointValueTime implements Serializable, IValueTime, Comparable<Poin
         this(new AlphanumericValue(value), time);
     }
 
-    @Override
     public long getTime() {
         return time;
     }
 
-    @Override
     public DataValue getValue() {
         return value;
     }
@@ -101,7 +99,6 @@ public class PointValueTime implements Serializable, IValueTime, Comparable<Poin
         return "PointValueTime(" + value + "@" + Functions.getTime(time) + ")";
     }
 
-    @Override
     public int compareTo(PointValueTime that) {
         if (time < that.time)
             return -1;

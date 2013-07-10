@@ -33,7 +33,6 @@ public class ProcessWorkItem implements WorkItem {
         this.timeoutSeconds = timeoutSeconds;
     }
 
-    @Override
     public void execute() {
         try {
             executeProcessCommand(command, timeoutSeconds);
@@ -87,7 +86,6 @@ public class ProcessWorkItem implements WorkItem {
         return result;
     }
 
-    @Override
     public int getPriority() {
         return WorkItem.PRIORITY_HIGH;
     }
@@ -104,7 +102,6 @@ public class ProcessWorkItem implements WorkItem {
             this.timeoutSeconds = timeoutSeconds;
         }
 
-        @Override
         public int getPriority() {
             return WorkItem.PRIORITY_HIGH;
         }
@@ -116,7 +113,6 @@ public class ProcessWorkItem implements WorkItem {
             }
         }
 
-        @Override
         public void execute() {
             try {
                 synchronized (this) {
@@ -160,12 +156,10 @@ public class ProcessWorkItem implements WorkItem {
             }
         }
 
-        @Override
         public int getPriority() {
             return WorkItem.PRIORITY_HIGH;
         }
 
-        @Override
         public void execute() {
             try {
                 StreamUtils.transfer(reader, writer);

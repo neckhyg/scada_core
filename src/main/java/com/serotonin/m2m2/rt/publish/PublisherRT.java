@@ -219,7 +219,6 @@ abstract public class PublisherRT<T extends PublishedPointVO> implements Timeout
     //
     // Scheduled snapshot send stuff
     //
-    @Override
     public void scheduleTimeout(long fireTime) {
         if (jobThread != null)
             return;

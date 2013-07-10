@@ -36,7 +36,6 @@ public class PointHierarchyEventDispatcher {
             this.root = root;
         }
 
-        @Override
         public void run() {
             if (root == null)
                 l.pointHierarchyCleared();

@@ -56,7 +56,6 @@ public class StartsAndRuntimeList implements StatisticsGenerator {
         }
     }
 
-    @Override
     public void addValueTime(IValueTime vt) {
         addValueTime(vt.getValue(), vt.getTime());
     }
@@ -85,7 +84,6 @@ public class StartsAndRuntimeList implements StatisticsGenerator {
         lastTime = time;
     }
 
-    @Override
     public void done(IValueTime endVT) {
         done(endVT == null ? null : endVT.getValue());
     }
@@ -107,19 +105,16 @@ public class StartsAndRuntimeList implements StatisticsGenerator {
 
         // Sort by value.
         Collections.sort(data, new Comparator<StartsAndRuntime>() {
-            @Override
             public int compare(StartsAndRuntime o1, StartsAndRuntime o2) {
                 return o1.value.compareTo(o2.value);
             }
         });
     }
 
-    @Override
     public long getPeriodStartTime() {
         return periodStart;
     }
 
-    @Override
     public long getPeriodEndTime() {
         return periodEnd;
     }

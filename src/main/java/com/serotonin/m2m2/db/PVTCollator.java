@@ -17,7 +17,6 @@ public class PVTCollator implements MappedRowCallback<IdPointValueTime> {
         this.callback = callback;
     }
 
-    @Override
     public void row(IdPointValueTime pvt, int index) {
         if (mvt == null || mvt.getTime() < pvt.getTime()) {
             done();

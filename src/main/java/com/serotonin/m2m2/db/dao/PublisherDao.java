@@ -55,7 +55,6 @@ public class PublisherDao extends BaseDao {
     }
 
     public static class PublisherNameComparator implements Comparator<PublisherVO<?>> {
-        @Override
         public int compare(PublisherVO<?> p1, PublisherVO<?> p2) {
             if (StringUtils.isBlank(p1.getName()))
                 return -1;
@@ -72,7 +71,6 @@ public class PublisherDao extends BaseDao {
     }
 
     class PublisherExtractor implements ResultSetExtractor<List<PublisherVO<? extends PublishedPointVO>>> {
-        @Override
         public List<PublisherVO<? extends PublishedPointVO>> extractData(ResultSet rs) throws SQLException,
                 DataAccessException {
             PublisherRowMapper rowMapper = new PublisherRowMapper();
@@ -98,7 +96,6 @@ public class PublisherDao extends BaseDao {
     }
 
     class PublisherRowMapper implements RowMapper<PublisherVO<? extends PublishedPointVO>> {
-        @Override
         @SuppressWarnings("unchecked")
         public PublisherVO<? extends PublishedPointVO> mapRow(ResultSet rs, int rowNum) throws SQLException {
             PublisherVO<? extends PublishedPointVO> p = (PublisherVO<? extends PublishedPointVO>) SerializationHelper
@@ -146,7 +143,6 @@ public class PublisherDao extends BaseDao {
     public Object getPersistentData(int id) {
         return query("select rtdata from publishers where id=?", new Object[] { id },
                 new ResultSetExtractor<Serializable>() {
-                    @Override
                     public Serializable extractData(ResultSet rs) throws SQLException, DataAccessException {
                         if (!rs.next())
                             return null;

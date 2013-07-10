@@ -48,13 +48,11 @@ public class ShareUser implements JsonSerializable {
         this.accessType = accessType;
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("user", new UserDao().getUser(userId).getUsername());
         writer.writeEntry("accessType", ACCESS_CODES.getCode(accessType));
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         String text = jsonObject.getString("user");
         if (StringUtils.isBlank(text))

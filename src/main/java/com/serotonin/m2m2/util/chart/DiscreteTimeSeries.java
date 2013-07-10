@@ -100,7 +100,6 @@ public class DiscreteTimeSeries {
             this.description = description;
         }
 
-        @Override
         public int compareTo(ValueDescription that) {
             return value.compareTo(that.getValue());
         }

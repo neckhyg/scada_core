@@ -204,7 +204,6 @@ public class ImageValue extends DataValue implements Comparable<ImageValue> {
         return DataTypes.IMAGE;
     }
 
-    @Override
     public int compareTo(ImageValue that) {
         return getFilename().compareTo(that.getFilename());
     }

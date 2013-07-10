@@ -261,7 +261,6 @@ public class ModuleRegistry {
 
                     for (List<MenuItemDefinition> list : map.values()) {
                         Collections.sort(list, new Comparator<MenuItemDefinition>() {
-                            @Override
                             public int compare(MenuItemDefinition m1, MenuItemDefinition m2) {
                                 return m1.getOrder() - m2.getOrder();
                             }

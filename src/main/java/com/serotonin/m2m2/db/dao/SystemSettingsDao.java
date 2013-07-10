@@ -216,5 +216,7 @@ public class SystemSettingsDao extends BaseDao {
         DEFAULT_VALUES.put(CHART_BACKGROUND_COLOUR, "white");
         DEFAULT_VALUES.put(PLOT_BACKGROUND_COLOUR, "white");
         DEFAULT_VALUES.put(PLOT_GRIDLINE_COLOUR, "silver");
+        DEFAULT_VALUES.put("pageSize", "20");
+
     }
 }

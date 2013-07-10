@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.serotonin.m2m2.db.dao.PointValueDao;
+import com.serotonin.m2m2.db.dao.SystemSettingsDao;
 
 /**
  * This class maintains an ordered list of the most recent values for a data point. It will mirror values in the
@@ -99,6 +100,7 @@ public class PointValueCache {
             limit = c.size();
         return new ArrayList<PointValueTime>(c.subList(0, limit));
     }
+
 
     private void refreshCache(int size) {
         if (size > maxSize) {

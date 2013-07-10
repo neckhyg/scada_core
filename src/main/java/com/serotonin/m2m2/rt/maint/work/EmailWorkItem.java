@@ -21,7 +21,6 @@ import com.serotonin.web.mail.EmailSender;
 public class EmailWorkItem implements WorkItem {
     private static final Log LOG = LogFactory.getLog(EmailWorkItem.class);
 
-    @Override
     public int getPriority() {
         return WorkItem.PRIORITY_MEDIUM;
     }
@@ -60,7 +59,6 @@ public class EmailWorkItem implements WorkItem {
     private EmailContent content;
     private Runnable[] postSendExecution;
 
-    @Override
     public void execute() {
         try {
             if (fromAddress == null) {

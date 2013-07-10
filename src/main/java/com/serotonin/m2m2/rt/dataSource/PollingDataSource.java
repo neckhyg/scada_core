@@ -53,7 +53,6 @@ abstract public class PollingDataSource extends DataSourceRT implements TimeoutC
         this.quantize = quantize;
     }
 
-    @Override
     public void scheduleTimeout(long fireTime) {
         if (jobThread != null) {
             // There is another poll still running, so abort this one.

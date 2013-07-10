@@ -82,7 +82,6 @@ public class AlphanumericValue extends DataValue implements Comparable<Alphanume
         return true;
     }
 
-    @Override
     public int compareTo(AlphanumericValue that) {
         if (value == null || that.value == null)
             return 0;

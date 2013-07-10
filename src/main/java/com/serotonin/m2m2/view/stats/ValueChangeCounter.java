@@ -43,7 +43,6 @@ public class ValueChangeCounter implements StatisticsGenerator {
         latestValue = startValue;
     }
 
-    @Override
     public void addValueTime(IValueTime vt) {
         addValue(vt.getValue(), vt.getTime());
     }
@@ -68,7 +67,6 @@ public class ValueChangeCounter implements StatisticsGenerator {
         lastTime = time;
     }
 
-    @Override
     public void done(IValueTime endVT) {
         done();
     }
@@ -77,12 +75,10 @@ public class ValueChangeCounter implements StatisticsGenerator {
         // no op
     }
 
-    @Override
     public long getPeriodStartTime() {
         return periodStart;
     }
 
-    @Override
     public long getPeriodEndTime() {
         return periodEnd;
     }

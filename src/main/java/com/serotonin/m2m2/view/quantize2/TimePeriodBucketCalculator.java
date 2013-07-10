@@ -28,18 +28,15 @@ public class TimePeriodBucketCalculator implements BucketCalculator {
         lastTo = startTime;
     }
 
-    @Override
     public DateTime getStartTime() {
         return startTime;
     }
 
-    @Override
     public DateTime getNextPeriodTo() {
         lastTo = lastTo.plus(period);
         return lastTo;
     }
 
-    @Override
     public DateTime getEndTime() {
         return endTime;
     }

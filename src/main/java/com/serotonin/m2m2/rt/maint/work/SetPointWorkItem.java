@@ -29,7 +29,6 @@ public class SetPointWorkItem implements WorkItem {
             sourceIds = threadLocal.get();
     }
 
-    @Override
     public void execute() {
         String sourceId = source.getSetPointSourceType() + "-" + Integer.toString(source.getSetPointSourceId());
 
@@ -55,7 +54,6 @@ public class SetPointWorkItem implements WorkItem {
         }
     }
 
-    @Override
     public int getPriority() {
         return WorkItem.PRIORITY_HIGH;
     }

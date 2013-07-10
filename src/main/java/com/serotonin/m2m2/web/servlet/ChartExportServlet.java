@@ -48,7 +48,6 @@ public class ChartExportServlet extends HttpServlet {
 
         final ExportDataValue edv = new ExportDataValue();
         MappedRowCallback<PointValueTime> callback = new MappedRowCallback<PointValueTime>() {
-            @Override
             public void row(PointValueTime pvt, int rowIndex) {
                 edv.setValue(pvt.getValue());
                 edv.setTime(pvt.getTime());

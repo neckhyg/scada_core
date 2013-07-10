@@ -19,7 +19,6 @@ public class TimeSeriesQuantizerCallback implements DataQuantizerCallback {
         this.ts = ts;
     }
 
-    @Override
     public void quantizedData(List<IValueTime> vts) {
         for (IValueTime vt : vts)
             ImageChartUtils.addMillisecond(ts, vt.getTime(), DataValue.numberValue(vt.getValue()));

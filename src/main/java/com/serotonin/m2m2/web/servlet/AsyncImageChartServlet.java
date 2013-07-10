@@ -189,7 +189,6 @@ public class AsyncImageChartServlet extends BaseInfoServlet {
             this.to = to;
         }
 
-        @Override
         public void run() {
             DataPointVO dp = dataPointDao.getDataPoint(dataPointId);
             try {
@@ -225,7 +224,6 @@ public class AsyncImageChartServlet extends BaseInfoServlet {
                 quantizer.done();
         }
 
-        @Override
         public void row(PointValueTime pvt, int rowNum) {
             if (quantizer != null)
                 quantizer.data(pvt);

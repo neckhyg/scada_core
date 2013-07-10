@@ -211,7 +211,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         lastValue = pvt;
     }
 
-    @Override
     public String getExtendedName() {
         return getExtendedName(this);
     }
@@ -248,12 +247,10 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         this.settable = settable;
     }
 
-    @Override
     public String getTypeKey() {
         return "event.audit.dataPoint";
     }
 
-    @Override
     public void addProperties(List<TranslatableMessage> list) {
         AuditEventType.addPropertyMessage(list, "common.xid", xid);
         AuditEventType.addPropertyMessage(list, "dsEdit.points.name", name);
@@ -276,7 +273,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         pointLocator.addProperties(list);
     }
 
-    @Override
     public void addPropertyChanges(List<TranslatableMessage> list, DataPointVO from) {
         AuditEventType.maybeAddPropertyChangeMessage(list, "common.xid", from.xid, xid);
         AuditEventType.maybeAddPropertyChangeMessage(list, "dsEdit.points.name", from.name, name);
@@ -310,7 +306,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         pointLocator.addPropertyChanges(list, from.pointLocator);
     }
 
-    @Override
     public int getDataSourceId() {
         return dataSourceId;
     }
@@ -319,7 +314,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         this.dataSourceId = dataSourceId;
     }
 
-    @Override
     public String getDeviceName() {
         return deviceName;
     }
@@ -336,7 +330,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         this.enabled = enabled;
     }
 
-    @Override
     public int getPointFolderId() {
         return pointFolderId;
     }
@@ -345,7 +338,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         this.pointFolderId = pointFolderId;
     }
 
-    @Override
     public int getId() {
         return id;
     }
@@ -354,7 +346,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         this.id = id;
     }
 
-    @Override
     public String getXid() {
         return xid;
     }
@@ -363,7 +354,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         this.xid = xid;
     }
 
-    @Override
     public String getName() {
         return name;
     }
@@ -783,7 +773,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
             purgePeriod = 1;
     }
 
-    @Override
     public void jsonWrite(ObjectWriter writer) throws IOException, JsonException {
         writer.writeEntry("loggingType", LOGGING_TYPE_CODES.getCode(loggingType));
         writer.writeEntry("intervalLoggingPeriodType", Common.TIME_PERIOD_CODES.getCode(intervalLoggingPeriodType));
@@ -795,7 +784,6 @@ public class DataPointVO implements Serializable, Cloneable, JsonSerializable, C
         writer.writeEntry("plotType", PLOT_TYPE_CODES.getCode(plotType));
     }
 
-    @Override
     public void jsonRead(JsonReader reader, JsonObject jsonObject) throws JsonException {
         String text = jsonObject.getString("loggingType");
         if (text != null) {
