@@ -830,7 +830,6 @@
             <tbody id="inactiveSMSRecipients"></tbody>
           </table>
 
-
           <table>
             <tbody id="genericMessages"></tbody>
           </table>
