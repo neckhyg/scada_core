@@ -1,15 +1,5 @@
 package com.serotonin.m2m2.rt.dataImage;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.serotonin.ShouldNeverHappenException;
 import com.serotonin.m2m2.Common;
 import com.serotonin.m2m2.DataTypes;
@@ -29,28 +19,29 @@ import com.serotonin.m2m2.vo.event.PointEventDetectorVO;
 import com.serotonin.timer.FixedRateTrigger;
 import com.serotonin.timer.TimerTask;
 import com.serotonin.util.ILifecycle;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.util.*;
 
 public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutClient {
     private static final Log LOG = LogFactory.getLog(DataPointRT.class);
     private static final PvtTimeComparator pvtTimeComparator = new PvtTimeComparator();
-
     // Configuration data.
     private final DataPointVO vo;
     private final PointLocatorRT pointLocator;
-
+    private final PointValueCache valueCache;
+    private final Map<String, Object> attributes = new HashMap<String, Object>();
+    private final Object intervalLoggingLock = new Object();
     // Runtime data.
     private volatile PointValueTime pointValue;
-    private final PointValueCache valueCache;
     private List<PointEventDetectorRT> detectors;
-    private final Map<String, Object> attributes = new HashMap<String, Object>();
-
     // Interval logging data.
     private PointValueTime intervalValue;
     private long intervalStartTime = -1;
     private List<IValueTime> averagingValues;
-    private final Object intervalLoggingLock = new Object();
     private TimerTask intervalLoggingTask;
-
     /**
      * This is the value around which tolerance decisions will be made when determining whether to log numeric values.
      */
@@ -134,7 +125,7 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
     /**
      * This method should only be called by the data source. Other types of point setting should include a set point
      * source object so that the annotation can be logged.
-     * 
+     *
      * @param newValue
      */
     public void updatePointValue(PointValueTime newValue) {
@@ -147,12 +138,10 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
 
     /**
      * Use this method to update a data point for reasons other than just data source update.
-     * 
-     * @param newValue
-     *            the value to set
-     * @param source
-     *            the source of the set. This can be a user object if the point was set from the UI, or could be a
-     *            program run by schedule or on event.
+     *
+     * @param newValue the value to set
+     * @param source   the source of the set. This can be a user object if the point was set from the UI, or could be a
+     *                 program run by schedule or on event.
      */
     public void setPointValue(PointValueTime newValue, SetPointSource source) {
         if (source == null)
@@ -196,54 +185,52 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
         // ... or even saving in the cache.
         boolean saveValue = true;
         switch (vo.getLoggingType()) {
-        case DataPointVO.LoggingTypes.ON_CHANGE:
-            if (pointValue == null)
-                logValue = true;
-            else if (backdated)
-                // Backdated. Ignore it
-                logValue = false;
-            else {
-                if (newValue.getValue() instanceof NumericValue) {
-                    // Get the new double
-                    double newd = newValue.getDoubleValue();
+            case DataPointVO.LoggingTypes.ON_CHANGE:
+                if (pointValue == null)
+                    logValue = true;
+                else if (backdated)
+                    // Backdated. Ignore it
+                    logValue = false;
+                else {
+                    if (newValue.getValue() instanceof NumericValue) {
+                        // Get the new double
+                        double newd = newValue.getDoubleValue();
 
-                    // See if the new value is outside of the tolerance.
-                    double diff = toleranceOrigin - newd;
-                    if (diff < 0)
-                        diff = -diff;
+                        // See if the new value is outside of the tolerance.
+                        double diff = toleranceOrigin - newd;
+                        if (diff < 0)
+                            diff = -diff;
 
-                    if (diff > vo.getTolerance()) {
-                        toleranceOrigin = newd;
-                        logValue = true;
-                    }
-                    else
-                        logValue = false;
+                        if (diff > vo.getTolerance()) {
+                            toleranceOrigin = newd;
+                            logValue = true;
+                        } else
+                            logValue = false;
+                    } else
+                        logValue = !ObjectUtils.equals(newValue.getValue(), pointValue.getValue());
                 }
-                else
-                    logValue = !ObjectUtils.equals(newValue.getValue(), pointValue.getValue());
-            }
 
-            saveValue = logValue;
-            break;
-        case DataPointVO.LoggingTypes.ALL:
-            logValue = true;
-            break;
-        case DataPointVO.LoggingTypes.ON_TS_CHANGE:
-            if (pointValue == null)
+                saveValue = logValue;
+                break;
+            case DataPointVO.LoggingTypes.ALL:
                 logValue = true;
-            else if (backdated)
-                // Backdated. Ignore it
-                logValue = false;
-            else
-                logValue = newValue.getTime() != pointValue.getTime();
+                break;
+            case DataPointVO.LoggingTypes.ON_TS_CHANGE:
+                if (pointValue == null)
+                    logValue = true;
+                else if (backdated)
+                    // Backdated. Ignore it
+                    logValue = false;
+                else
+                    logValue = newValue.getTime() != pointValue.getTime();
 
-            saveValue = logValue;
-            break;
-        case DataPointVO.LoggingTypes.INTERVAL:
-            if (!backdated)
-                intervalSave(newValue);
-        default:
-            logValue = false;
+                saveValue = logValue;
+                break;
+            case DataPointVO.LoggingTypes.INTERVAL:
+                if (!backdated)
+                    intervalSave(newValue);
+            default:
+                logValue = false;
         }
 
         if (saveValue)
@@ -254,13 +241,12 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
             PointValueTime oldValue = pointValue;
             pointValue = newValue;
             fireEvents(oldValue, newValue, source != null, false);
-        }
-        else
+        } else
             fireEvents(null, newValue, false, true);
     }
 
     public void savePointValueDirectToCache(PointValueTime newValue, SetPointSource source, boolean logValue,
-            boolean async) {
+                                            boolean async) {
         valueCache.savePointValue(newValue, source, logValue, async);
     }
 
@@ -301,16 +287,14 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
                     if (intervalValue.getDoubleValue() < pvt.getDoubleValue())
                         intervalValue = pvt;
                 }
-            }
-            else if (vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.MINIMUM) {
+            } else if (vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.MINIMUM) {
                 if (intervalValue == null)
                     intervalValue = pvt;
                 else if (pvt != null) {
                     if (intervalValue.getDoubleValue() > pvt.getDoubleValue())
                         intervalValue = pvt;
                 }
-            }
-            else if (vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.AVERAGE)
+            } else if (vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.AVERAGE)
                 averagingValues.add(pvt);
         }
     }
@@ -324,8 +308,7 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
                     || vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.MINIMUM) {
                 value = PointValueTime.getValue(intervalValue);
                 intervalValue = pointValue;
-            }
-            else if (vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.AVERAGE) {
+            } else if (vo.getIntervalLoggingType() == DataPointVO.IntervalLoggingTypes.AVERAGE) {
                 IValueTime endValue = intervalValue;
                 if (!averagingValues.isEmpty())
                     endValue = averagingValues.get(averagingValues.size() - 1);
@@ -339,8 +322,7 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
                 intervalValue = pointValue;
                 averagingValues.clear();
                 intervalStartTime = fireTime;
-            }
-            else
+            } else
                 throw new ShouldNeverHappenException("Unknown interval logging type: " + vo.getIntervalLoggingType());
 
             if (value != null)
@@ -437,44 +419,6 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
             Common.backgroundProcessing.addWorkItem(new EventNotifyWorkItem(l, oldValue, newValue, set, backdate));
     }
 
-    class EventNotifyWorkItem implements WorkItem {
-        private final DataPointListener listener;
-        private final PointValueTime oldValue;
-        private final PointValueTime newValue;
-        private final boolean set;
-        private final boolean backdate;
-
-        EventNotifyWorkItem(DataPointListener listener, PointValueTime oldValue, PointValueTime newValue, boolean set,
-                boolean backdate) {
-            this.listener = listener;
-            this.oldValue = oldValue;
-            this.newValue = newValue;
-            this.set = set;
-            this.backdate = backdate;
-        }
-
-        public void execute() {
-            if (backdate)
-                listener.pointBackdated(newValue);
-            else {
-                // Always fire this.
-                listener.pointUpdated(newValue);
-
-                // Fire if the point has changed.
-                if (!PointValueTime.equalValues(oldValue, newValue))
-                    listener.pointChanged(oldValue, newValue);
-
-                // Fire if the point was set.
-                if (set)
-                    listener.pointSet(oldValue, newValue);
-            }
-        }
-
-        public int getPriority() {
-            return WorkItem.PRIORITY_MEDIUM;
-        }
-    }
-
     //
     //
     // Lifecycle
@@ -523,5 +467,43 @@ public class DataPointRT implements IDataPointValueSource, ILifecycle, TimeoutCl
 
     public void terminateHistorical() {
         terminateIntervalLogging();
+    }
+
+    class EventNotifyWorkItem implements WorkItem {
+        private final DataPointListener listener;
+        private final PointValueTime oldValue;
+        private final PointValueTime newValue;
+        private final boolean set;
+        private final boolean backdate;
+
+        EventNotifyWorkItem(DataPointListener listener, PointValueTime oldValue, PointValueTime newValue, boolean set,
+                            boolean backdate) {
+            this.listener = listener;
+            this.oldValue = oldValue;
+            this.newValue = newValue;
+            this.set = set;
+            this.backdate = backdate;
+        }
+
+        public void execute() {
+            if (backdate)
+                listener.pointBackdated(newValue);
+            else {
+                // Always fire this.
+                listener.pointUpdated(newValue);
+
+                // Fire if the point has changed.
+                if (!PointValueTime.equalValues(oldValue, newValue))
+                    listener.pointChanged(oldValue, newValue);
+
+                // Fire if the point was set.
+                if (set)
+                    listener.pointSet(oldValue, newValue);
+            }
+        }
+
+        public int getPriority() {
+            return WorkItem.PRIORITY_MEDIUM;
+        }
     }
 }

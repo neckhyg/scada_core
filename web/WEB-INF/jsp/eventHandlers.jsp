@@ -6,7 +6,7 @@
 <%@page import="com.serotonin.m2m2.DataTypes"%>
 <c:set var="NEW_ID"><%= Common.NEW_ID %></c:set>
 
-<tag:page dwr="EventHandlersDwr" js="/resources/emailRecipients.js">
+<tag:page dwr="EventHandlersDwr" js="/resources/emailRecipients.js,/resources/smsRecipients.js">
 <jsp:attribute name="styles">
   <style>
     html > body .dijitTreeNodeLabelSelected { background-color: inherit; color: inherit; }
@@ -25,6 +25,8 @@
     var emailRecipients;
     var escalRecipients;
     var inactiveRecipients;
+    var smsRecipients;
+    var inactiveSmsRecipients;
     var store;
     // Define a convenience function for unwrapping values in the store.
     function $$(item, attr, value) {
@@ -65,7 +67,19 @@
                     data.mailingLists, data.users);
             inactiveRecipients.write("inactiveRecipients", "inactiveRecipients", "inactiveAddresses2",
                     "<m2m2:translate key="eventHandlers.inactiveRecipients" escapeDQuotes="true"/>");
-            
+
+            smsRecipients = new mango.srecip.SmsRecipients("smsRecipients",
+                    "<m2m2:translate key="eventHandlers.recipTestSmsMessage" escapeDQuotes="true"/>",
+                    data.users);
+            smsRecipients.write("smsRecipients", "smsRecipients", null,
+                    "<m2m2:translate key="eventHandlers.smsRecipients" escapeDQuotes="true"/>");
+
+            inactiveSmsRecipients = new mango.srecip.SmsRecipients("inactiveSmsRecipients",
+                    "<m2m2:translate key="eventHandlers.inactiveTestSmsMessage" escapeDQuotes="true"/>",
+                    data.users);
+            inactiveSmsRecipients.write("inactiveSmsRecipients", "inactiveSmsRecipients", "inactiveMobile2",
+                    "<m2m2:translate key="eventHandlers.inactiveSmsRecipients" escapeDQuotes="true"/>");
+
             var storeItems = [];
             
             //
@@ -309,6 +323,8 @@
             img = "images/cog_email.png";
         else if (handler.handlerType == <c:out value="<%= EventHandlerVO.TYPE_PROCESS %>"/>)
             img = "images/cog_process.png";
+        else if (handler.handlerType == <c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>)
+            img = "images/cog_email.png";
         var item = {
                 name: "<img src='"+ img +"'/> <span id='"+ handler.id +"Msg'>"+ handler.message +"</span>",
                 widgetId: "handler"+ handler.id,
@@ -366,6 +382,12 @@
                 $set("inactiveProcessCommand", handler.inactiveProcessCommand);
                 $set("inactiveProcessTimeout", handler.inactiveProcessTimeout);
             }
+            else if (handler.handlerType == <c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>) {
+                smsRecipients.updateRecipientList(handler.activeSmsRecipients);
+                $set("sendSmsInactive", handler.sendSmsInactive);
+                $set("inactiveSmsOverride", handler.inactiveSmsOverride);
+                inactiveSmsRecipients.updateRecipientList(handler.inactiveSmsRecipients);
+            }
         }
         else {
             $("saveImg").src = "images/save_add.png";
@@ -392,6 +414,10 @@
             emailRecipients.updateRecipientList();
             escalRecipients.updateRecipientList();
             inactiveRecipients.updateRecipientList();
+
+            smsRecipients.updateRecipientList();
+            inactiveSmsRecipients.updateRecipientList();
+
         }
         
         // Set the use source value checkbox.
@@ -539,6 +565,13 @@
                     $get("activeProcessTimeout"), $get("inactiveProcessCommand"), $get("inactiveProcessTimeout"), 
                     saveEventHandlerCB);
         }
+        else if (handlerType == <c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>) {
+            var smsList = smsRecipients.createRecipientArray();
+            var inactiveSmsList = inactiveSmsRecipients.createRecipientArray();
+            EventHandlersDwr.saveSmsEventHandler(eventType.type, eventType.subtype, eventType.typeRef1,
+                    eventType.typeRef2, handlerId, xid, alias, disabled, smsList,
+                    $get("sendSmsInactive"), $get("inactiveSmsOverride"), inactiveSmsList, saveEventHandlerCB);
+        }
     }
     
     function saveEventHandlerCB(response) {
@@ -637,10 +670,12 @@
                   <option value="<c:out value="<%= EventHandlerVO.TYPE_EMAIL %>"/>"><fmt:message key="eventHandlers.type.email"/></option>
                   <option value="<c:out value="<%= EventHandlerVO.TYPE_SET_POINT %>"/>"><fmt:message key="eventHandlers.type.setPoint"/></option>
                   <option value="<c:out value="<%= EventHandlerVO.TYPE_PROCESS %>"/>"><fmt:message key="eventHandlers.type.process"/></option>
+                  <option value="<c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>"><fmt:message key="eventHandlers.type.sms"/></option>
                 </select>
                 <tag:img id="handler1Img" png="cog_wrench" title="eventHandlers.type.setPointHandler" style="display:none;"/>
                 <tag:img id="handler2Img" png="cog_email" title="eventHandlers.type.emailHandler" style="display:none;"/>
                 <tag:img id="handler3Img" png="cog_process" title="eventHandlers.type.processHandler" style="display:none;"/>
+                <tag:img id="handler4Img" png="cog_sms" title="eventHandlers.type.smsHandler" style="display:none;"/>
               </td>
             </tr>
             
@@ -775,7 +810,27 @@
               <td class="formField"><input type="text" id="inactiveProcessTimeout" class="formShort"/></td>
             </tr>
           </table>
-          
+
+
+          <table id="handler<c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>" style="display:none" width="100%">
+            <tbody id="smsRecipients"></tbody>
+
+            <tr><td class="horzSeparator" colspan="2"></td></tr>
+
+            <tr>
+              <td class="formLabelRequired"><fmt:message key="eventHandlers.inactiveSMSNotif"/></td>
+              <td class="formField"><input id="sendSMSInactive" type="checkbox" onclick="sendInactiveSMSChanged()"/></td>
+            </tr>
+
+            <tr id="inactiveMobile1">
+              <td class="formLabelRequired"><fmt:message key="eventHandlers.inactiveSMSOverride"/></td>
+              <td class="formField"><input id="inactiveSMSOverride" type="checkbox" onclick="inactiveSMSOverrideChanged()"/></td>
+            </tr>
+
+            <tbody id="inactiveSMSRecipients"></tbody>
+          </table>
+
+
           <table>
             <tbody id="genericMessages"></tbody>
           </table>

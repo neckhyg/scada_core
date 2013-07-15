@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.serotonin.m2m2.web.dwr.beans.SmsListEntryBean;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -236,6 +237,20 @@ public class EventHandlersDwr extends BaseDwr {
         handler.setSendInactive(sendInactive);
         handler.setInactiveOverride(inactiveOverride);
         handler.setInactiveRecipients(inactiveRecipients);
+        return save(eventType, eventSubtype, eventTypeRef1, eventTypeRef2, handler, handlerId, xid, alias, disabled);
+    }
+
+    @DwrPermission(user = true)
+    public ProcessResult saveSmsEventHandler(String eventType, String eventSubtype, int eventTypeRef1,
+                                               int eventTypeRef2, int handlerId, String xid, String alias, boolean disabled,
+                                               List<SmsListEntryBean> activeRecipients,  boolean sendInactive,
+                                               boolean inactiveOverride, List<SmsListEntryBean> inactiveRecipients) {
+        EventHandlerVO handler = new EventHandlerVO();
+        handler.setHandlerType(EventHandlerVO.TYPE_SMS);
+        handler.setActiveSmsRecipients(activeRecipients);
+        handler.setSendSmsInactive(sendInactive);
+        handler.setInactiveSmsOverride(inactiveOverride);
+        handler.setInactiveSmsRecipients(inactiveRecipients);
         return save(eventType, eventSubtype, eventTypeRef1, eventTypeRef2, handler, handlerId, xid, alias, disabled);
     }
 

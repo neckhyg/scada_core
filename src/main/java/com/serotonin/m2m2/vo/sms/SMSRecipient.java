@@ -12,27 +12,25 @@ import org.joda.time.DateTime;
 import java.io.IOException;
 import java.util.Set;
 
-abstract public class SMSRecipient implements JsonSerializable {
-    public static final int TYPE_MAILING_LIST = 1;
-    public static final int TYPE_USER = 2;
-    public static final int TYPE_ADDRESS = 3;
+abstract public class SmsRecipient implements JsonSerializable {
+    public static final int TYPE_USER = 1;
+    public static final int TYPE_MOBILE = 2;
 
     public static final ExportCodes TYPE_CODES = new ExportCodes();
     static {
-        TYPE_CODES.addElement(TYPE_MAILING_LIST, "MAILING_LIST", "mailingLists.mailingList");
-        TYPE_CODES.addElement(TYPE_USER, "USER", "mailingLists.emailAddress");
-        TYPE_CODES.addElement(TYPE_ADDRESS, "ADDRESS", "common.user");
+        TYPE_CODES.addElement(TYPE_USER, "USER", "common.user");
+        TYPE_CODES.addElement(TYPE_MOBILE, "MOBILE", "sms.mobile");
     }
 
     abstract public int getRecipientType();
 
-    abstract public void appendAddresses(Set<String> addresses, DateTime sendTime);
+    abstract public void appendMobile(Set<String> mobile, DateTime sendTime);
 
-    abstract public void appendAllAddresses(Set<String> addresses);
+    abstract public void appendAllMobile(Set<String> mobile);
 
     abstract public int getReferenceId();
 
-    abstract public String getReferenceAddress();
+    abstract public String getReferenceMobile();
 
     /**
      * @throws com.serotonin.json.JsonException
