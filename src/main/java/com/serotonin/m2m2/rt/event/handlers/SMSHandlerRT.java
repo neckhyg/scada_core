@@ -1,9 +1,18 @@
 
 package com.serotonin.m2m2.rt.event.handlers;
 
+import com.serotonin.m2m2.db.dao.SmsTbMsgDao;
+import com.serotonin.m2m2.db.dao.UserDao;
+import com.serotonin.m2m2.i18n.TranslatableMessage;
+import com.serotonin.m2m2.i18n.Translations;
 import com.serotonin.m2m2.rt.event.EventInstance;
 import com.serotonin.m2m2.util.timeout.ModelTimeoutClient;
+import com.serotonin.m2m2.vo.User;
 import com.serotonin.m2m2.vo.event.EventHandlerVO;
+import com.serotonin.m2m2.vo.sms.MobileEntry;
+import com.serotonin.m2m2.vo.sms.UserEntry;
+import com.serotonin.m2m2.vo.sms.SmsRecipient;
+import com.serotonin.m2m2.web.dwr.beans.SmsListEntryBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -55,12 +64,34 @@ public class SmsHandlerRT extends EventHandlerRT implements ModelTimeoutClient<E
 
     @Override
     public void eventRaised(EventInstance evt) {
-        System.out.println("raise an event");
+        String message = evt.getMessage().translate(Translations.getTranslations());
+        SmsTbMsgDao smsDao = new SmsTbMsgDao();
+        UserDao userDao = new UserDao();
+        String mobile = "";
+        for(SmsListEntryBean bean: vo.getActiveSmsRecipients()){
+           SmsRecipient smsRecipient = bean.createSmsRecipient();
+//            smsRecipient.appendAllMobile(activeRecipients);
+            if(smsRecipient instanceof UserEntry){
+                UserEntry userEntry =(UserEntry) smsRecipient;
+                User user = userDao.getUser(userEntry.getUserId());
+                userEntry.setUser(user);
+                mobile = userEntry.getReferenceMobile();
+            } else if (smsRecipient instanceof MobileEntry){
+                MobileEntry mobileEntry = (MobileEntry)smsRecipient;
+                mobile = mobileEntry.getMobile();
+            }
+            int id = smsDao.getCount() + 1;
+            try{
+                smsDao.insertSmsRecord(String.valueOf(id),mobile,message,"N");
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override
     synchronized public void eventInactive(EventInstance evt) {
-        System.out.println("inactive an event");
     }
 
 }
