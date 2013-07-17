@@ -23,7 +23,7 @@
   <!-- Meta -->
   <meta http-equiv="content-type" content="application/xhtml+xml;charset=utf-8"/>
   <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="Copyright" content="&copy;2006-2011 Serotonin Software Technologies Inc."/>
+  <meta name="Copyright" content="&copy;2008-2013 Eazytec Software Technologies Inc."/>
   <meta name="DESCRIPTION" content="EazyTec Software"/>
   <meta name="KEYWORDS" content="EazyTec Software"/>
   

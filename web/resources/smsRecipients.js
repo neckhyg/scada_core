@@ -104,7 +104,7 @@ mango.srecip.SmsRecipients = function(prefix, testSmsMessage, users) {
             mobile = $get(this.prefix +"Mobile");
         if (mobile == "")
             return;
-        this.addListEntry("A"+ this.nextMobileId++, "images/sms.png", mobile);
+        this.addListEntry("M"+ this.nextMobileId++, "images/sms.png", mobile);
         this.checkListEmptyMessage();
     }
     
@@ -188,7 +188,7 @@ mango.srecip.SmsRecipients = function(prefix, testSmsMessage, users) {
                 var recip = recipientList[i];
                 if (recip.recipientType == 1) // SmsRecipient.TYPE_USER
                     this.addUser(recip.referenceId);
-                else if (recip.recipientType == 2) // SmsRecipient.TYPE_ADDRESS
+                else if (recip.recipientType == 2) // SmsRecipient.TYPE_MOBILE
                     this.addMobile(recip.referenceMobile);
                 else
                     dojo.debug("Unknown recipient type id: "+ recip.recipientType);

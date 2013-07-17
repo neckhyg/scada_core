@@ -2,6 +2,7 @@ package com.serotonin.m2m2.db.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -26,13 +27,18 @@ public class SmsTbMsgDao extends BaseDao {
 		return smslist;
 	}
 
-    public int insertSmsRecord(String smsNo, String toMobile, String content, String msgStatus){
+    public void insertSmsRecord(String smsNo, String toMobile, String content, String msgStatus){
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentTime = sdf.format(date);
-        String sql = "INSERT INTO sms_msg_no (sms_msg_no,to_mobile,content,msg_status,enter_datetime) VALUES (?,?,?,?,?)";
-        int result = doInsert(sql,new Object[]{smsNo,toMobile,content,msgStatus,currentTime});
-        return result;
+        String sql = "INSERT INTO sms_tb_msg (sms_msg_no,to_mobile,content,msg_status,enter_datetime) VALUES (?,?,?,?,?)";
+        doInsert(sql, new Object[]{smsNo, toMobile, content, msgStatus, currentTime},
+                new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR});
+    }
+
+    public int getCount(){
+       String sql = "SELECT COUNT(*) FROM sms_tb_msg";
+        return ejt2.queryForInt(sql);
     }
 
 	class SmsTbMsgRowWapper implements RowMapper<SmsTbMsg>

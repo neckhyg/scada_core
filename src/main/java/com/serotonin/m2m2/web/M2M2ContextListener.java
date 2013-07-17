@@ -89,7 +89,9 @@ public class M2M2ContextListener implements ServletContextListener {
                 "common.disabledToggle", "common.enabledToggle", "common.maximize", "common.minimize",
                 "common.loading", "js.help.error", "js.help.related", "js.help.lastUpdated", "common.sendTestEmail",
                 "js.email.noRecipients", "js.email.addMailingList", "js.email.addUser", "js.email.addAddress",
-                "js.email.noRecipForEmail", "js.email.testSent", "events.silence", "events.unsilence", "header.mute",
+                "js.email.noRecipForEmail", "js.email.testSent",
+                "js.sms.noRecipients","js.sms.addUser","js.sms.addMobile","js.sms.testSent","js.sms.noRecipForSms",
+                "events.silence", "events.unsilence", "header.mute",
                 "header.unmute", };
         Map<String, TranslatableMessage> messages = new HashMap<String, TranslatableMessage>();
         for (String code : codes)

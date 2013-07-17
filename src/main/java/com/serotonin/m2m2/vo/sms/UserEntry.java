@@ -52,9 +52,13 @@ public class UserEntry extends SmsRecipient {
     }
 
     public String getReferenceMobile() {
-        return null;
+        if(!user.isDisabled())
+            return user.getPhone();
+        else
+            return null;
     }
-        @Override
+
+    @Override
     public String toString() {
         if (user == null)
             return "userId=" + userId;

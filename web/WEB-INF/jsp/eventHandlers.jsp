@@ -324,7 +324,7 @@
         else if (handler.handlerType == <c:out value="<%= EventHandlerVO.TYPE_PROCESS %>"/>)
             img = "images/cog_process.png";
         else if (handler.handlerType == <c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>)
-            img = "images/cog_email.png";
+            img = "images/cog_sms.png";
         var item = {
                 name: "<img src='"+ img +"'/> <span id='"+ handler.id +"Msg'>"+ handler.message +"</span>",
                 widgetId: "handler"+ handler.id,
@@ -384,7 +384,7 @@
             }
             else if (handler.handlerType == <c:out value="<%= EventHandlerVO.TYPE_SMS %>"/>) {
                 smsRecipients.updateRecipientList(handler.activeSmsRecipients);
-                $set("sendSmsInactive", handler.sendSmsInactive);
+                $set("sendInactiveSms", handler.sendInactiveSms);
                 $set("inactiveSmsOverride", handler.inactiveSmsOverride);
                 inactiveSmsRecipients.updateRecipientList(handler.inactiveSmsRecipients);
             }
@@ -427,6 +427,7 @@
         targetPointSelectChanged();
         sendEscalationChanged();
         sendInactiveChanged();
+        sendInactiveSmsChanged();
     }
     
     var currentHandlerEditor;
@@ -570,7 +571,7 @@
             var inactiveSmsList = inactiveSmsRecipients.createRecipientArray();
             EventHandlersDwr.saveSmsEventHandler(eventType.type, eventType.subtype, eventType.typeRef1,
                     eventType.typeRef2, handlerId, xid, alias, disabled, smsList,
-                    $get("sendSmsInactive"), $get("inactiveSmsOverride"), inactiveSmsList, saveEventHandlerCB);
+                    $get("sendInactiveSms"), $get("inactiveSmsOverride"), inactiveSmsList, saveEventHandlerCB);
         }
     }
     
@@ -630,6 +631,24 @@
             show("inactiveAddresses2");
         else
             hide("inactiveAddresses2");
+    }
+
+    function sendInactiveSmsChanged() {
+        if ($get("sendInactiveSms")) {
+            show("inactiveMobile1");
+            inactiveSmsOverrideChanged();
+        }
+        else {
+            hide("inactiveMobile1");
+            hide("inactiveMobile2");
+        }
+    }
+
+    function inactiveSmsOverrideChanged() {
+        if ($get("inactiveSmsOverride"))
+            show("inactiveMobile2");
+        else
+            hide("inactiveMobile2");
     }
   </script>
   
@@ -818,16 +837,16 @@
             <tr><td class="horzSeparator" colspan="2"></td></tr>
 
             <tr>
-              <td class="formLabelRequired"><fmt:message key="eventHandlers.inactiveSMSNotif"/></td>
-              <td class="formField"><input id="sendSMSInactive" type="checkbox" onclick="sendInactiveSMSChanged()"/></td>
+              <td class="formLabelRequired"><fmt:message key="eventHandlers.inactiveSmsNotif"/></td>
+              <td class="formField"><input id="sendInactiveSms" type="checkbox" onclick="sendInactiveSmsChanged()"/></td>
             </tr>
 
             <tr id="inactiveMobile1">
-              <td class="formLabelRequired"><fmt:message key="eventHandlers.inactiveSMSOverride"/></td>
-              <td class="formField"><input id="inactiveSMSOverride" type="checkbox" onclick="inactiveSMSOverrideChanged()"/></td>
+              <td class="formLabelRequired"><fmt:message key="eventHandlers.inactiveSmsOverride"/></td>
+              <td class="formField"><input id="inactiveSmsOverride" type="checkbox" onclick="inactiveSmsOverrideChanged()"/></td>
             </tr>
 
-            <tbody id="inactiveSMSRecipients"></tbody>
+            <tbody id="inactiveSmsRecipients"></tbody>
           </table>
 
           <table>

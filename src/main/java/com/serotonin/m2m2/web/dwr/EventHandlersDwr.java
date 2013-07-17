@@ -248,7 +248,7 @@ public class EventHandlersDwr extends BaseDwr {
         EventHandlerVO handler = new EventHandlerVO();
         handler.setHandlerType(EventHandlerVO.TYPE_SMS);
         handler.setActiveSmsRecipients(activeRecipients);
-        handler.setSendSmsInactive(sendInactive);
+        handler.setSendInactiveSms(sendInactive);
         handler.setInactiveSmsOverride(inactiveOverride);
         handler.setInactiveSmsRecipients(inactiveRecipients);
         return save(eventType, eventSubtype, eventTypeRef1, eventTypeRef2, handler, handlerId, xid, alias, disabled);

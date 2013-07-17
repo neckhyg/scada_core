@@ -115,7 +115,7 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
     // SMS handler fields.
     private List<SmsListEntryBean> activeSmsRecipients;
     private List<SmsListEntryBean> inactiveSmsRecipients;
-    private boolean sendSmsInactive;
+    private boolean sendInactiveSms;
     private boolean inactiveSmsOverride;
 
     public static TranslatableMessage getSetActionMessage(int action) {
@@ -488,7 +488,7 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             if (activeSmsRecipients.isEmpty())
                 response.addGenericMessage("eventHandlers.noSmsRecips");
 
-            if (sendSmsInactive && inactiveSmsOverride) {
+            if (sendInactiveSms && inactiveSmsOverride) {
                 if (inactiveSmsRecipients.isEmpty())
                     response.addGenericMessage("eventHandlers.noInactiveSmsRecips");
             }
@@ -543,8 +543,8 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
         } else if (handlerType == TYPE_SMS) {
             AuditEventType.addPropertyMessage(list, "eventHandlers.smsRecipients",
                     createSmsMessage(activeSmsRecipients));
-            AuditEventType.addPropertyMessage(list, "eventHandlers.inactiveSmsNotif", sendSmsInactive);
-            if (sendSmsInactive) {
+            AuditEventType.addPropertyMessage(list, "eventHandlers.inactiveSmsNotif", sendInactiveSms);
+            if (sendInactiveSms) {
                 AuditEventType.addPropertyMessage(list, "eventHandlers.inactiveOverride", inactiveSmsOverride);
                 if (inactiveSmsOverride)
                     AuditEventType.addPropertyMessage(list, "eventHandlers.inactiveSmsRecipients",
@@ -605,8 +605,8 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
         } else if (handlerType == TYPE_SMS) {
             AuditEventType.maybeAddPropertyChangeMessage(list, "eventHandlers.smsRecipients",
                     createSmsMessage(from.activeSmsRecipients), createSmsMessage(activeSmsRecipients));
-            AuditEventType.maybeAddPropertyChangeMessage(list, "eventHandlers.inactiveSmsNotif", from.sendSmsInactive,
-                    sendSmsInactive);
+            AuditEventType.maybeAddPropertyChangeMessage(list, "eventHandlers.inactiveSmsNotif", from.sendInactiveSms,
+                    sendInactiveSms);
             AuditEventType.maybeAddPropertyChangeMessage(list, "eventHandlers.inactiveSmsOverride", from.inactiveSmsOverride,
                     inactiveSmsOverride);
             AuditEventType.maybeAddPropertyChangeMessage(list, "eventHandlers.inactiveSmsRecipients",
@@ -643,7 +643,7 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             out.writeInt(inactiveProcessTimeout);
         } else if (handlerType == TYPE_SMS) {
             out.writeObject(activeSmsRecipients);
-            out.writeBoolean(sendSmsInactive);
+            out.writeBoolean(sendInactiveSms);
             out.writeBoolean(inactiveSmsOverride);
             out.writeObject(inactiveSmsRecipients);
         }
@@ -681,7 +681,7 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
                 inactiveProcessTimeout = 15;
             } else if (handlerType == TYPE_SMS) {
                 activeSmsRecipients = (List<SmsListEntryBean>) in.readObject();
-                sendSmsInactive = in.readBoolean();
+                sendInactiveSms = in.readBoolean();
                 inactiveSmsOverride = in.readBoolean();
                 inactiveSmsRecipients = (List<SmsListEntryBean>) in.readObject();
             }
@@ -712,7 +712,7 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
                 inactiveProcessTimeout = in.readInt();
             } else if (handlerType == TYPE_SMS) {
                 activeSmsRecipients = (List<SmsListEntryBean>) in.readObject();
-                sendSmsInactive = in.readBoolean();
+                sendInactiveSms = in.readBoolean();
                 inactiveSmsOverride = in.readBoolean();
                 inactiveSmsRecipients = (List<SmsListEntryBean>) in.readObject();
             }
@@ -769,8 +769,8 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
             writer.writeEntry("inactiveProcessTimeout", inactiveProcessTimeout);
         } else if (handlerType == TYPE_SMS) {
             writer.writeEntry("activeSmsRecipients", activeSmsRecipients);
-            writer.writeEntry("sendSmsInactive", sendSmsInactive);
-            if (sendSmsInactive) {
+            writer.writeEntry("sendSmsInactive", sendInactiveSms);
+            if (sendInactiveSms) {
                 writer.writeEntry("inactiveSmsOverride", inactiveSmsOverride);
                 if (inactiveSmsOverride)
                     writer.writeEntry("inactiveSmsRecipients", inactiveSmsRecipients);
@@ -913,9 +913,9 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
 
             Boolean b = jsonObject.getBoolean("sendSmsInactive");
             if (b != null)
-                sendSmsInactive = b;
+                sendInactiveSms = b;
 
-            if (sendSmsInactive) {
+            if (sendInactiveSms) {
                 b = jsonObject.getBoolean("inactiveSmsOverride");
                 if (b != null)
                     inactiveSmsOverride = b;
@@ -929,12 +929,12 @@ public class EventHandlerVO implements Serializable, ChangeComparable<EventHandl
         }
     }
 
-    public boolean isSendSmsInactive() {
-        return sendSmsInactive;
+    public boolean isSendInactiveSms() {
+        return sendInactiveSms;
     }
 
-    public void setSendSmsInactive(boolean sendSmsInactive) {
-        this.sendSmsInactive = sendSmsInactive;
+    public void setSendInactiveSms(boolean sendInactiveSms) {
+        this.sendInactiveSms = sendInactiveSms;
     }
 
     public List<SmsListEntryBean> getActiveSmsRecipients() {
