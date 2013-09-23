@@ -25,10 +25,12 @@ import com.serotonin.web.taglib.Functions;
 public class UserDao extends BaseDao {
     private static final Log LOG = LogFactory.getLog(UserDao.class);
 
+//    private static final String USER_SELECT = //
+//    "SELECT id, username, password, email, phone, admin, disabled, homeUrl, " //
+//            + "lastLogin, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted,sewageCompany,sewageRecord FROM users ";
     private static final String USER_SELECT = //
-    "SELECT id, username, password, email, phone, admin, disabled, homeUrl, " //
-            + "lastLogin, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted,sewageCompany,sewageRecord FROM users ";
-
+            "SELECT id, username, password, email, phone, admin, disabled, homeUrl, " //
+                    + "lastLogin, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted FROM users ";
     public User getUser(int id) {
         User user = queryForObject(USER_SELECT + "where id=?", new Object[] { id }, new UserRowMapper(), null);
         populateUserPermissions(user);
@@ -59,8 +61,8 @@ public class UserDao extends BaseDao {
             user.setReceiveOwnAuditEvents(charToBool(rs.getString(++i)));
             user.setTimezone(rs.getString(++i));
             user.setMuted(charToBool(rs.getString(++i)));
-            user.setSewageCompany(charToBool(rs.getString(++i)));
-            user.setSewageRecord(charToBool(rs.getString(++i)));
+//            user.setSewageCompany(charToBool(rs.getString(++i)));
+//            user.setSewageRecord(charToBool(rs.getString(++i)));
             return user;
         }
     }
@@ -72,8 +74,11 @@ public class UserDao extends BaseDao {
     }
 
     public List<User> getActiveUsers() {
-        List<User> users = query(USER_SELECT + "where disabled=?", new Object[] { boolToChar(false) },
-                new UserRowMapper());
+//        List<User> users = query(USER_SELECT + "where disabled=?", new Object[] { boolToChar(false) },
+//                new UserRowMapper());
+//        populateUserPermissions(users);
+//        return users;
+        List<User> users = query(USER_SELECT + "order by username", new Object[0], new UserRowMapper());
         populateUserPermissions(users);
         return users;
     }
@@ -119,19 +124,32 @@ public class UserDao extends BaseDao {
             + "disabled, homeUrl, receiveAlarmEmails, receiveOwnAuditEvents, timezone, muted,sewageCompany,sewageRecord) " //
             + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    void insertUser(User user) {
+//    void insertUser(User user) {
+//        int id = doInsert(
+//                USER_INSERT,
+//                new Object[] { user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(),
+//                        boolToChar(user.isAdmin()), boolToChar(user.isDisabled()), user.getHomeUrl(),
+//                        user.getReceiveAlarmEmails(), boolToChar(user.isReceiveOwnAuditEvents()), user.getTimezone(),
+//                        boolToChar(user.isMuted()),boolToChar(user.isSewageCompany()), boolToChar(user.isSewageRecord()) },
+//                        new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
+//                		Types.VARCHAR, Types.INTEGER, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR });
+//
+//        user.setId(id);
+//        saveRelationalData(user);
+//    }
+void insertUser(User user) {
         int id = doInsert(
                 USER_INSERT,
                 new Object[] { user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(),
                         boolToChar(user.isAdmin()), boolToChar(user.isDisabled()), user.getHomeUrl(),
                         user.getReceiveAlarmEmails(), boolToChar(user.isReceiveOwnAuditEvents()), user.getTimezone(),
-                        boolToChar(user.isMuted()),boolToChar(user.isSewageCompany()), boolToChar(user.isSewageRecord()) }, 
-                        new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, 
+                        boolToChar(user.isMuted()) },
+                        new int[] { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,
                 		Types.VARCHAR, Types.INTEGER, Types.VARCHAR,Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR });
+
         user.setId(id);
         saveRelationalData(user);
     }
-
     private static final String USER_UPDATE = "update users set " //
             + "  username=?, password=?, email=?, phone=?, admin=?, disabled=?, homeUrl=?, receiveAlarmEmails=?, " //
             + "  receiveOwnAuditEvents=?, timezone=?, muted=?, sewageCompany=?, sewageRecord=? " //
@@ -146,16 +164,27 @@ public class UserDao extends BaseDao {
         if (user.getTimezone() == null)
             user.setTimezone("");
 
+//        try {
+//            ejt.update(
+//                    USER_UPDATE,
+//                    new Object[] { user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(),
+//                            boolToChar(user.isAdmin()), boolToChar(user.isDisabled()), user.getHomeUrl(),
+//                            user.getReceiveAlarmEmails(), boolToChar(user.isReceiveOwnAuditEvents()),
+//                            user.getTimezone(), boolToChar(user.isMuted()), boolToChar(user.isSewageCompany()),
+//                            boolToChar(user.isSewageRecord()), user.getId() }, new int[] { Types.VARCHAR,Types.VARCHAR,
+//                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.INTEGER,
+//                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER });
+//            saveRelationalData(user);
+//        }
         try {
             ejt.update(
                     USER_UPDATE,
                     new Object[] { user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(),
                             boolToChar(user.isAdmin()), boolToChar(user.isDisabled()), user.getHomeUrl(),
                             user.getReceiveAlarmEmails(), boolToChar(user.isReceiveOwnAuditEvents()),
-                            user.getTimezone(), boolToChar(user.isMuted()), boolToChar(user.isSewageCompany()), 
-                            boolToChar(user.isSewageRecord()), user.getId() }, new int[] { Types.VARCHAR,Types.VARCHAR, 
-                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.INTEGER, 
-                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER });
+                            user.getTimezone(), boolToChar(user.isMuted()), user.getId() }, new int[] { Types.VARCHAR,Types.VARCHAR,
+                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR,Types.INTEGER,
+                    		Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.INTEGER });
             saveRelationalData(user);
         }
         catch (DataIntegrityViolationException e) {

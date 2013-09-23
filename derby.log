@@ -1,0 +1,16 @@
+----------------------------------------------------------------
+Sun Sep 22 14:06:53 CST 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-0141-4447-1766-000000a3ed30 
+on database directory F:\Application\hospital\scada_core\derby  with class loader sun.misc.Launcher$AppClassLoader@11e1e67 
+Loaded from file:/C:/Documents%20and%20Settings/Administrator/.m2/repository/org/apache/derby/derby/10.8.2.2/derby-10.8.2.2.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_04-b20
+user.dir=F:\Application\hospital\scada_core
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sun Sep 22 14:07:22 CST 2013: Shutting down Derby engine
+----------------------------------------------------------------
+Sun Sep 22 14:07:28 CST 2013:
+Shutting down instance a816c00e-0141-4447-1766-000000a3ed30 on database directory F:\Application\hospital\scada_core\derby with class loader sun.misc.Launcher$AppClassLoader@11e1e67 
+----------------------------------------------------------------

@@ -141,10 +141,13 @@
     <div data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'leading'" id="left_menu">
         <div class="sideBarNav">
         <div class="tit">
-            <span class="innerTit">监测数据</span>
+            <span class="innerTit">实时监测</span>
             <ul>
-                <li><a href="monitoring_point.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测点信息</a></li>
-                <li><a href="monitoring_data.shtm">&nbsp;&nbsp;&nbsp;&nbsp;监测数据</a></li>
+                <li><a href="temperHumidity.shtm">&nbsp;&nbsp;&nbsp;&nbsp;温湿度监测</a></li>
+                <li><a href="leak.shtm">&nbsp;&nbsp;&nbsp;&nbsp;漏水监测</a></li>
+                <li><a href="airCondition.shtm">&nbsp;&nbsp;&nbsp;&nbsp;空调监测</a></li>
+                <li><a href="uspMonitor.shtm">&nbsp;&nbsp;&nbsp;&nbsp;UPS1监测</a></li>
+                <li><a href="usp2Monitor.shtm">&nbsp;&nbsp;&nbsp;&nbsp;UPS2监测</a></li>
             </ul>
         </div>
         <div class="tit">
@@ -158,18 +161,12 @@
             </ul>
         </div>
         <div class="tit">
-            <span class="innerTit">超标报警</span>
+            <span class="innerTit">报警记录</span>
             <ul>
 		        <li><a href="alarm.shtm">&nbsp;&nbsp;&nbsp;&nbsp;报警</a></li>
             </ul>
         </div>
-        <div class="tit">
-            <span class="innerTit">排污记录</span>
-            <ul>
-		        <li><a href="sewage_comp_edit.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污企业记录</a></li>
-		    <li><a href="sewage_comp_record.shtm">&nbsp;&nbsp;&nbsp;&nbsp;排污记录</a></li>
-            </ul>
-        </div>
+
         <div class="tit">
         <span class="innerTit">用户管理</span>
             <ul>

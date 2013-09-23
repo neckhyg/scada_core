@@ -68,10 +68,10 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
     private String timezone;
     @JsonProperty
     private boolean muted = true;
-    @JsonProperty
-    private boolean sewageRecord = false;
-    @JsonProperty
-    private boolean sewageCompany = false;
+//    @JsonProperty
+//    private boolean sewageRecord = false;
+//    @JsonProperty
+//    private boolean sewageCompany = false;
 
     //
     // Session data. The user object is stored in session, and some other session-based information is cached here
@@ -357,21 +357,21 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
         return timezone;
     }
 
-    public boolean isSewageRecord() {
-		return sewageRecord;
-	}
-
-	public void setSewageRecord(boolean sewageRecord) {
-		this.sewageRecord = sewageRecord;
-	}
-
-	public boolean isSewageCompany() {
-		return sewageCompany;
-	}
-
-	public void setSewageCompany(boolean sewageCompany) {
-		this.sewageCompany = sewageCompany;
-	}
+//    public boolean isSewageRecord() {
+//		return sewageRecord;
+//	}
+//
+//	public void setSewageRecord(boolean sewageRecord) {
+//		this.sewageRecord = sewageRecord;
+//	}
+//
+//	public boolean isSewageCompany() {
+//		return sewageCompany;
+//	}
+//
+//	public void setSewageCompany(boolean sewageCompany) {
+//		this.sewageCompany = sewageCompany;
+//	}
 
 	public void setTimezone(String timezone) {
         this.timezone = timezone;
@@ -422,7 +422,12 @@ public class User implements SetPointSource, HttpSessionBindingListener, JsonSer
                 + phone + ", admin=" + admin + ", disabled=" + disabled + ", dataSourcePermissions="
                 + dataSourcePermissions + ", dataPointPermissions=" + dataPointPermissions + ", homeUrl=" + homeUrl
                 + ", lastLogin=" + lastLogin + ", receiveAlarmEmails=" + receiveAlarmEmails
-                + ", receiveOwnAuditEvents=" + receiveOwnAuditEvents + ", timezone=" + timezone + ",sewageRecord="+sewageRecord+",sewageCompany="+sewageCompany+"]";
+                + ", receiveOwnAuditEvents=" + receiveOwnAuditEvents + ", timezone=" + timezone + "]";
+//        return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", phone="
+//                + phone + ", admin=" + admin + ", disabled=" + disabled + ", dataSourcePermissions="
+//                + dataSourcePermissions + ", dataPointPermissions=" + dataPointPermissions + ", homeUrl=" + homeUrl
+//                + ", lastLogin=" + lastLogin + ", receiveAlarmEmails=" + receiveAlarmEmails
+//                + ", receiveOwnAuditEvents=" + receiveOwnAuditEvents + ", timezone=" + timezone + ",sewageRecord="+sewageRecord+",sewageCompany="+sewageCompany+"]";
     }
 
     //

@@ -120,8 +120,8 @@ public class UsersDwr extends BaseDwr {
         user.setReceiveAlarmEmails(receiveAlarmEmails);
         user.setReceiveOwnAuditEvents(receiveOwnAuditEvents);
         user.setTimezone(timezone);
-        user.setSewageCompany(sewageCompany);
-        user.setSewageRecord(sewageRecord);
+//        user.setSewageCompany(sewageCompany);
+//        user.setSewageRecord(sewageRecord);
         user.setDataSourcePermissions(dataSourcePermissions);
         user.setDataPointPermissions(dataPointPermissions);
 

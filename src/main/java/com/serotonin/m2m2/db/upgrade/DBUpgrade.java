@@ -48,7 +48,8 @@ abstract public class DBUpgrade extends BaseDao {
             int schemaVersion = -1;
             if(strVersion != null)
               schemaVersion = Integer.valueOf(strVersion.trim());
-//            int schemaVersion = SystemSettingsDao.getIntValue(settingsKey, -1);
+//            schemaVersion = Integer.valueOf(strVersion.trim().substring(2,3));
+//             schemaVersion = SystemSettingsDao.getIntValue(settingsKey, -1);
 //            int schemaVersion = codeVersion;
 
             if (schemaVersion == -1) {

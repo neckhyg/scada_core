@@ -88,7 +88,7 @@ public class Main
       lifecycle.initialize(moduleClassLoader);
       if ((!GraphicsEnvironment.isHeadless()) && (Desktop.isDesktopSupported()) && (Common.envProps.getBoolean("web.openBrowserOnStartup")))
       {
-        Desktop.getDesktop().browse(new URI(new StringBuilder().append("http://localhost:").append(Common.envProps.getInt("web.port", 8080)).toString()));
+        Desktop.getDesktop().browse(new URI(new StringBuilder().append("http://localhost:").append(Common.envProps.getInt("web.port", 8088)).toString()));
       }
     } catch (Exception e) {
       LOG.error("Error during initialization", e);

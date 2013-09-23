@@ -305,6 +305,7 @@ input[type="submit"], input[type="button"] {
 	font-weight: normal;
 }
 .simpleRenderer {
+    font-size:16px;
 	line-height:16px;
 }
 .infoData {

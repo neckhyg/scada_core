@@ -31,8 +31,8 @@
                     </div>
                     </spring:bind>
                     <spring:bind path="login.password">
-                    <div class="userText">
-                      <input type="password" class="user_text"  name="password" size="12" maxlength="30" value=""/>
+                    <div class="pswText">
+                      <input type="password" class="psw_text"  name="password" size="12" maxlength="30" value=""/>
                     </div>
                     </spring:bind>
                   </td>
