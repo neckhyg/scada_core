@@ -15,7 +15,7 @@ html, body, form {margin: auto;font-size: 13px; height: 100%}
 .login-main-ie{ position: relative; z-index: 100; top:250px; left: 185px;}
 .psw_text{
     width: 150px; border: 0px;
-    margin-top: 25px; margin-left:288px;}
+    margin-top: 24px; margin-left:288px;}
 .user_text{ 
   width: 150px; border: 0px;
   margin-top: 42px; margin-left:288px;}
