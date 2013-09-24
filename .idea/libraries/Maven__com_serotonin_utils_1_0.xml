@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Maven: com.serotonin:utils:1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/com.serotonin.utils.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

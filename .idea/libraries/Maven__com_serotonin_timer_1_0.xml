@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Maven: com.serotonin:timer:1.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/com.serotonin.timer.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
